@@ -144,7 +144,7 @@ class RbacController extends Controller
         $auth->add($statusOrder);
 
         $deleteOrder = $auth->createPermission('deleteOrder');
-        $deleteOrder->description = 'Deletar Encomenda';
+        $deleteOrder->description = 'Remover Encomenda';
         $auth->add($deleteOrder);
 
         $viewOwnOrders = $auth->createPermission('viewOwnOrders');
@@ -273,7 +273,7 @@ class RbacController extends Controller
         $deleteAllProfiles->description = 'Deletar todos os perfis';
         $auth->add($deleteAllProfiles);
 
-        //Permições para perfis
+        //Permissões para perfis
         $auth->addChild($cliente, $viewMyProfile);
         $auth->addChild($cliente, $updateMyProfile);
         $auth->addChild($cliente, $deleteMyProfile);
