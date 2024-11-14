@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use yii;
-use backend\models\Fornecedor;
+use backend\models\Loja;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ForncedorController implements the CRUD actions for Fornecedor model.
+ * LojaController implements the CRUD actions for Loja model.
  */
-class FornecedorController extends Controller
+class LojaController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,15 +33,15 @@ class FornecedorController extends Controller
     }
 
     /**
-     * Lists all Fornecedor models.
+     * Lists all Loja models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('viewfornecedor')) {
+        if (Yii::$app->user->can('viewloja')) {
             $dataProvider = new ActiveDataProvider([
-                'query' => Fornecedor::find(),
+                'query' => Loja::find(),
                 /*
                 'pagination' => [
                     'pageSize' => 50
@@ -62,14 +62,14 @@ class FornecedorController extends Controller
     }
 
     /**
-     * Displays a single Fornecedor model.
+     * Displays a single Loja model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        if (Yii::$app->user->can('viewfornecedor')) {
+        if (Yii::$app->user->can('viewloja')) {
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
@@ -78,14 +78,14 @@ class FornecedorController extends Controller
     }
 
     /**
-     * Creates a new Fornecedor model.
+     * Creates a new Loja model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->can('createfornecedor')) {
-            $model = new Fornecedor();
+        if(Yii::$app->user->can('createloja')){
+            $model = new Loja();
 
             if ($this->request->isPost) {
                 if ($model->load($this->request->post()) && $model->save()) {
@@ -103,7 +103,7 @@ class FornecedorController extends Controller
     }
 
     /**
-     * Updates an existing Fornecedor model.
+     * Updates an existing Loja model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -111,7 +111,7 @@ class FornecedorController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('updatefornecedor')) {
+        if(Yii::$app->user->can('updateloja')) {
             $model = $this->findModel($id);
 
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -126,7 +126,7 @@ class FornecedorController extends Controller
     }
 
     /**
-     * Deletes an existing Fornecedor model.
+     * Deletes an existing Loja model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -134,7 +134,7 @@ class FornecedorController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('deletefornecedor')) {
+        if(Yii::$app->user->can('deleteloja')) {
             $this->findModel($id)->delete();
 
             return $this->redirect(['index']);
@@ -143,15 +143,15 @@ class FornecedorController extends Controller
     }
 
     /**
-     * Finds the Fornecedor model based on its primary key value.
+     * Finds the Loja model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Fornecedor the loaded model
+     * @return Loja the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Fornecedor::findOne(['id' => $id])) !== null) {
+        if (($model = Loja::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

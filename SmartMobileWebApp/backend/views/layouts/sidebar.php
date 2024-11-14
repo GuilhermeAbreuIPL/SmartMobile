@@ -10,10 +10,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="https://www.technotification.com/wp-content/uploads/2022/01/KEWK-twitch.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">Guilherme Abreu</a>
             </div>
         </div>
 
@@ -59,10 +59,19 @@
 
                     ['label' => 'Gerir Contas', 'visible' => Yii::$app->user->can('funcionario')],
 
+                    //header gestao geral
                     ['label' => 'Gestão Geral', 'header' => true],
-                    ['label' => 'Adicionar Fornecedores', 'url' => ['fornecedor/index'],
+
+                    //fornecedores
+                    ['label' => 'Vista Fornecedores', 'url' => ['fornecedor/index'],
                         'visible' => Yii::$app->user->can('viewfornecedor'),
                     ],
+
+                    //lojas
+                    ['label' => 'Vista Lojas', 'url' => ['loja/index'],
+                        'visible' => Yii::$app->user->can('viewloja')
+                    ],
+
 
                     [
                         'label' => 'Level1',
