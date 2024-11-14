@@ -17,10 +17,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c25c377d-7980-4a0f-9c3a-00c80bacbdfc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php-test-framework.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php-test-framework.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smartmobile.sql" beforeDir="false" afterPath="$PROJECT_DIR$/smartmobile.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,7 +247,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "CRUD-Fornecedores",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/wamp64/www/AMAI-plataformas",
     "node.js.detected.package.eslint": "true",
@@ -266,8 +263,11 @@
       <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\views\site" />
       <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\views\layouts" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\views" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Codeception.Main">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="SmartMobileAndroid.app.main" />
       <option name="DEPLOY" value="true" />
@@ -356,7 +356,7 @@
       <updated>1730129167330</updated>
       <workItem from="1730729495127" duration="11324000" />
       <workItem from="1731001750361" duration="5870000" />
-      <workItem from="1731498470991" duration="40833000" />
+      <workItem from="1731498470991" duration="44787000" />
     </task>
     <servers />
   </component>

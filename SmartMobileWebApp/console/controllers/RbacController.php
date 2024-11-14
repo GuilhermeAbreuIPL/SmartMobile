@@ -97,6 +97,29 @@ class RbacController extends Controller
         $auth->addChild($admin, $deleteGestor);
         $auth->addChild($admin, $viewGestor);
 
+        //---------------------- Permissões Fornecedores --------------------------------
+        $createFornecedor = $auth->createPermission('createFornecedor');
+        $createFornecedor->description = 'Criar Fornecedor';
+        $auth->add($createFornecedor);
+
+        $updateFornecedor = $auth->createPermission('updateFornecedor');
+        $updateFornecedor->description = 'Atualizar Fornecedor';
+        $auth->add($updateFornecedor);
+
+        $deleteFornecedor = $auth->createPermission('deleteFornecedor');
+        $deleteFornecedor->description = 'Remover Fornecedor';
+        $auth->add($deleteFornecedor);
+
+        $viewFornecedor = $auth->createPermission('viewFornecedor');
+        $viewFornecedor->description = 'Ver Fornecedor';
+        $auth->add($viewFornecedor);
+
+        //Permissões para fornecedores
+        $auth->addChild($gestor, $createFornecedor);
+        $auth->addChild($gestor, $updateFornecedor);
+        $auth->addChild($gestor, $deleteFornecedor);
+        $auth->addChild($gestor, $viewFornecedor);
+
         //---------------------- Permissões Lojas --------------------------------
         $createLoja = $auth->createPermission('createLoja');
         $createLoja->description = 'Criar Loja';

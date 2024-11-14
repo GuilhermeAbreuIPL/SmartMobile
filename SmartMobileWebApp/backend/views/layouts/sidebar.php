@@ -59,6 +59,11 @@
 
                     ['label' => 'Gerir Contas', 'visible' => Yii::$app->user->can('funcionario')],
 
+                    ['label' => 'Gestão Geral', 'header' => true],
+                    ['label' => 'Adicionar Fornecedores', 'url' => ['fornecedor/index'],
+                        'visible' => Yii::$app->user->can('viewfornecedor'),
+                    ],
+
                     [
                         'label' => 'Level1',
                         'items' => [
