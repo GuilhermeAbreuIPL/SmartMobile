@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use backend\models\UserForm;
+use common\models\User;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -32,6 +34,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['admin', 'gestor', 'funcionario'],
+                    ]
                 ],
             ],
             'verbs' => [
@@ -83,6 +90,8 @@ class SiteController extends Controller
             return $this->goBack();
         }
 
+
+
         $model->password = '';
 
         return $this->render('login', [
@@ -100,5 +109,44 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+
+
+    public function actionSignup()
+    {
+
+        $model = new UserForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->createUser()) {
+
+            $auth = Yii::$app->authManager;
+
+
+            $gestor = $auth->getRole('gestor');
+            $funcionario = $auth->getRole('funcionario');
+            $cliente = $auth->getRole('cliente');
+
+
+
+            // Verifica se o usuário logado tem permissão para criar esta role específica
+            if (!Yii::$app->user->can('create' . $model->role)) {
+                Yii::$app->session->setFlash('error', 'Você não tem permissão para criar este tipo de conta.');
+                return $this->redirect(['site/index']);
+            }
+
+
+            if ($model->createUser()) {
+                Yii::$app->session->setFlash('success', 'Utilizador criado com sucesso.');
+                return $this->redirect(['site/index']);
+            }
+
+
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+
     }
 }

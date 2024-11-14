@@ -37,14 +37,30 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-/*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-*/
+    ],
+    'as access' => [
+        'class' => yii\filters\AccessControl::class,
+        'rules' => [
+            [
+                'actions' => ['login', 'error'],
+                'allow' => true,
+            ],
+            [
+                'allow' => true,
+                'roles' => ['viewbackend'],
+            ],
+        ],
+        'denyCallback' => function ($rule, $action) {
+            Yii::$app->user->logout();
+            return Yii::$app->response->redirect(['site/login']);
+        },
     ],
     'params' => $params,
 ];

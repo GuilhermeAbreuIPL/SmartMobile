@@ -29,6 +29,15 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public static function findRole()
+    {
+        $auth = Yii::$app->authManager;
+        $roles = $auth->getRolesByUser(Yii::$app->user->id);
+        return !empty($roles) ? array_keys($roles)[0] : null;
+    }
+
+
+    // isto serve para que o Yii saiba qual é a role do utilizador no site inteiro
 
     /**
      * {@inheritdoc}
@@ -54,7 +63,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
@@ -62,6 +71,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);

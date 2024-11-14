@@ -50,7 +50,15 @@
                     ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
                     ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
                     ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
-                    ['label' => 'Produtos'], //Alterei aqui.
+
+                    //Gestao de Contas e Roles
+                    ['label' => 'Gestão Roles', 'header' => true],
+                    ['label' => 'Adicionar Roles', 'url' => ['site/signup'],
+                        'visible' => Yii::$app->user->can('viewGestor') || Yii::$app->user->can('viewFuncionario') || Yii::$app->user->can('viewCliente')
+                    ],
+
+                    ['label' => 'Gerir Contas', 'visible' => Yii::$app->user->can('funcionario')],
+
                     [
                         'label' => 'Level1',
                         'items' => [

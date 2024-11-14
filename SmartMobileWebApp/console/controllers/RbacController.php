@@ -1,4 +1,6 @@
 <?php
+
+
 namespace console\controllers;
 
 use Yii;
@@ -24,28 +26,6 @@ class RbacController extends Controller
         $cliente = $auth->createRole('cliente');
         $auth->add($cliente);
 
-        //---------------------- Permissões Criar contas de gestor --------------------------------
-        $createGestor = $auth->createPermission('createGestor');
-        $createGestor->description = 'Criar Gestor';
-        $auth->add($createGestor);
-
-        $updateGestor = $auth->createPermission('updateGestor');
-        $updateGestor->description = 'Atualizar Gestor';
-        $auth->add($updateGestor);
-
-        $deleteGestor = $auth->createPermission('deleteGestor');
-        $deleteGestor->description = 'Deletar Gestor';
-        $auth->add($deleteGestor);
-
-        $viewGestor = $auth->createPermission('viewGestor');
-        $viewGestor->description = 'Visualizar Gestor';
-        $auth->add($viewGestor);
-
-        //Permições para gestores
-        $auth->addChild($admin, $createGestor);
-        $auth->addChild($admin, $updateGestor);
-        $auth->addChild($admin, $deleteGestor);
-        $auth->addChild($admin, $viewGestor);
 
         //---------------------- Permissões Criar contas de funcionario --------------------------------
         $createFuncionario = $auth->createPermission('createFuncionario');
@@ -57,18 +37,65 @@ class RbacController extends Controller
         $auth->add($updateFuncionario);
 
         $deleteFuncionario = $auth->createPermission('deleteFuncionario');
-        $deleteFuncionario->description = 'Deletar Funcionario';
+        $deleteFuncionario->description = 'Remover Funcionario';
         $auth->add($deleteFuncionario);
 
         $viewFuncionario = $auth->createPermission('viewFuncionario');
-        $viewFuncionario->description = 'Visualizar Funcionario';
+        $viewFuncionario->description = 'Ver Funcionario';
         $auth->add($viewFuncionario);
 
-        //Permições para funcionarios
+        //Permissões para funcionarios
         $auth->addChild($gestor, $createFuncionario);
         $auth->addChild($gestor, $updateFuncionario);
         $auth->addChild($gestor, $deleteFuncionario);
         $auth->addChild($gestor, $viewFuncionario);
+
+        //---------------------- Permissões Criar contas de cliente --------------------------------
+        $createCliente = $auth->createPermission('createCliente');
+        $createCliente->description = 'Criar Cliente';
+        $auth->add($createCliente);
+
+        $updateCliente = $auth->createPermission('updateCliente');
+        $updateCliente->description = 'Atualizar Cliente';
+        $auth->add($updateCliente);
+
+        $deleteCliente = $auth->createPermission('deleteCliente');
+        $deleteCliente->description = 'Remover Cliente';
+        $auth->add($deleteCliente);
+
+        $viewCliente = $auth->createPermission('viewCliente');
+        $viewCliente->description = 'Ver Cliente';
+        $auth->add($viewCliente);
+
+        //Permissões para clientes
+        $auth->addChild($funcionario, $createCliente);
+        $auth->addChild($funcionario, $updateCliente);
+        $auth->addChild($gestor, $deleteCliente);
+        $auth->addChild($funcionario, $viewCliente);
+
+
+        //---------------------- Permissões Criar contas de gestor --------------------------------
+        $createGestor = $auth->createPermission('createGestor');
+        $createGestor->description = 'Criar Gestor';
+        $auth->add($createGestor);
+
+        $updateGestor = $auth->createPermission('updateGestor');
+        $updateGestor->description = 'Atualizar Gestor';
+        $auth->add($updateGestor);
+
+        $deleteGestor = $auth->createPermission('deleteGestor');
+        $deleteGestor->description = 'Remover Gestor';
+        $auth->add($deleteGestor);
+
+        $viewGestor = $auth->createPermission('viewGestor');
+        $viewGestor->description = 'Ver Gestor';
+        $auth->add($viewGestor);
+
+        //Permissões para gestores
+        $auth->addChild($admin, $createGestor);
+        $auth->addChild($admin, $updateGestor);
+        $auth->addChild($admin, $deleteGestor);
+        $auth->addChild($admin, $viewGestor);
 
         //---------------------- Permissões Lojas --------------------------------
         $createLoja = $auth->createPermission('createLoja');
@@ -80,14 +107,14 @@ class RbacController extends Controller
         $auth->add($updateLoja);
 
         $deleteLoja = $auth->createPermission('deleteLoja');
-        $deleteLoja->description = 'Deletar Loja';
+        $deleteLoja->description = 'Remover Loja';
         $auth->add($deleteLoja);
 
         $viewLoja = $auth->createPermission('viewLoja');
-        $viewLoja->description = 'Visualizar Loja';
+        $viewLoja->description = 'Ver Loja';
         $auth->add($viewLoja);
 
-        //Permições para lojas
+        //Permissões para lojas
         $auth->addChild($gestor, $createLoja);
         $auth->addChild($gestor, $updateLoja);
         $auth->addChild($gestor, $deleteLoja);
@@ -103,10 +130,10 @@ class RbacController extends Controller
         $auth->add($removeStock);
 
         $viewStock = $auth->createPermission('viewStock');
-        $viewStock->description = 'Visualizar Stock';
+        $viewStock->description = 'Ver Stock';
         $auth->add($viewStock);
 
-        //Permições para stock
+        //Permissões para stock
         $auth->addChild($funcionario, $addStock);
         $auth->addChild($gestor, $removeStock);
         $auth->addChild($funcionario, $viewStock);
@@ -121,14 +148,14 @@ class RbacController extends Controller
         $auth->add($updatePromocao);
 
         $deletePromocao = $auth->createPermission('deletePromocao');
-        $deletePromocao->description = 'Deletar Promoção';
+        $deletePromocao->description = 'Remover Promoção';
         $auth->add($deletePromocao);
 
         $viewPromocao = $auth->createPermission('viewPromocao');
-        $viewPromocao->description = 'Visualizar Promoção';
+        $viewPromocao->description = 'Ver Promoção';
         $auth->add($viewPromocao);
 
-        //Permições para promoções
+        //Permissões para promoções
         $auth->addChild($admin, $createPromocao);
         $auth->addChild($admin, $updatePromocao);
         $auth->addChild($admin, $deletePromocao);
@@ -148,14 +175,14 @@ class RbacController extends Controller
         $auth->add($deleteOrder);
 
         $viewOwnOrders = $auth->createPermission('viewOwnOrders');
-        $viewOwnOrders->description = 'Visualizar as suas encomendas';
+        $viewOwnOrders->description = 'Ver as suas encomendas';
         $auth->add($viewOwnOrders);
 
         $viewAllOrders = $auth->createPermission('viewAllOrders');
-        $viewAllOrders->description = 'Visualizar todas as encomendas';
+        $viewAllOrders->description = 'Ver todas as encomendas';
         $auth->add($viewAllOrders);
 
-        //Permições para encomendas
+        //Permissões para encomendas
         $auth->addChild($cliente, $createOrder);
         $auth->addChild($funcionario, $statusOrder);
         $auth->addChild($funcionario, $deleteOrder);
@@ -173,14 +200,14 @@ class RbacController extends Controller
         $auth->add($updateCategoria);
 
         $deleteCategoria = $auth->createPermission('deleteCategoria');
-        $deleteCategoria->description = 'Deletar Categoria';
+        $deleteCategoria->description = 'Remover Categoria';
         $auth->add($deleteCategoria);
 
         $viewCategoria = $auth->createPermission('viewCategoria');
-        $viewCategoria->description = 'Visualizar Categoria';
+        $viewCategoria->description = 'Ver Categoria';
         $auth->add($viewCategoria);
 
-        //Permições para categorias
+        //Permissões para categorias
         $auth->addChild($gestor, $createCategoria);
         $auth->addChild($gestor, $updateCategoria);
         $auth->addChild($gestor, $deleteCategoria);
@@ -197,10 +224,10 @@ class RbacController extends Controller
         $auth->add($updateProduto);
 
         $deleteProduto = $auth->createPermission('deleteProduto');
-        $deleteProduto->description = 'Deletar Produto';
+        $deleteProduto->description = 'Remover Produto';
         $auth->add($deleteProduto);
 
-        //permições para produtos
+        //permissões para produtos
         $auth->addChild($gestor, $createProduto);
         $auth->addChild($gestor, $updateProduto);
         $auth->addChild($gestor, $deleteProduto);
@@ -216,14 +243,14 @@ class RbacController extends Controller
         $auth->add($updateMetodoPagamento);
 
         $deleteMetodoPagamento = $auth->createPermission('deleteMetodoPagamento');
-        $deleteMetodoPagamento->description = 'Deletar Metodo de Pagamento';
+        $deleteMetodoPagamento->description = 'Remover Metodo de Pagamento';
         $auth->add($deleteMetodoPagamento);
 
         $viewMetodoPagamento = $auth->createPermission('viewMetodoPagamento');
-        $viewMetodoPagamento->description = 'Visualizar Metodo de Pagamento';
+        $viewMetodoPagamento->description = 'Ver Metodo de Pagamento';
         $auth->add($viewMetodoPagamento);
 
-        //Permições para metodos de pagamento
+        //Permissões para metodos de pagamento
         $auth->addChild($admin, $createMetodoPagamento);
         $auth->addChild($admin, $updateMetodoPagamento);
         $auth->addChild($admin, $deleteMetodoPagamento);
@@ -239,14 +266,14 @@ class RbacController extends Controller
         $auth->add($updateMetodoEntrega);
 
         $deleteMetodoEntrega = $auth->createPermission('deleteMetodoEntrega');
-        $deleteMetodoEntrega->description = 'Deletar Metodo de Entrega';
+        $deleteMetodoEntrega->description = 'Remover Metodo de Entrega';
         $auth->add($deleteMetodoEntrega);
 
         $viewMetodoEntrega = $auth->createPermission('viewMetodoEntrega');
-        $viewMetodoEntrega->description = 'Visualizar Metodo de Entrega';
+        $viewMetodoEntrega->description = 'Ver Metodo de Entrega';
         $auth->add($viewMetodoEntrega);
 
-        //Permições para metodos de entrega
+        //Permissões para metodos de entrega
         $auth->addChild($admin, $createMetodoEntrega);
         $auth->addChild($admin, $updateMetodoEntrega);
         $auth->addChild($admin, $deleteMetodoEntrega);
@@ -254,7 +281,7 @@ class RbacController extends Controller
 
         //---------------------- Permissões Perfis --------------------------------
         $viewMyProfile = $auth->createPermission('viewMyProfile');
-        $viewMyProfile->description = 'Visualizar o seu perfil';
+        $viewMyProfile->description = 'Ver o seu perfil';
         $auth->add($viewMyProfile);
 
         $updateMyProfile = $auth->createPermission('updateMyProfile');
@@ -262,15 +289,15 @@ class RbacController extends Controller
         $auth->add($updateMyProfile);
 
         $deleteMyProfile = $auth->createPermission('deleteMyProfile');
-        $deleteMyProfile->description = 'Deletar o seu perfil';
+        $deleteMyProfile->description = 'Remover o seu perfil';
         $auth->add($deleteMyProfile);
 
         $viewAllProfiles = $auth->createPermission('viewAllProfiles');
-        $viewAllProfiles->description = 'Visualizar todos os perfis';
+        $viewAllProfiles->description = 'Ver todos os perfis';
         $auth->add($viewAllProfiles);
 
         $deleteAllProfiles = $auth->createPermission('deleteAllProfiles');
-        $deleteAllProfiles->description = 'Deletar todos os perfis';
+        $deleteAllProfiles->description = 'Remover todos os perfis';
         $auth->add($deleteAllProfiles);
 
         //Permissões para perfis
@@ -294,14 +321,22 @@ class RbacController extends Controller
         $auth->add($removeFromCart);
 
         $viewCart = $auth->createPermission('viewCart');
-        $viewCart->description = 'Visualizar Carrinho';
+        $viewCart->description = 'Ver Carrinho';
         $auth->add($viewCart);
 
-        //Permições para o carrinho
+        //Permissões para o carrinho
         $auth->addChild($cliente, $addToCart);
         $auth->addChild($cliente, $editQuantityOnCart);
         $auth->addChild($cliente, $removeFromCart);
         $auth->addChild($cliente, $viewCart);
+
+        //---------------------- Permissões para ver Backend --------------------------------
+        $viewBackend = $auth->createPermission('viewBackend');
+        $viewBackend->description = 'Ver Backend';
+        $auth->add($viewBackend);
+
+        //Permissões para ver o backend
+        $auth->addChild($funcionario, $viewBackend);
 
         //---------------------- Finalizações --------------------------------
 
@@ -313,3 +348,4 @@ class RbacController extends Controller
         $auth->assign($admin, 1);
     }
 }
+
