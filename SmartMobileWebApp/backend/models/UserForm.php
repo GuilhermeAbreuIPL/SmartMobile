@@ -94,4 +94,5 @@ class UserForm extends Model
         $auth->assign($userRole, $user->id);
         return true;
     }
+
 }

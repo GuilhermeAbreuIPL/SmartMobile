@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\UserForm;
+use backend\models\UserSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -13,7 +14,13 @@ class UserController extends Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionCreate(){

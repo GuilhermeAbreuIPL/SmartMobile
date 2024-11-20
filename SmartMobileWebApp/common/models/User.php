@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use backend\models\AuthAssignment;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -213,8 +214,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     //relacionamento com a tabela userprofiles
-    public function getUserprofiles()
+    public function getUserprofile()
     {
-        return $this->hasOne(Userprofiles::class, ['id' => 'id']);
+        return $this->hasOne(Userprofile::class, ['id' => 'id']);
+    }
+
+    //relacionamento com a tabela auth_assignment com o objetivo de conseguir ver a role do user
+    public function getAuth()
+    {
+        return $this->hasOne(AuthAssignment::class, ['user_id' => 'id']);
     }
 }
