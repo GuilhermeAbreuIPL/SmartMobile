@@ -10,6 +10,7 @@ use common\models\Userprofile;
 class UserForm extends Model
 {
     //Campos do user
+    public $id;
     public $username;
     public $email;
     public $password;
@@ -21,6 +22,8 @@ class UserForm extends Model
 
     //Campo Role
     public $role;
+
+
 
 
     /**
@@ -92,6 +95,46 @@ class UserForm extends Model
         $auth = \Yii::$app->authManager;
         $userRole = $auth->getRole($this->role);
         $auth->assign($userRole, $user->id);
+        return true;
+    }
+
+
+    public function update($user, $profile)
+    {
+        /*if (!$this->validate()) {
+            return null;
+        }*/
+
+
+        // Atualizar dados do utilizador
+        $user->username = $this->username;
+        $user->email = $this->email;
+
+        // Se a password for alterada, define-a
+        if (!empty($this->password)) {
+            $user->setPassword($this->password);
+        }
+
+        if (!$user->save()) {
+            return null;
+        }
+
+        // Atualizar dados do perfil
+        $profile->nome = $this->nome;
+        $profile->nif = $this->nif;
+        $profile->telemovel = $this->telemovel;
+
+        if (!$profile->save()) {
+            return null;
+        }
+
+
+        // Atualizar role
+        $auth = \Yii::$app->authManager;
+        $auth->revokeAll($user->id);
+        $userRole = $auth->getRole($this->role);
+        $auth->assign($userRole, $user->id);
+
         return true;
     }
 

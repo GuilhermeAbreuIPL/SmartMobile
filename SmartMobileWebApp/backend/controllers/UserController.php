@@ -4,10 +4,13 @@ namespace backend\controllers;
 
 use backend\models\UserForm;
 use backend\models\UserSearch;
+use common\models\User;
+use common\models\Userprofile;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class UserController extends Controller
@@ -32,6 +35,46 @@ class UserController extends Controller
             return $this->redirect(['site/index']);
         }
 
+            $roles = $this->getAvailableRoles();
+
+            return $this->render('create', [
+            'model' => $model,
+            'roles' => $roles,
+        ]);
+    }
+
+    public function actionUpdate($id)
+    {
+        $user = User::findOne($id);
+        $profile = Userprofile::findOne(['id' => $id]);
+
+        if (!$user || !$profile) {
+            throw new NotFoundHttpException('Utilizador não encontrado.');
+        }
+
+        $model = new UserForm();
+        $model->setAttributes(array_merge($user->attributes, $profile->attributes));
+        $model->role = \Yii::$app->authManager->getRolesByUser($id)
+            ? array_keys(\Yii::$app->authManager->getRolesByUser($id))[0]
+            : null;
+
+        //ele chega aqui mas o model update vem null
+        if ($model->load(\Yii::$app->request->post()) && $model->update($user, $profile)) {
+            return $this->redirect(['site/index']);
+        }
+
+
+        $roles = $this->getAvailableRoles();
+
+        return $this->render('update', [
+            'model' => $model,
+            'roles' => $roles,
+        ]);
+    }
+
+
+    protected function getAvailableRoles()
+    {
         $roles = [];
         if (Yii::$app->user->can('creategestor')) {
             $roles = [
@@ -44,16 +87,22 @@ class UserController extends Controller
                 'funcionario' => 'Funcionario',
                 'cliente' => 'Cliente'
             ];
-        } elseif (Yii::$app->user->can('createcliente')){
+        } elseif (Yii::$app->user->can('createcliente')) {
             $roles = [
                 'cliente' => 'Cliente'
             ];
         }
-
-            return $this->render('create', [
-            'model' => $model,
-            'roles' => $roles,
-        ]);
+        return $roles;
     }
 
+
+
+    protected function findModel($id)
+    {
+        if (($model = User::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 }

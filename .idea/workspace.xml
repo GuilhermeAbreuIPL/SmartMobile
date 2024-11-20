@@ -264,7 +264,7 @@
       <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\views\layouts" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Codeception.Main">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="SmartMobileAndroid.app.main" />
       <option name="DEPLOY" value="true" />
@@ -354,6 +354,7 @@
       <workItem from="1730729495127" duration="11324000" />
       <workItem from="1731001750361" duration="2739000" />
       <workItem from="1732119430549" duration="5657000" />
+      <workItem from="1732140410031" duration="679000" />
     </task>
     <servers />
   </component>
