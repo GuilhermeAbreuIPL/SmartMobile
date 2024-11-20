@@ -54,7 +54,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            //alterado para que o user tenha sempre o status 10
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
@@ -209,5 +210,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    //relacionamento com a tabela userprofiles
+    public function getUserprofiles()
+    {
+        return $this->hasOne(Userprofiles::class, ['id' => 'id']);
     }
 }
