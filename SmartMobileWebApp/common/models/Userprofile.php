@@ -22,6 +22,14 @@ class Userprofile extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+    //rules para senarios
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['update'] = ['nome', 'nif', 'telemovel']; // Atributos permitidos no update
+        return $scenarios;
+    }
     public static function tableName()
     {
         return 'userprofiles';

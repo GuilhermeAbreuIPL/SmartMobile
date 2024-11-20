@@ -34,6 +34,15 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+
+    //rules para cenarios
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['update'] = ['username', 'email'];
+        return $scenarios;
+    }
+
     public static function tableName()
     {
         return '{{%user}}';

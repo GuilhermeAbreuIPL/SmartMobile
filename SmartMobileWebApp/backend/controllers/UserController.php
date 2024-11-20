@@ -52,6 +52,10 @@ class UserController extends Controller
             throw new NotFoundHttpException('Utilizador não encontrado.');
         }
 
+        //chamar os cenarios
+        $user->scenario = 'update';
+        $profile->scenario = 'update';
+
         $model = new UserForm();
         $model->setAttributes(array_merge($user->attributes, $profile->attributes));
         $model->role = \Yii::$app->authManager->getRolesByUser($id)
@@ -60,7 +64,7 @@ class UserController extends Controller
 
         //ele chega aqui mas o model update vem null
         if ($model->load(\Yii::$app->request->post()) && $model->update($user, $profile)) {
-            return $this->redirect(['site/index']);
+            return $this->redirect(['user/index']);
         }
 
 
@@ -105,4 +109,38 @@ class UserController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionDelete($id)
+    {
+        $user = User::findOne($id);
+        $profile = Userprofile::findOne(['id' => $id]);
+
+        if (!$user || !$profile) {
+            throw new NotFoundHttpException('Utilizador não encontrado.');
+        }
+
+        $transaction = \Yii::$app->db->beginTransaction();
+
+        try {
+            $auth = \Yii::$app->authManager;
+            $auth->revokeAll($user->id);
+
+            if (!$profile->delete()) {
+                throw new \Exception('Erro ao apagar Userprofile.');
+            }
+
+            if (!$user->delete()) {
+                throw new \Exception('Erro ao apagar User.');
+            }
+
+            $transaction->commit();
+            \Yii::$app->session->setFlash('success', 'Utilizador apagado com sucesso.');
+        } catch (\Exception $e) {
+            $transaction->rollBack(); 
+            \Yii::$app->session->setFlash('error', 'Erro ao apagar o utilizador: ' . $e->getMessage());
+        }
+
+        return $this->redirect(['user/index']);
+    }
+
 }
