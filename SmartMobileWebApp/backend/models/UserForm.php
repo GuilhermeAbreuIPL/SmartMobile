@@ -19,6 +19,9 @@ class UserForm extends Model
     public $nif;
     public $telemovel;
 
+    //Campo Role
+    public $role;
+
 
     /**
      * {@inheritdoc}
@@ -41,10 +44,15 @@ class UserForm extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
+
             //Campos do userprofile
-            ['nome', 'required'],
-            ['nif', 'required'],
-            ['telemovel', 'required'],
+            ['nome', 'required', 'message' => 'O nome é obrigatório'],
+            ['nome', 'string', 'max' => 45],
+            ['nif', 'required', 'message' => 'O NIF é obrigatório'],
+            ['telemovel', 'required', 'message' => 'O numero de telemóvel é obrigatório'],
+
+            //Campo Role
+            ['role', 'required'],
         ];
     }
 
@@ -79,8 +87,11 @@ class UserForm extends Model
             return null;
         }
 
-        //TODO: Adicionar código para adicionar a role
+        //Atribuição da role funcional.
 
+        $auth = \Yii::$app->authManager;
+        $userRole = $auth->getRole($this->role);
+        $auth->assign($userRole, $user->id);
         return true;
     }
 }
