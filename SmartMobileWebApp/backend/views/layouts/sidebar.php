@@ -50,7 +50,8 @@
                     ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
                     ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
                     ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
-                    ['label' => 'Produtos'], //Alterei aqui.
+                    ['label' => 'Produtos', 'url' => ['user/create']], //Alterei aqui.
+
                     [
                         'label' => 'Level1',
                         'items' => [
