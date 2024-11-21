@@ -14,6 +14,9 @@ use yii\grid\GridView;
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 
+// Guarda que este foi o ultimo url
+Yii::$app->session->set('lastUrl', Yii::$app->request->url);
+
 ?>
 
 <div class="user-index">
@@ -23,6 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create User', ['user/create'], ['class' => 'btn btn-success']) ?>
     </p>
+
+    <?php if (Yii::$app->session->hasFlash('error')): ?>
+        <div class="alert alert-danger">
+            <?= Yii::$app->session->getFlash('error') ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <div class="alert alert-success">
+            <?= Yii::$app->session->getFlash('success') ?>
+        </div>
+    <?php endif; ?>
+
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
