@@ -15,6 +15,38 @@ use yii\web\Response;
 
 class UserController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    // Regra para ações relacionadas à gestão de users
+                    [
+                        'allow' => true,
+                        'actions' => ['update', 'delete'],
+                        'roles' => ['admin', 'gestor'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create'],
+                        'roles' => ['admin', 'gestor', 'funcionario'],
+                    ],
+                ],
+                'denyCallback' => function ($rule, $action) {
+                    throw new \yii\web\ForbiddenHttpException('Você não tem permissão para acessar esta página.');
+                },
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
+    }
+
+
     public function actionIndex()
     {
         $searchModel = new UserSearch();
@@ -70,6 +102,9 @@ class UserController extends Controller
         $user = User::findOne($id);
         $profile = Userprofile::findOne(['id' => $id]);
 
+        // Guarda que este foi o último URL
+        $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
+
         if (!$user || !$profile) {
             throw new NotFoundHttpException('Utilizador não encontrado.');
         }
@@ -84,47 +119,37 @@ class UserController extends Controller
             ? array_keys(\Yii::$app->authManager->getRolesByUser($id))[0]
             : null;
 
-        $currentUserRole = array_keys(\Yii::$app->authManager->getRolesByUser(Yii::$app->user->id))[0] ?? null;
+        // Obter a role do user a ser editado
+        $targetUserRole = array_keys(\Yii::$app->authManager->getRolesByUser($id))[0] ?? null;
 
-        // Restrições de acesso
-        if ($currentUserRole === 'funcionario') {
-            // Funcionários não podem editar ninguém
-            Yii::$app->session->setFlash('error', 'Funcionários não têm permissão para editar utilizadores.');
-            $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
+        // Verifica se o user tem uma role atribuída
+        if (!$targetUserRole) {
+            Yii::$app->session->setFlash('error', 'O user não tem uma role atribuída.');
             return $this->redirect($lastUrl);
         }
 
-        if ($currentUserRole === 'gestor') {
-            // Gestores só podem editar funcionários
-            if ($model->role !== 'funcionario') {
-                Yii::$app->session->setFlash('error', 'Gestores só podem editar users com a role Funcionário.');
-                $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
-                return $this->redirect($lastUrl);
-            }
+        // Permissões para editar
+        $permissions = [
+            'funcionario' => 'updateFuncionario',
+            'gestor' => 'updateGestor',
+        ];
+
+        // Verificar permissão
+        if (isset($permissions[$targetUserRole]) && !Yii::$app->user->can($permissions[$targetUserRole])) {
+            Yii::$app->session->setFlash('error', "Não tens permissão para editar a role {$targetUserRole}.");
+            return $this->redirect($lastUrl);
         }
 
-        if ($currentUserRole === 'admin') {
-            // Admins só podem editar Admin, Gestor e Funcionário
-            if (!in_array($model->role, ['admin', 'gestor', 'funcionario'])) {
-                Yii::$app->session->setFlash('error', 'Admins só podem editar Admins, Gestores ou Funcionários.');
-                $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
-                return $this->redirect($lastUrl);
-            }
+        if ($targetUserRole === 'admin' || $targetUserRole === 'cliente') {
+            Yii::$app->session->setFlash('error', 'O cliente e o admin não podem ser editados.');
+            return $this->redirect($lastUrl);
         }
 
-        // Impedir mudanças de role de admin para outro papel
-        if ($model->role === 'admin' && $currentUserRole === 'admin') {
-            $roles = [
-                'admin' => 'Admin', // Admins só podem manter a role como "Admin"
-            ];
-        } else {
-            $roles = $this->getAvailableRoles();
-        }
+        $roles = $this->getAvailableRoles();
 
         // Atualizar os dados se forem válidos
         if ($model->load(Yii::$app->request->post()) && $model->update($user, $profile)) {
             Yii::$app->session->setFlash('success', 'Dados atualizados com sucesso!');
-            $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
             return $this->redirect($lastUrl);
         }
 
@@ -133,6 +158,7 @@ class UserController extends Controller
             'roles' => $roles,
         ]);
     }
+
 
 
 
@@ -174,35 +200,36 @@ class UserController extends Controller
         $user = User::findOne($id);
         $profile = Userprofile::findOne(['id' => $id]);
 
+        // Guarda que este foi o ultimo url
+        $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
+
         if (!$user || !$profile) {
             throw new NotFoundHttpException('Utilizador não encontrado.');
         }
 
-        // Obter a role do utilizador atual e do utilizador a ser apagado
-        $currentUserRole = array_keys(\Yii::$app->authManager->getRolesByUser(Yii::$app->user->id))[0] ?? null;
         $targetUserRole = array_keys(\Yii::$app->authManager->getRolesByUser($id))[0] ?? null;
-
-        // Restrições de exclusão
-        if ($currentUserRole === 'funcionario') {
-            Yii::$app->session->setFlash('error', 'Funcionários não têm permissão para apagar utilizadores.');
-            $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
+        //ve se existe uma role atribuida ao user
+        if (!$targetUserRole) {
+            Yii::$app->session->setFlash('error', 'O user não tem uma role atribuída.');
             return $this->redirect($lastUrl);
         }
 
-        if ($currentUserRole === 'gestor') {
-            if (in_array($targetUserRole, ['admin', 'gestor'])) {
-                Yii::$app->session->setFlash('error', 'Gestores não podem apagar Admins ou outros Gestores.');
-                $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
-                return $this->redirect($lastUrl);
-            }
+        // Verificar permissões
+        $permissions = [
+            'cliente' => 'deleteCliente',
+            'funcionario' => 'deleteFuncionario',
+            'gestor' => 'deleteGestor',
+        ];
+
+        if (isset($permissions[$targetUserRole]) && !Yii::$app->user->can($permissions[$targetUserRole])) {
+            Yii::$app->session->setFlash('error', "Não tens permissão para apagar a role {$targetUserRole}.");
+            return $this->redirect($lastUrl);
         }
 
-        if ($currentUserRole === 'admin') {
-            if ($targetUserRole === 'admin') {
-                Yii::$app->session->setFlash('error', 'Admins não podem apagar outros Admins.');
-                $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
-                return $this->redirect($lastUrl);
-            }
+        // Caso para Admin
+        if ($targetUserRole === 'admin') {
+            Yii::$app->session->setFlash('error', 'Admins não podem ser apagados.');
+            return $this->redirect($lastUrl);
         }
 
         // Iniciar transação para apagar o utilizador
@@ -230,11 +257,7 @@ class UserController extends Controller
             Yii::$app->session->setFlash('error', 'Erro ao apagar o utilizador: ' . $e->getMessage());
         }
 
-        // Vai para a última página visitada
-        $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']); // Default para 'index' se não houver URL
         return $this->redirect($lastUrl);
     }
-
-
 
 }

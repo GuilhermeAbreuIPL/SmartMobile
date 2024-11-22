@@ -1,21 +1,22 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="<?=$assetDir?>/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
-    </a>
 
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+            <div class="brand-link">
+                <img src="<?= Yii::$app->request->baseUrl ?>/img/smartmobile_logo.png" alt="SmartMobile Logo" class="brand-image" style="opacity: .8; height: 40px;">
             </div>
-            <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+            <div class="info mt-2 d-flex align-items-center">
+                <!-- Imagem KEKW ajustada para o mesmo tamanho da logo -->
+                <img src="<?= Yii::$app->request->baseUrl ?>/img/kekw_image.png" alt="KEKW" class="img-circle mr-2" style="height: 40px; width: 40px;">
+                <!-- Nome do usuário sem a tag <a>, com texto branco -->
+                <span class="d-block" style="font-size: 16px; font-weight: 600; color: #c2c7d0; margin-left: 10px;"><?= Yii::$app->user->identity->userprofile->nome ?></span>
             </div>
         </div>
+
+
+
 
         <!-- SidebarSearch Form -->
         <!-- href be escaped -->
@@ -35,44 +36,44 @@
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
-                    [
-                        'label' => 'Starter Pages',
-                        'icon' => 'tachometer-alt',
-                        'badge' => '<span class="right badge badge-info">2</span>',
-                        'items' => [
-                            ['label' => 'Active Page', 'url' => ['site/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Inactive Page', 'iconStyle' => 'far'],
-                        ]
-                    ],
-                    ['label' => 'Simple Link', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],
-                    ['label' => 'Yii2 PROVIDED', 'header' => true],
-                    ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
-                    ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
-                    ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
-                    ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
-                    ['label' => 'Produtos', 'url' => ['user/index']], //Alterei aqui.
+                    //header dashboard
+                    ['label' => 'Dashboard', 'header' => true],
+                    ['label' => 'Smart Mobile', 'icon' => 'tachometer-alt', 'url' => ['site/index']],
 
                     [
-                        'label' => 'Level1',
+                        'label' => 'Feramentas Yii2',
+                        'icon' => 'tools',
                         'items' => [
-                            ['label' => 'Level2', 'iconStyle' => 'far'],
-                            [
-                                'label' => 'Level2',
-                                'iconStyle' => 'far',
-                                'items' => [
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle']
-                                ]
-                            ],
-                            ['label' => 'Level2', 'iconStyle' => 'far']
+                            ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
+                            ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
                         ]
                     ],
-                    ['label' => 'Level1'],
-                    ['label' => 'LABELS', 'header' => true],
-                    ['label' => 'Important', 'iconStyle' => 'far', 'iconClassAdded' => 'text-danger'],
-                    ['label' => 'Warning', 'iconClass' => 'nav-icon far fa-circle text-warning'],
-                    ['label' => 'Informational', 'iconStyle' => 'far', 'iconClassAdded' => 'text-info'],
+
+                    //Gestao de Contas e Roles
+                    ['label' => 'Gestão Roles', 'header' => true],
+                    ['label' => 'Gerir Contas', 'url' => ['user/index'],
+                        'visible' => Yii::$app->user->can('viewallprofiles')
+                    ],
+
+                    //header gestao geral
+                    ['label' => 'Gestão Geral', 'header' => true],
+
+                    //fornecedores
+                    ['label' => 'Vista Fornecedores', 'url' => ['fornecedor/index'],
+                        'visible' => Yii::$app->user->can('viewfornecedor'),
+                    ],
+
+                    //lojas
+                    ['label' => 'Vista Lojas', 'url' => ['loja/index'],
+                        'visible' => Yii::$app->user->can('viewloja')
+                    ],
+
+                    //header gestao produtos
+                    ['label' => 'Gestão Produtos', 'header' => true],
+                    ['label' => 'Vista Produtos', 'url' => ['produto/index'] /*prems aqui*/],
+
+
+
                 ],
             ]);
             ?>

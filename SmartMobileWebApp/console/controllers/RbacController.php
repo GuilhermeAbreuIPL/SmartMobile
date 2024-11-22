@@ -55,10 +55,6 @@ class RbacController extends Controller
         $createCliente->description = 'Criar Cliente';
         $auth->add($createCliente);
 
-        $updateCliente = $auth->createPermission('updateCliente');
-        $updateCliente->description = 'Atualizar Cliente';
-        $auth->add($updateCliente);
-
         $deleteCliente = $auth->createPermission('deleteCliente');
         $deleteCliente->description = 'Remover Cliente';
         $auth->add($deleteCliente);
@@ -69,7 +65,6 @@ class RbacController extends Controller
 
         //Permissões para clientes
         $auth->addChild($funcionario, $createCliente);
-        $auth->addChild($funcionario, $updateCliente);
         $auth->addChild($gestor, $deleteCliente);
         $auth->addChild($funcionario, $viewCliente);
 
@@ -319,16 +314,11 @@ class RbacController extends Controller
         $viewAllProfiles->description = 'Ver todos os perfis';
         $auth->add($viewAllProfiles);
 
-        $deleteAllProfiles = $auth->createPermission('deleteAllProfiles');
-        $deleteAllProfiles->description = 'Remover todos os perfis';
-        $auth->add($deleteAllProfiles);
-
         //Permissões para perfis
         $auth->addChild($cliente, $viewMyProfile);
         $auth->addChild($cliente, $updateMyProfile);
         $auth->addChild($cliente, $deleteMyProfile);
-        $auth->addChild($admin, $viewAllProfiles);
-        $auth->addChild($admin, $deleteAllProfiles);
+        $auth->addChild($funcionario, $viewAllProfiles);
 
         //---------------------- Permissões para o Carrinho --------------------------------
         $addToCart = $auth->createPermission('addToCart');

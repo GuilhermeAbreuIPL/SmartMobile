@@ -24,9 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => 45]) ?>
 
-    <?= $form->field($model, 'nif')->textInput(['maxlength' => 9]) ?>
+    <?= $form->field($model, 'nif')->textInput(['minlength' => 9, 'maxlength' => 9]) ?>
 
-    <?= $form->field($model, 'telemovel')->textInput(['maxlength' => 9]) ?>
+    <?= $form->field($model, 'telemovel')->textInput(['minlength' => 9, 'maxlength' => 9]) ?>
 
     <?= $form->field($model, 'role')->label('Role')->dropDownList(
         $roles,
