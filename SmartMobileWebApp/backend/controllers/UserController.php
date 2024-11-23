@@ -2,16 +2,15 @@
 
 namespace backend\controllers;
 
-use backend\models\UserForm;
 use backend\models\UserSearch;
 use common\models\User;
+use common\models\UserForm;
 use common\models\Userprofile;
 use Yii;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 class UserController extends Controller
 {
@@ -122,11 +121,12 @@ class UserController extends Controller
         // Obter a role do user a ser editado
         $targetUserRole = array_keys(\Yii::$app->authManager->getRolesByUser($id))[0] ?? null;
 
+        /*
         // Verifica se o user tem uma role atribuída
         if (!$targetUserRole) {
             Yii::$app->session->setFlash('error', 'O user não tem uma role atribuída.');
             return $this->redirect($lastUrl);
-        }
+        }*/
 
         // Permissões para editar
         $permissions = [
@@ -207,12 +207,14 @@ class UserController extends Controller
             throw new NotFoundHttpException('Utilizador não encontrado.');
         }
 
+
         $targetUserRole = array_keys(\Yii::$app->authManager->getRolesByUser($id))[0] ?? null;
+        /*
         //ve se existe uma role atribuida ao user
         if (!$targetUserRole) {
             Yii::$app->session->setFlash('error', 'O user não tem uma role atribuída.');
             return $this->redirect($lastUrl);
-        }
+        }*/
 
         // Verificar permissões
         $permissions = [

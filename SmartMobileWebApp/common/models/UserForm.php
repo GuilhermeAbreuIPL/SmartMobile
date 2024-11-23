@@ -1,11 +1,9 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
-use common\models\User;
-use common\models\Userprofile;
 
 class UserForm extends Model
 {
@@ -65,10 +63,11 @@ class UserForm extends Model
      * @return bool whether the creating new account was successful and email was sent
      */
     public function create()
-    {
+    {/*
         if (!$this->validate()) {
             return null;
-        }
+        }*/
+
 
         $user = new User();
         $user->username = $this->username;
