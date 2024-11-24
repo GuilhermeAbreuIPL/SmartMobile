@@ -83,6 +83,11 @@
                         'visible' => Yii::$app->user->can('viewCategoria')
                     ],
 
+                    //metodo promocao
+                    ['label' => 'Promoções', 'url' => ['promocao/index'],
+                        'visible' => Yii::$app->user->can('viewPromocao')
+                    ],
+
                     //header gestao produtos
                     ['label' => 'Gestão Produtos', 'header' => true],
                     ['label' => 'Vista Produtos', 'url' => ['produto/index'] /*prems aqui*/],
