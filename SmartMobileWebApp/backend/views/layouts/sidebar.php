@@ -78,6 +78,11 @@
                         'visible' => Yii::$app->user->can('viewMetodoEntrega')
                     ],
 
+                    //metodo categoria
+                    ['label' => 'Categorias', 'url' => ['categoria/index'],
+                        'visible' => Yii::$app->user->can('viewCategoria')
+                    ],
+
                     //header gestao produtos
                     ['label' => 'Gestão Produtos', 'header' => true],
                     ['label' => 'Vista Produtos', 'url' => ['produto/index'] /*prems aqui*/],
