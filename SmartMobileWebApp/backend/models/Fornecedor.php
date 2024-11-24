@@ -1,9 +1,6 @@
 <?php
 
-namespace common\models;
-
-use Yii;
-use backend\models\CompraLoja;
+namespace backend\models;
 
 /**
  * This is the model class for table "fornecedor".

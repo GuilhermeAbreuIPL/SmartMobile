@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <thead>
     <tr>
         <th>#</th>
+        <th>ID</th>
         <th>Localidade</th>
         <th>Código Postal</th>
     </tr>
@@ -27,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($moradas as $index => $morada): ?>
         <tr>
             <td><?= $index + 1 ?></td>
+            <td><?= Html::encode($morada->id) ?></td>
             <td><?= Html::encode($morada->localidade) ?></td>
             <td><?= Html::encode($morada->codpostal) ?></td>
         </tr>

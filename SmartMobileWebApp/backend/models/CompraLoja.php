@@ -2,8 +2,6 @@
 
 namespace backend\models;
 
-use Yii;
-use common\models\Fornecedor;
 use common\models\Loja;
 use common\models\Produto;
 
