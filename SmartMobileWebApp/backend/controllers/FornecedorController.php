@@ -4,8 +4,10 @@ namespace backend\controllers;
 
 use backend\models\Fornecedor;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -21,6 +23,20 @@ class FornecedorController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'actions' => ['update', 'delete', 'create', 'view', 'index'],
+                            'roles' => ['gestor'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new ForbiddenHttpException('Não tem permissão para ver esta página.');
+                    },
+                ],
+
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -40,7 +56,6 @@ class FornecedorController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Fornecedor::find(),
-            /*
             'pagination' => [
                 'pageSize' => 50
             ],
@@ -49,7 +64,7 @@ class FornecedorController extends Controller
                     'id' => SORT_DESC,
                 ]
             ],
-            */
+
         ]);
 
         return $this->render('index', [
