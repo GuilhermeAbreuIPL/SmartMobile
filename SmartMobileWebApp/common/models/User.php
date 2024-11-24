@@ -228,6 +228,17 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(Userprofile::class, ['id' => 'id']);
     }
 
+    /**
+     * Gets query for [[Moradas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMoradas()
+    {
+        return $this->hasMany(Morada::class, ['user_id' => 'id']);
+    }
+
+
     //relacionamento com a tabela auth_assignment com o objetivo de conseguir ver a role do user
     public function getAuth()
     {

@@ -100,6 +100,10 @@ Yii::$app->session->set('lastUrl', Yii::$app->request->url);
                 <th>Telemóvel</th>
                 <td><?= Html::encode($profile->telemovel ?? 'Not set') ?></td>
             </tr>
+            <tr>
+                <th>Morada/s</th>
+                <td><?= Html::a('Ver', ['moradas', 'id' => $user->id], ['class' => 'btn btn-secondary btn-sm']) ?></td>
+            </tr>
         </table>
     </div>
 </div>

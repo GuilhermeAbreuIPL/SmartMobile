@@ -10,9 +10,9 @@ use Yii;
  * @property int $id
  * @property string|null $localidade
  * @property string|null $codpostal
- * @property int|null $userprofile_id
+ * @property int|null $user_id
  *
- * @property Userprofile $id0
+ * @property User $id0
  */
 class Morada extends \yii\db\ActiveRecord
 {
@@ -30,10 +30,10 @@ class Morada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userprofile_id'], 'integer'],
+            [['user_id'], 'integer'],
             [['localidade'], 'string', 'max' => 100],
             [['codpostal'], 'string', 'max' => 8],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id' => 'id']],
+            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
         ];
     }
 
@@ -46,7 +46,7 @@ class Morada extends \yii\db\ActiveRecord
             'id' => 'ID',
             'localidade' => 'Localidade',
             'codpostal' => 'Codpostal',
-            'userprofile_id' => 'Userprofile ID',
+            'user_id' => 'User ID',
         ];
     }
 
@@ -55,8 +55,9 @@ class Morada extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getId0()
+    public function getUser()
     {
-        return $this->hasOne(Userprofile::class, ['id' => 'id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
 }

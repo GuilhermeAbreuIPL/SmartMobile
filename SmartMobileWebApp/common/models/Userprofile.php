@@ -92,15 +92,8 @@ class Userprofile extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'id']);
     }
 
-    /**
-     * Gets query for [[Moradas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMoradas()
-    {
-        return $this->hasOne(Moradas::class, ['id' => 'id']);
-    }
+
+
 
     public function getUser()
     {
