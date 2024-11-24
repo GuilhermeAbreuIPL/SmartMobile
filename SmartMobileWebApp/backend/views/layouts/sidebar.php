@@ -59,13 +59,18 @@
                     ['label' => 'Gestão Geral', 'header' => true],
 
                     //fornecedores
-                    ['label' => 'Vista Fornecedores', 'url' => ['fornecedor/index'],
+                    ['label' => 'Fornecedores', 'url' => ['fornecedor/index'],
                         'visible' => Yii::$app->user->can('viewfornecedor'),
                     ],
 
                     //lojas
-                    ['label' => 'Vista Lojas', 'url' => ['loja/index'],
+                    ['label' => 'Lojas', 'url' => ['loja/index'],
                         'visible' => Yii::$app->user->can('viewloja')
+                    ],
+
+                    //metodo pagamento
+                    ['label' => 'Métodos de Pagamento', 'url' => ['metodopagamento/index'],
+                       'visible' => Yii::$app->user->can('viewMetodoPagamento')
                     ],
 
                     //header gestao produtos
