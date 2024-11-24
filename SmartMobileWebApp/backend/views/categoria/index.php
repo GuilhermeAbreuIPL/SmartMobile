@@ -1,42 +1,64 @@
 <?php
 
-use common\models\Categoria;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var common\models\Categoria[] $categorias */
+/** @var common\models\Categoria|null $categoriaPrincipal */
+/** @var common\models\Categoria[] $breadcrumbs */
 
-$this->title = 'Categorias';
+$this->title = $categoriaPrincipal ? "Subcategorias de {$categoriaPrincipal->nome}" : 'Categorias Principais';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="categoria-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <!-- Exibir Breadcrumbs: Caminho das categorias -->
+    <div class="breadcrumbs">
+        <?php if (!empty($breadcrumbs)): ?>
+            <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
+                <?= Html::a($breadcrumb->nome, $breadcrumb->id == 0 ? ['index'] : ['index', 'categoriaprincipalid' => $breadcrumb->id]) ?>
+                <?php if ($index !== count($breadcrumbs) - 1): ?> > <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+
     <p>
-        <?= Html::a('Criar Categoria', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php if ($categoriaPrincipal): ?>
+            <?= Html::a('Criar Subcategoria', ['create', 'categoriaprincipalid' => $categoriaPrincipal->id], ['class' => 'btn btn-success']) ?>
+        <?php else: ?>
+            <?= Html::a('Criar Categoria Principal', ['create', 'categoriaprincipalid' => 0], ['class' => 'btn btn-success']) ?>
+        <?php endif; ?>
     </p>
 
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'nome',
-            'categoria_principal_id',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Categoria $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
-
-
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($categorias as $categoria): ?>
+            <tr>
+                <td><?= $categoria->id ?></td>
+                <td><?= $categoria->nome ?></td>
+                <td>
+                    <?= Html::a('Ver Subcategorias', ['index', 'categoriaprincipalid' => $categoria->id], ['class' => 'btn btn-info btn-sm']) ?>
+                    <?= Html::a('Adicionar Subcategoria', ['create', 'categoriaprincipalid' => $categoria->id], ['class' => 'btn btn-success btn-sm']) ?>
+                    <?= Html::a('Editar', ['update', 'id' => $categoria->id], ['class' => 'btn btn-warning btn-sm']) ?>
+                    <?= Html::a('Apagar', ['delete', 'id' => $categoria->id], [
+                        'class' => 'btn btn-danger btn-sm',
+                        'data' => [
+                            'confirm' => 'Tem certeza de que deseja excluir esta categoria?',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>

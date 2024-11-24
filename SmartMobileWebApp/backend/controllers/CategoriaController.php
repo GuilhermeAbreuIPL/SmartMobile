@@ -51,25 +51,46 @@ class CategoriaController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($categoriaprincipalid = null)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Categoria::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        // Procurar categorias com relação para a categoria principal
+        $categorias = Categoria::find()->where(['categoria_principal_id' => $categoriaprincipalid])->all();
+
+        // Quando existe categoria principal, vamos encontrar as relacionadas dessa
+        $categoriaPrincipal = $categoriaprincipalid ? Categoria::findOne($categoriaprincipalid) : null;
+
+        // Criar o caminho das categorias como se fosse um filtro
+        $breadcrumbs = $this->getCategoryBreadcrumbs($categoriaprincipalid);
+
+        // Sempre colocar "Categoria Principal" no início dos breadcrumbs
+        array_unshift($breadcrumbs, new Categoria([
+            'id' => 0,  // ID fictício para o link de "Categoria Principal" para depois ser reconhecio no index
+            'nome' => 'Categoria Principal', // Nome do link
+        ]));
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'categorias' => $categorias,
+            'categoriaPrincipal' => $categoriaPrincipal,
+            'breadcrumbs' => $breadcrumbs, // Passar titulo para a view
         ]);
+    }
+
+    /**
+     * Função para construir o caminho das categorias (breadcrumbs)
+     */
+    private function getCategoryBreadcrumbs($categoryId)
+    {
+        $breadcrumbs = [];
+        while ($categoryId) {
+            $category = Categoria::findOne($categoryId);
+            if ($category) {
+                $breadcrumbs[] = $category; // Adicionar categoria ao caminho
+                $categoryId = $category->categoria_principal_id; // Move para a categoria principal da atual
+            } else {
+                break;
+            }
+        }
+        return array_reverse($breadcrumbs); // Reverter para mostrar da categoria principal até a subcategoria
     }
 
     /**
@@ -90,22 +111,35 @@ class CategoriaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($categoriaprincipalid)
     {
         $model = new Categoria();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        //adicionar o id da categoria principal
+        if ($categoriaprincipalid != 0)
+            $model->categoria_principal_id = $categoriaprincipalid;
+        else {
+            $model->categoria_principal_id = null;
+        }
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['index', 'categoriaprincipalid' => $model->categoria_principal_id]);
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+
+    public function actionSubcategories($id)
+    {
+        $subcategorias = Categoria::find()->where(['categoria_principal_id' => $id])->all();
+        return $this->renderPartial('_subcategories', [
+            'subcategorias' => $subcategorias,
+        ]);
+    }
+
+
 
     /**
      * Updates an existing Categoria model.
