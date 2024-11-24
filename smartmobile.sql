@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 11-Nov-2024 às 15:37
+-- Tempo de geração: 24-Nov-2024 às 18:27
 -- Versão do servidor: 8.2.0
 -- versão do PHP: 8.1.26
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `auth_assignment`;
 CREATE TABLE IF NOT EXISTS `auth_assignment` (
-  `item_name` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `user_id` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `item_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `user_id` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `created_at` int DEFAULT NULL,
   PRIMARY KEY (`item_name`,`user_id`),
   KEY `idx-auth_assignment-user_id` (`user_id`)
@@ -41,7 +41,11 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('admin', '1', 1730739901);
+('admin', '1', 1732297456),
+('cliente', '60', 1732297456),
+('cliente', '64', 1732382439),
+('funcionario', '57', 1732297456),
+('gestor', '56', 1732297456);
 
 -- --------------------------------------------------------
 
@@ -51,10 +55,10 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 
 DROP TABLE IF EXISTS `auth_item`;
 CREATE TABLE IF NOT EXISTS `auth_item` (
-  `name` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `type` smallint NOT NULL,
-  `description` text COLLATE utf8mb3_unicode_ci,
-  `rule_name` varchar(64) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+  `rule_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `data` blob,
   `created_at` int DEFAULT NULL,
   `updated_at` int DEFAULT NULL,
@@ -68,58 +72,65 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('addToCart', 2, 'Adicionar ao Carrinho', NULL, NULL, 1730739901, 1730739901),
-('adicionarStock', 2, 'Adicionar Stock', NULL, NULL, 1730739901, 1730739901),
-('admin', 1, NULL, NULL, NULL, 1730739901, 1730739901),
-('cliente', 1, NULL, NULL, NULL, 1730739901, 1730739901),
-('createCategoria', 2, 'Criar Categoria', NULL, NULL, 1730739901, 1730739901),
-('createFuncionario', 2, 'Criar Funcionario', NULL, NULL, 1730739901, 1730739901),
-('createGestor', 2, 'Criar Gestor', NULL, NULL, 1730739901, 1730739901),
-('createLoja', 2, 'Criar Loja', NULL, NULL, 1730739901, 1730739901),
-('createMetodoEntrega', 2, 'Criar Metodo de Entrega', NULL, NULL, 1730739901, 1730739901),
-('createMetodoPagamento', 2, 'Criar Metodo de Pagamento', NULL, NULL, 1730739901, 1730739901),
-('createOrder', 2, 'Criar Encomenda', NULL, NULL, 1730739901, 1730739901),
-('createProduto', 2, 'Criar Produto', NULL, NULL, 1730739901, 1730739901),
-('createPromocao', 2, 'Criar Promoção', NULL, NULL, 1730739901, 1730739901),
-('deleteAllProfiles', 2, 'Deletar todos os perfis', NULL, NULL, 1730739901, 1730739901),
-('deleteCategoria', 2, 'Deletar Categoria', NULL, NULL, 1730739901, 1730739901),
-('deleteFuncionario', 2, 'Deletar Funcionario', NULL, NULL, 1730739901, 1730739901),
-('deleteGestor', 2, 'Deletar Gestor', NULL, NULL, 1730739901, 1730739901),
-('deleteLoja', 2, 'Deletar Loja', NULL, NULL, 1730739901, 1730739901),
-('deleteMetodoEntrega', 2, 'Deletar Metodo de Entrega', NULL, NULL, 1730739901, 1730739901),
-('deleteMetodoPagamento', 2, 'Deletar Metodo de Pagamento', NULL, NULL, 1730739901, 1730739901),
-('deleteMyProfile', 2, 'Deletar o seu perfil', NULL, NULL, 1730739901, 1730739901),
-('deleteOrder', 2, 'Deletar Encomenda', NULL, NULL, 1730739901, 1730739901),
-('deleteProduto', 2, 'Deletar Produto', NULL, NULL, 1730739901, 1730739901),
-('deletePromocao', 2, 'Deletar Promoção', NULL, NULL, 1730739901, 1730739901),
-('editQuantityOnCart', 2, 'Editar quantidade no Carrinho', NULL, NULL, 1730739901, 1730739901),
-('funcionario', 1, NULL, NULL, NULL, 1730739901, 1730739901),
-('gestor', 1, NULL, NULL, NULL, 1730739901, 1730739901),
-('removeFromCart', 2, 'Remover do Carrinho', NULL, NULL, 1730739901, 1730739901),
-('removerStock', 2, 'Remover Stock', NULL, NULL, 1730739901, 1730739901),
-('statusOrder', 2, 'Alterar estado da encomenda', NULL, NULL, 1730739901, 1730739901),
-('updateCategoria', 2, 'Atualizar Categoria', NULL, NULL, 1730739901, 1730739901),
-('updateFuncionario', 2, 'Atualizar Funcionario', NULL, NULL, 1730739901, 1730739901),
-('updateGestor', 2, 'Atualizar Gestor', NULL, NULL, 1730739901, 1730739901),
-('updateLoja', 2, 'Atualizar Loja', NULL, NULL, 1730739901, 1730739901),
-('updateMetodoEntrega', 2, 'Atualizar Metodo de Entrega', NULL, NULL, 1730739901, 1730739901),
-('updateMetodoPagamento', 2, 'Atualizar Metodo de Pagamento', NULL, NULL, 1730739901, 1730739901),
-('updateMyProfile', 2, 'Atualizar o seu perfil', NULL, NULL, 1730739901, 1730739901),
-('updateProduto', 2, 'Atualizar Produto', NULL, NULL, 1730739901, 1730739901),
-('updatePromocao', 2, 'Atualizar Promoção', NULL, NULL, 1730739901, 1730739901),
-('viewAllOrders', 2, 'Visualizar todas as encomendas', NULL, NULL, 1730739901, 1730739901),
-('viewAllProfiles', 2, 'Visualizar todos os perfis', NULL, NULL, 1730739901, 1730739901),
-('viewCart', 2, 'Visualizar Carrinho', NULL, NULL, 1730739901, 1730739901),
-('viewCategoria', 2, 'Visualizar Categoria', NULL, NULL, 1730739901, 1730739901),
-('viewFuncionario', 2, 'Visualizar Funcionario', NULL, NULL, 1730739901, 1730739901),
-('viewGestor', 2, 'Visualizar Gestor', NULL, NULL, 1730739901, 1730739901),
-('viewLoja', 2, 'Visualizar Loja', NULL, NULL, 1730739901, 1730739901),
-('viewMetodoEntrega', 2, 'Visualizar Metodo de Entrega', NULL, NULL, 1730739901, 1730739901),
-('viewMetodoPagamento', 2, 'Visualizar Metodo de Pagamento', NULL, NULL, 1730739901, 1730739901),
-('viewMyProfile', 2, 'Visualizar o seu perfil', NULL, NULL, 1730739901, 1730739901),
-('viewOwnOrders', 2, 'Visualizar as suas encomendas', NULL, NULL, 1730739901, 1730739901),
-('viewPromocao', 2, 'Visualizar Promoção', NULL, NULL, 1730739901, 1730739901),
-('viewStock', 2, 'Visualizar Stock', NULL, NULL, 1730739901, 1730739901);
+('addToCart', 2, 'Adicionar ao Carrinho', NULL, NULL, 1732297456, 1732297456),
+('adicionarStock', 2, 'Adicionar Stock', NULL, NULL, 1732297456, 1732297456),
+('admin', 1, NULL, NULL, NULL, 1732297456, 1732297456),
+('cliente', 1, NULL, NULL, NULL, 1732297456, 1732297456),
+('createCategoria', 2, 'Criar Categoria', NULL, NULL, 1732297456, 1732297456),
+('createCliente', 2, 'Criar Cliente', NULL, NULL, 1732297456, 1732297456),
+('createFornecedor', 2, 'Criar Fornecedor', NULL, NULL, 1732297456, 1732297456),
+('createFuncionario', 2, 'Criar Funcionario', NULL, NULL, 1732297456, 1732297456),
+('createGestor', 2, 'Criar Gestor', NULL, NULL, 1732297456, 1732297456),
+('createLoja', 2, 'Criar Loja', NULL, NULL, 1732297456, 1732297456),
+('createMetodoEntrega', 2, 'Criar Metodo de Entrega', NULL, NULL, 1732297456, 1732297456),
+('createMetodoPagamento', 2, 'Criar Metodo de Pagamento', NULL, NULL, 1732297456, 1732297456),
+('createOrder', 2, 'Criar Encomenda', NULL, NULL, 1732297456, 1732297456),
+('createProduto', 2, 'Criar Produto', NULL, NULL, 1732297456, 1732297456),
+('createPromocao', 2, 'Criar Promoção', NULL, NULL, 1732297456, 1732297456),
+('deleteCategoria', 2, 'Remover Categoria', NULL, NULL, 1732297456, 1732297456),
+('deleteCliente', 2, 'Remover Cliente', NULL, NULL, 1732297456, 1732297456),
+('deleteFornecedor', 2, 'Remover Fornecedor', NULL, NULL, 1732297456, 1732297456),
+('deleteFuncionario', 2, 'Remover Funcionario', NULL, NULL, 1732297456, 1732297456),
+('deleteGestor', 2, 'Remover Gestor', NULL, NULL, 1732297456, 1732297456),
+('deleteLoja', 2, 'Remover Loja', NULL, NULL, 1732297456, 1732297456),
+('deleteMetodoEntrega', 2, 'Remover Metodo de Entrega', NULL, NULL, 1732297456, 1732297456),
+('deleteMetodoPagamento', 2, 'Remover Metodo de Pagamento', NULL, NULL, 1732297456, 1732297456),
+('deleteMyProfile', 2, 'Remover o seu perfil', NULL, NULL, 1732297456, 1732297456),
+('deleteOrder', 2, 'Remover Encomenda', NULL, NULL, 1732297456, 1732297456),
+('deleteProduto', 2, 'Remover Produto', NULL, NULL, 1732297456, 1732297456),
+('deletePromocao', 2, 'Remover Promoção', NULL, NULL, 1732297456, 1732297456),
+('editQuantityOnCart', 2, 'Editar quantidade no Carrinho', NULL, NULL, 1732297456, 1732297456),
+('funcionario', 1, NULL, NULL, NULL, 1732297456, 1732297456),
+('gestor', 1, NULL, NULL, NULL, 1732297456, 1732297456),
+('removeFromCart', 2, 'Remover do Carrinho', NULL, NULL, 1732297456, 1732297456),
+('removerStock', 2, 'Remover Stock', NULL, NULL, 1732297456, 1732297456),
+('statusOrder', 2, 'Alterar estado da encomenda', NULL, NULL, 1732297456, 1732297456),
+('updateCategoria', 2, 'Atualizar Categoria', NULL, NULL, 1732297456, 1732297456),
+('updateFornecedor', 2, 'Atualizar Fornecedor', NULL, NULL, 1732297456, 1732297456),
+('updateFuncionario', 2, 'Atualizar Funcionario', NULL, NULL, 1732297456, 1732297456),
+('updateGestor', 2, 'Atualizar Gestor', NULL, NULL, 1732297456, 1732297456),
+('updateLoja', 2, 'Atualizar Loja', NULL, NULL, 1732297456, 1732297456),
+('updateMetodoEntrega', 2, 'Atualizar Metodo de Entrega', NULL, NULL, 1732297456, 1732297456),
+('updateMetodoPagamento', 2, 'Atualizar Metodo de Pagamento', NULL, NULL, 1732297456, 1732297456),
+('updateMyProfile', 2, 'Atualizar o seu perfil', NULL, NULL, 1732297456, 1732297456),
+('updateProduto', 2, 'Atualizar Produto', NULL, NULL, 1732297456, 1732297456),
+('updatePromocao', 2, 'Atualizar Promoção', NULL, NULL, 1732297456, 1732297456),
+('viewAllOrders', 2, 'Ver todas as encomendas', NULL, NULL, 1732297456, 1732297456),
+('viewAllProfiles', 2, 'Ver todos os perfis', NULL, NULL, 1732297456, 1732297456),
+('viewBackend', 2, 'Ver Backend', NULL, NULL, 1732297456, 1732297456),
+('viewCart', 2, 'Ver Carrinho', NULL, NULL, 1732297456, 1732297456),
+('viewCategoria', 2, 'Ver Categoria', NULL, NULL, 1732297456, 1732297456),
+('viewCliente', 2, 'Ver Cliente', NULL, NULL, 1732297456, 1732297456),
+('viewFornecedor', 2, 'Ver Fornecedor', NULL, NULL, 1732297456, 1732297456),
+('viewFuncionario', 2, 'Ver Funcionario', NULL, NULL, 1732297456, 1732297456),
+('viewGestor', 2, 'Ver Gestor', NULL, NULL, 1732297456, 1732297456),
+('viewLoja', 2, 'Ver Loja', NULL, NULL, 1732297456, 1732297456),
+('viewMetodoEntrega', 2, 'Ver Metodo de Entrega', NULL, NULL, 1732297456, 1732297456),
+('viewMetodoPagamento', 2, 'Ver Metodo de Pagamento', NULL, NULL, 1732297456, 1732297456),
+('viewMyProfile', 2, 'Ver o seu perfil', NULL, NULL, 1732297456, 1732297456),
+('viewOwnOrders', 2, 'Ver as suas encomendas', NULL, NULL, 1732297456, 1732297456),
+('viewPromocao', 2, 'Ver Promoção', NULL, NULL, 1732297456, 1732297456),
+('viewStock', 2, 'Ver Stock', NULL, NULL, 1732297456, 1732297456);
 
 -- --------------------------------------------------------
 
@@ -129,8 +140,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 
 DROP TABLE IF EXISTS `auth_item_child`;
 CREATE TABLE IF NOT EXISTS `auth_item_child` (
-  `parent` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `child` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `parent` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `child` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   PRIMARY KEY (`parent`,`child`),
   KEY `child` (`child`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
@@ -143,6 +154,8 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('cliente', 'addToCart'),
 ('funcionario', 'adicionarStock'),
 ('gestor', 'createCategoria'),
+('funcionario', 'createCliente'),
+('gestor', 'createFornecedor'),
 ('gestor', 'createFuncionario'),
 ('admin', 'createGestor'),
 ('gestor', 'createLoja'),
@@ -151,8 +164,9 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('cliente', 'createOrder'),
 ('gestor', 'createProduto'),
 ('admin', 'createPromocao'),
-('admin', 'deleteAllProfiles'),
 ('gestor', 'deleteCategoria'),
+('gestor', 'deleteCliente'),
+('gestor', 'deleteFornecedor'),
 ('gestor', 'deleteFuncionario'),
 ('admin', 'deleteGestor'),
 ('gestor', 'deleteLoja'),
@@ -169,6 +183,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('gestor', 'removerStock'),
 ('funcionario', 'statusOrder'),
 ('gestor', 'updateCategoria'),
+('gestor', 'updateFornecedor'),
 ('gestor', 'updateFuncionario'),
 ('admin', 'updateGestor'),
 ('gestor', 'updateLoja'),
@@ -178,9 +193,12 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('gestor', 'updateProduto'),
 ('admin', 'updatePromocao'),
 ('funcionario', 'viewAllOrders'),
-('admin', 'viewAllProfiles'),
+('funcionario', 'viewAllProfiles'),
+('funcionario', 'viewBackend'),
 ('cliente', 'viewCart'),
 ('gestor', 'viewCategoria'),
+('funcionario', 'viewCliente'),
+('gestor', 'viewFornecedor'),
 ('gestor', 'viewFuncionario'),
 ('admin', 'viewGestor'),
 ('gestor', 'viewLoja'),
@@ -199,7 +217,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 
 DROP TABLE IF EXISTS `auth_rule`;
 CREATE TABLE IF NOT EXISTS `auth_rule` (
-  `name` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `data` blob,
   `created_at` int DEFAULT NULL,
   `updated_at` int DEFAULT NULL,
@@ -292,7 +310,15 @@ CREATE TABLE IF NOT EXISTS `fornecedor` (
   `empresa` varchar(45) DEFAULT NULL,
   `contacto` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `fornecedor`
+--
+
+INSERT INTO `fornecedor` (`id`, `empresa`, `contacto`) VALUES
+(1, 'Logitech', '211231221'),
+(2, 'Asus', '212321231');
 
 -- --------------------------------------------------------
 
@@ -358,7 +384,14 @@ CREATE TABLE IF NOT EXISTS `lojas` (
   `contacto` varchar(15) DEFAULT NULL,
   `localizacao` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `lojas`
+--
+
+INSERT INTO `lojas` (`id`, `nome`, `contacto`, `localizacao`) VALUES
+(3, 'SmartMobile - Leiria', '911111111', 'Leiria, 2400');
 
 -- --------------------------------------------------------
 
@@ -438,10 +471,18 @@ CREATE TABLE IF NOT EXISTS `moradas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `localidade` varchar(100) DEFAULT NULL,
   `codpostal` varchar(8) DEFAULT NULL,
-  `userprofile_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `userprofile_id` (`userprofile_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `userprofile_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `moradas`
+--
+
+INSERT INTO `moradas` (`id`, `localidade`, `codpostal`, `user_id`) VALUES
+(1, 'Leiria', '2400-441', 1),
+(19, 'vale de moinhos', '2005-500', 1);
 
 -- --------------------------------------------------------
 
@@ -521,20 +562,20 @@ CREATE TABLE IF NOT EXISTS `promocoes` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `auth_key` varchar(32) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `password_hash` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `password_reset_token` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `auth_key` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `password_hash` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `password_reset_token` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `status` smallint NOT NULL DEFAULT '10',
   `created_at` int NOT NULL,
   `updated_at` int NOT NULL,
-  `verification_token` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `verification_token` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Extraindo dados da tabela `user`
@@ -542,7 +583,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
 (1, 'admin', 'FOPLSfyTgNgESknjyUYEyxE6o-QRjq8A', '$2y$13$4JacQBtU82QQMCoYbvkM6OUTQJE.mLtJXqJAm8skKqJxvzBHCQYxi', NULL, 'admin@gmail.com', 10, 1730739149, 1730739149, 'XeFjZRGBQN5iAZqiDEYQ6yn8IczwLy8V_1730739149'),
-(3, 'Utilizador1', 'Q0RORkrKXtrIhB_yvrAEMHx7arFVfo6c', '$2y$13$PVqjKudOw/1OSxeIBHQtzOkn88SEvjstHI0C2/aZvWjOSzFFiFVlG', NULL, 'asdfasdf@sdsd.sdf', 9, 1730740245, 1730740245, 'I6LUJtlmNLtZjggAFil4TwjDyxdZC0Lc_1730740245');
+(56, 'gestor', 'aO10di9PZJLkhMwo95oC-8brEWgeCBk4', '$2y$13$8r2IuJWlTTDmU2OBvS8ZduRmnfeKCW30uZ9raxh9c7ruwuSHtTZlm', NULL, 'gestor@gmail.com', 10, 1732190497, 1732190497, NULL),
+(57, 'funcionario', 'vJbDifuZ1jBm-ccQ2_pBGUfXLsVGgCZX', '$2y$13$x3/JSgbcTqChu044k55cnOuE.hKDs281p1xpX2OaXm8/KoKM8I2rG', NULL, 'funcionario@gmail.com', 10, 1732190524, 1732297397, NULL),
+(60, 'Cliente', 'aKvmZXH_VW0igwgEDGi0izA85cF1Org2', '$2y$13$9KS.kCIvU3lR3HkdaYU7V.0rha1x7eV/hTTn/qHfoqVcrQOGylBy.', NULL, 'cliente@gmail.com', 10, 1732296687, 1732296687, NULL),
+(64, 'beatriz', 'BrDd1rJmmcqMKKqYVRZfeJKa0W34Mn8C', '$2y$13$ZWXdSh8UeWGdMVWb5fnErensQ14Qmmr1sO4w/89zfAllDz0V1/ciS', NULL, 'beatrizc@hotmail.com', 10, 1732382439, 1732382439, NULL);
 
 -- --------------------------------------------------------
 
@@ -558,6 +602,17 @@ CREATE TABLE IF NOT EXISTS `userprofiles` (
   `telemovel` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `userprofiles`
+--
+
+INSERT INTO `userprofiles` (`id`, `nome`, `nif`, `telemovel`) VALUES
+(1, 'Admin', 12345678, 111111111),
+(56, 'Gestor', 123123123, 111111111),
+(57, 'Funcionario', 123123123, 111111111),
+(60, 'Cliente', 123123123, 111111111),
+(64, 'beatriz', 123321123, 912432567);
 
 --
 -- Restrições para despejos de tabelas
@@ -629,7 +684,7 @@ ALTER TABLE `linhafatura`
 -- Limitadores para a tabela `moradas`
 --
 ALTER TABLE `moradas`
-  ADD CONSTRAINT `moradas_ibfk_1` FOREIGN KEY (`id`) REFERENCES `userprofiles` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `moradas_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Limitadores para a tabela `produtolojas`
