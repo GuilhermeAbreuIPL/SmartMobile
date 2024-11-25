@@ -13,13 +13,12 @@ use Yii;
  * @property string|null $statusorder
  * @property int|null $userprofile_id
  * @property int|null $metodopagamento_id
- * @property int|null $metodoentrega_id
+ * @property string $tipoentrega
  * @property int|null $moradaexpedicao_id
  *
  * @property Userprofile $id0
  * @property Linhafatura[] $linhafaturas
- * @property Metodoentrega $metodoentrega
- * @property MetodoPagamento $metodopagamento
+ * @property Metodopagamento $metodopagamento
  * @property Moradaexpedicao $moradaexpedicao
  */
 class Fatura extends \yii\db\ActiveRecord
@@ -40,12 +39,12 @@ class Fatura extends \yii\db\ActiveRecord
         return [
             [['datafatura'], 'safe'],
             [['total'], 'number'],
-            [['userprofile_id', 'metodopagamento_id', 'metodoentrega_id', 'moradaexpedicao_id'], 'integer'],
-            [['statusorder'], 'string', 'max' => 45],
+            [['userprofile_id', 'metodopagamento_id', 'moradaexpedicao_id'], 'integer'],
+            [['tipoentrega'], 'required'],
+            [['statusorder', 'tipoentrega'], 'string', 'max' => 45],
             [['metodopagamento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Metodopagamento::class, 'targetAttribute' => ['metodopagamento_id' => 'id']],
-            [['metodoentrega_id'], 'exist', 'skipOnError' => true, 'targetClass' => Metodoentrega::class, 'targetAttribute' => ['metodoentrega_id' => 'id']],
-            [['moradaexpedicao_id'], 'exist', 'skipOnError' => true, 'targetClass' => Moradaexpedicao::class, 'targetAttribute' => ['moradaexpedicao_id' => 'id']],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id' => 'id']],
+            [['moradaexpedicao_id'], 'exist', 'skipOnError' => true, 'targetClass' => Moradaexpedicao::class, 'targetAttribute' => ['moradaexpedicao_id' => 'id']],
         ];
     }
 
@@ -61,7 +60,7 @@ class Fatura extends \yii\db\ActiveRecord
             'statusorder' => 'Statusorder',
             'userprofile_id' => 'Userprofile ID',
             'metodopagamento_id' => 'Metodopagamento ID',
-            'metodoentrega_id' => 'Metodoentrega ID',
+            'tipoentrega' => 'Tipoentrega',
             'moradaexpedicao_id' => 'Moradaexpedicao ID',
         ];
     }
@@ -87,23 +86,13 @@ class Fatura extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Metodoentrega]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMetodoentrega()
-    {
-        return $this->hasOne(Metodoentrega::class, ['id' => 'metodoentrega_id']);
-    }
-
-    /**
      * Gets query for [[Metodopagamento]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getMetodopagamento()
     {
-        return $this->hasOne(MetodoPagamento::class, ['id' => 'metodopagamento_id']);
+        return $this->hasOne(Metodopagamento::class, ['id' => 'metodopagamento_id']);
     }
 
     /**
@@ -113,6 +102,6 @@ class Fatura extends \yii\db\ActiveRecord
      */
     public function getMoradaexpedicao()
     {
-        return $this->hasOne(MoradaExpedicao::class, ['id' => 'moradaexpedicao_id']);
+        return $this->hasOne(Moradaexpedicao::class, ['id' => 'moradaexpedicao_id']);
     }
 }

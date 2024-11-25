@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use backend\models\Compraloja;
 
 /**
  * This is the model class for table "lojas".
@@ -15,7 +16,7 @@ use Yii;
  * @property string $codpostal
  *
  * @property Compraloja[] $compralojas
- * @property Produtolojas[] $produtolojas
+ * @property Produtoloja[] $produtolojas
  */
 class Loja extends \yii\db\ActiveRecord
 {
@@ -73,6 +74,6 @@ class Loja extends \yii\db\ActiveRecord
      */
     public function getProdutolojas()
     {
-        return $this->hasMany(Produtolojas::class, ['loja_id' => 'id']);
+        return $this->hasMany(Produtoloja::class, ['loja_id' => 'id']);
     }
 }

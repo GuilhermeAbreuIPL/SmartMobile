@@ -12,7 +12,7 @@ use Yii;
  * @property string|null $localidade
  * @property string|null $codpostal
  *
- * @property Faturas[] $faturas
+ * @property Fatura[] $faturas
  */
 class MoradaExpedicao extends \yii\db\ActiveRecord
 {
@@ -57,6 +57,6 @@ class MoradaExpedicao extends \yii\db\ActiveRecord
      */
     public function getFaturas()
     {
-        return $this->hasMany(Faturas::class, ['moradaexpedicao_id' => 'id']);
+        return $this->hasMany(Fatura::class, ['moradaexpedicao_id' => 'id']);
     }
 }
