@@ -1,0 +1,55 @@
+.main-box {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+}
+
+.person {
+    /*background-color: aqua;*/
+    height: 30rem;
+}
+
+.muldura {
+    width: 250px;
+    height: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 100%;
+    border-style: solid;
+    border-width: 12px;
+    border-color: #eee;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.30);
+    overflow: hidden;
+}
+
+.img-responsive {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.info-perfil {
+    text-align: center;
+    margin-top: 12%;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.banner-txt {
+    font-size: 50px;
+    font-weight: 700;
+    margin-top: 0;
+    font-family: sans-serif;
+    color: #ff6600;
+    cursor: default;
+}
+
+.banner-txt-min {
+    font-size: 18px;
+    font-weight: 500;
+    font-weight: bold;
+    margin-top: -2%;
+    font-family: sans-serif;
+    cursor: default;
+}
