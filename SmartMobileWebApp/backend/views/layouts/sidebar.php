@@ -73,11 +73,6 @@
                        'visible' => Yii::$app->user->can('viewMetodoPagamento')
                     ],
 
-                    //metodo entrega
-                    ['label' => 'Métodos de Entrega', 'url' => ['metodoentrega/index'],
-                        'visible' => Yii::$app->user->can('viewMetodoEntrega')
-                    ],
-
                     //metodo categoria
                     ['label' => 'Categorias', 'url' => ['categoria/index'],
                         'visible' => Yii::$app->user->can('viewCategoria')

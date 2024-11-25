@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <tr>
         <th>#</th>
         <th>ID</th>
+        <th>Rua</th>
         <th>Localidade</th>
         <th>Código Postal</th>
     </tr>
@@ -29,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <tr>
             <td><?= $index + 1 ?></td>
             <td><?= Html::encode($morada->id) ?></td>
+            <td><?= Html::encode($morada->rua) ?></td>
             <td><?= Html::encode($morada->localidade) ?></td>
             <td><?= Html::encode($morada->codpostal) ?></td>
         </tr>

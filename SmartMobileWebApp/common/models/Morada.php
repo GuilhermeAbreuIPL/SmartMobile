@@ -8,11 +8,12 @@ use Yii;
  * This is the model class for table "moradas".
  *
  * @property int $id
+ * @property string $rua
  * @property string|null $localidade
  * @property string|null $codpostal
  * @property int|null $user_id
  *
- * @property User $id0
+ * @property User $user
  */
 class Morada extends \yii\db\ActiveRecord
 {
@@ -30,10 +31,12 @@ class Morada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['rua'], 'required'],
             [['user_id'], 'integer'],
+            [['rua'], 'string', 'max' => 85],
             [['localidade'], 'string', 'max' => 100],
             [['codpostal'], 'string', 'max' => 8],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -44,6 +47,7 @@ class Morada extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'rua' => 'Rua',
             'localidade' => 'Localidade',
             'codpostal' => 'Codpostal',
             'user_id' => 'User ID',
@@ -51,7 +55,7 @@ class Morada extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Id0]].
+     * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -59,5 +63,4 @@ class Morada extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
 }

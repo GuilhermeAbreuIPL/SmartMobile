@@ -8,10 +8,11 @@ use Yii;
  * This is the model class for table "moradaexpedicao".
  *
  * @property int $id
+ * @property int $rua
  * @property string|null $localidade
  * @property string|null $codpostal
  *
- * @property Fatura[] $faturas
+ * @property Faturas[] $faturas
  */
 class MoradaExpedicao extends \yii\db\ActiveRecord
 {
@@ -29,6 +30,8 @@ class MoradaExpedicao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['rua'], 'required'],
+            [['rua'], 'integer'],
             [['localidade'], 'string', 'max' => 100],
             [['codpostal'], 'string', 'max' => 8],
         ];
@@ -41,6 +44,7 @@ class MoradaExpedicao extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'rua' => 'Rua',
             'localidade' => 'Localidade',
             'codpostal' => 'Codpostal',
         ];
@@ -53,6 +57,6 @@ class MoradaExpedicao extends \yii\db\ActiveRecord
      */
     public function getFaturas()
     {
-        return $this->hasMany(Fatura::class, ['moradaexpedicao_id' => 'id']);
+        return $this->hasMany(Faturas::class, ['moradaexpedicao_id' => 'id']);
     }
 }

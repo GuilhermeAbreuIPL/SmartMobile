@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 24-Nov-2024 às 18:27
+-- Tempo de geração: 25-Nov-2024 às 15:13
 -- Versão do servidor: 8.2.0
 -- versão do PHP: 8.1.26
 
@@ -252,7 +252,22 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `categoria_principal_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `categoria_principal_id` (`categoria_principal_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `nome`, `categoria_principal_id`) VALUES
+(1, 'Telemoveis', NULL),
+(2, 'Apple', 1),
+(4, 'Iphone', 2),
+(5, 'Iphone Recondicionado', 2),
+(6, 'Com 100% de bateria', 5),
+(7, 'Com menos de 80% de bateria', 5),
+(8, 'Samsung', 1),
+(9, 'TLC', 1),
+(10, '70%', 5);
 
 -- --------------------------------------------------------
 
@@ -289,12 +304,11 @@ CREATE TABLE IF NOT EXISTS `faturas` (
   `statusorder` varchar(45) DEFAULT NULL,
   `userprofile_id` int DEFAULT NULL,
   `metodopagamento_id` int DEFAULT NULL,
-  `metodoentrega_id` int DEFAULT NULL,
+  `tipoentrega` varchar(45) NOT NULL,
   `moradaexpedicao_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userprofile_id` (`userprofile_id`),
   KEY `metodopagamento_id` (`metodopagamento_id`),
-  KEY `metodoentrega_id` (`metodoentrega_id`),
   KEY `moradaexpedicao_id` (`moradaexpedicao_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -382,29 +396,18 @@ CREATE TABLE IF NOT EXISTS `lojas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `contacto` varchar(15) DEFAULT NULL,
+  `rua` varchar(85) NOT NULL,
   `localizacao` varchar(45) DEFAULT NULL,
+  `codpostal` varchar(8) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `lojas`
 --
 
-INSERT INTO `lojas` (`id`, `nome`, `contacto`, `localizacao`) VALUES
-(3, 'SmartMobile - Leiria', '911111111', 'Leiria, 2400');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `metodoentrega`
---
-
-DROP TABLE IF EXISTS `metodoentrega`;
-CREATE TABLE IF NOT EXISTS `metodoentrega` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `lojas` (`id`, `nome`, `contacto`, `rua`, `localizacao`, `codpostal`) VALUES
+(4, 'Leiria', '999999999', 'Rua da gandara', 'Leiria, Rua dos Inventarios', '');
 
 -- --------------------------------------------------------
 
@@ -418,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `metodopagamentos` (
   `nome` varchar(45) DEFAULT NULL,
   `descricao` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -455,6 +458,7 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 DROP TABLE IF EXISTS `moradaexpedicao`;
 CREATE TABLE IF NOT EXISTS `moradaexpedicao` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `rua` int NOT NULL,
   `localidade` varchar(100) DEFAULT NULL,
   `codpostal` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -469,6 +473,7 @@ CREATE TABLE IF NOT EXISTS `moradaexpedicao` (
 DROP TABLE IF EXISTS `moradas`;
 CREATE TABLE IF NOT EXISTS `moradas` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `rua` varchar(85) NOT NULL,
   `localidade` varchar(100) DEFAULT NULL,
   `codpostal` varchar(8) DEFAULT NULL,
   `user_id` int DEFAULT NULL,
@@ -480,9 +485,9 @@ CREATE TABLE IF NOT EXISTS `moradas` (
 -- Extraindo dados da tabela `moradas`
 --
 
-INSERT INTO `moradas` (`id`, `localidade`, `codpostal`, `user_id`) VALUES
-(1, 'Leiria', '2400-441', 1),
-(19, 'vale de moinhos', '2005-500', 1);
+INSERT INTO `moradas` (`id`, `rua`, `localidade`, `codpostal`, `user_id`) VALUES
+(1, 'Rua vale dos minhos', 'Leiria', '2400-441', 1),
+(19, 'Rua da trunqueira', 'vale de moinhos', '2005-500', 1);
 
 -- --------------------------------------------------------
 
@@ -551,7 +556,14 @@ CREATE TABLE IF NOT EXISTS `promocoes` (
   `descricao` text,
   `descontopercentual` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `promocoes`
+--
+
+INSERT INTO `promocoes` (`id`, `nome`, `descricao`, `descontopercentual`) VALUES
+(1, 'BlackFriday', 'Na Black Friday tens os melhores descontos possíveis', 15.00);
 
 -- --------------------------------------------------------
 
@@ -662,9 +674,8 @@ ALTER TABLE `compraloja`
 --
 ALTER TABLE `faturas`
   ADD CONSTRAINT `faturas_ibfk_2` FOREIGN KEY (`metodopagamento_id`) REFERENCES `metodopagamentos` (`id`),
-  ADD CONSTRAINT `faturas_ibfk_3` FOREIGN KEY (`metodoentrega_id`) REFERENCES `metodoentrega` (`id`),
-  ADD CONSTRAINT `faturas_ibfk_4` FOREIGN KEY (`moradaexpedicao_id`) REFERENCES `moradaexpedicao` (`id`),
-  ADD CONSTRAINT `faturas_ibfk_5` FOREIGN KEY (`id`) REFERENCES `userprofiles` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `faturas_ibfk_5` FOREIGN KEY (`id`) REFERENCES `userprofiles` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `faturas_ibfk_6` FOREIGN KEY (`moradaexpedicao_id`) REFERENCES `moradaexpedicao` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Limitadores para a tabela `linhacarrinho`

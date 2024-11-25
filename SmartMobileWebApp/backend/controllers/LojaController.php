@@ -36,7 +36,6 @@ class LojaController extends Controller
                         throw new ForbiddenHttpException('Não tem permissão para ver esta página.');
                     },
                 ],
-
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

@@ -12,11 +12,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => 45]) ?>
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'contacto')->textInput(['maxlength' => 9]) ?>
+    <?= $form->field($model, 'contacto')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'localizacao')->textInput(['maxlength' => 45]) ?>
+    <?= $form->field($model, 'rua')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'localizacao')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'codpostal')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
