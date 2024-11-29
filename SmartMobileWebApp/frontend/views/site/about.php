@@ -17,7 +17,7 @@ $this->title = 'About';
     </div>
     <div class="row">
         <div class="col person">
-            <div class="muldura">
+            <div class="moldura">
                 <img src="#" class="img-responsive" alt="...">
             </div>
             <div class="info-perfil">
@@ -26,7 +26,7 @@ $this->title = 'About';
             </div>
         </div>
         <div class="col person">
-            <div class="muldura">
+            <div class="moldura">
                 <img src="#" class="img-responsive" alt="...">
             </div>
             <div class="info-perfil">
@@ -35,7 +35,7 @@ $this->title = 'About';
             </div>
         </div>
         <div class="col person">
-            <div class="muldura">
+            <div class="moldura">
                 <img src="#" class="img-responsive" alt="...">
             </div>
             <div class="info-perfil">

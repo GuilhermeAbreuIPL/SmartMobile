@@ -64,6 +64,9 @@
     </div>
   </header>
 
+  <!-- Backdrop -->
+  <div id="backdrop" class="backdrop" onclick="openNavMenu()"></div>
+
   <!-- Sidebar Menu-->
   <div id="SidebarMenu" class="sidebarMenu">
     <a href="#" class="closebtn" onclick="closeNavMenu()">×</a>
