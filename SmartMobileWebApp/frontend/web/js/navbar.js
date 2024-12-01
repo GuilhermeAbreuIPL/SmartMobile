@@ -1,9 +1,9 @@
-// SideBar Menu
-function openNavMenu() {
-    document.getElementById("SidebarMenu").style.width = "400px";
-
-    const backdrop = document.getElementById("backdrop");
-    backdrop.classList.add("active");
+function openSidebar(sidebarId) {
+    const sidebar = document.getElementById(sidebarId);
+    if (sidebar) {
+        sidebar.style.width = "400px";
+        document.getElementById("backdrop").classList.add("active");
+    }
 }
 
 function closeNavMenu() {
@@ -13,27 +13,11 @@ function closeNavMenu() {
     backdrop.classList.remove("active");
 }
 
-// Sidebar Profile
-function openNavProfile() {
-    document.getElementById("SidebarProfile").style.width = "400px";
-
-    const backdrop = document.getElementById("backdrop");
-    backdrop.classList.add("active");
-}
-
 function closeNavProfile() {
     document.getElementById("SidebarProfile").style.width = "0";
 
     const backdrop = document.getElementById("backdrop");
     backdrop.classList.remove("active");
-}
-
-// Sidebar Profile
-function openNavCart() {
-    document.getElementById("SidebarCart").style.width = "400px";
-    
-    const backdrop = document.getElementById("backdrop");
-    backdrop.classList.add("active");
 }
 
 function closeNavCart() {

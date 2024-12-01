@@ -11,11 +11,14 @@ use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
+
+
 ?>
 <?php $this->beginPage() ?>
 
     <link rel="stylesheet" href="<?= Yii::getAlias('@web/css/navbar.css') ?>">
     <link rel="stylesheet" href="<?= Yii::getAlias('@web/css/footer.css') ?>">
+
     <script src="<?= Yii::getAlias('@web/js/navbar.js') ?>"></script>
 
 <!DOCTYPE html>
@@ -47,6 +50,8 @@ AppAsset::register($this);
 <footer>
     <?= $this->render('footer')?>
 </footer>
+
+<script src="<?= Yii::getAlias('@web/js/navbar.js') ?>"></script>
 
 <?php $this->endBody() ?>
 </body>

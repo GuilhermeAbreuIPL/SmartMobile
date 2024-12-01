@@ -8,7 +8,7 @@
   <!-- Navbar -->
   <header>
     <div class="btnBar">
-        <button class="openbtn" onclick="openNavMenu()">☰</button>
+        <button class="openbtn" onclick="openSidebar('SidebarMenu')">☰</button>
     </div>
     <a href="<?= \yii\helpers\Url::to(['site/index']) ?>" class="Logo">SmartMobile</a>
     <div class="Nav">
@@ -47,14 +47,14 @@
         </svg>
 
         <!-- Perfil -->
-          <svg class="iconClick"  onclick="openNavProfile()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="iconClick"  onclick="openSidebar('SidebarProfile')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="8" r="4"></circle>
             <path d="M4 20c0-4 4-7 8-7s8 3 8 7"></path>
           </svg>
 
 
         <!-- Carrinho -->
-        <svg class="iconClick" onclick="openNavCart()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="iconClick" onclick="openSidebar('SidebarCart')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="9" cy="21" r="1"></circle>
           <circle cx="20" cy="21" r="1"></circle>
           <path d="M1 1h4l2 14h13"></path>
@@ -65,7 +65,7 @@
   </header>
 
   <!-- Backdrop -->
-  <div id="backdrop" class="backdrop" onclick="openNavMenu()"></div>
+  <div id="backdrop" class="backdrop" onclick="closeAllSidebars()"></div>
 
   <!-- Sidebar Menu-->
   <div id="SidebarMenu" class="sidebarMenu">
@@ -78,15 +78,15 @@
 
   <!-- Sidebar Profile -->
   <div id="SidebarProfile" class="sdCartProfile">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNavProfile()">×</a>
+    <a href="#" class="closebtn" onclick="closeNavProfile()">×</a>
 
     <div class="profile-content">
       <hr>
       <div class="container-white">
         <h2>Olá! Faz já o teu Registo no smartmobile</h2>
         <div class="buttons">
-          <button class="btn-create">Criar conta</button>
-          <button class="btn-login">Iniciar sessão</button>
+          <a href="<?= \yii\helpers\Url::to(['site/signup'])?>" class="btn-create">Criar conta</a>
+          <a href="<?= \yii\helpers\Url::to(['site/login']) ?>" class="btn-login">Iniciar sessão</a>
         </div>
       </div>
       <hr>
