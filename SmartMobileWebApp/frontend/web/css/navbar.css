@@ -105,7 +105,7 @@ header {
 }
 
 .iconClick:hover {
-    color: #ff9900;
+    color: #ff6600;
 }
 
 /* Switch Modo Tema */
@@ -147,7 +147,7 @@ header {
 }
 
 input:checked + .slider {
-    background-color: #ff9900;
+    background-color: #ff6600;
 }
 
 input:checked + .slider::before {
