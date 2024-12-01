@@ -12,14 +12,14 @@ use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
 
-
 ?>
+
 <?php $this->beginPage() ?>
 
-    <link rel="stylesheet" href="<?= Yii::getAlias('@web/css/navbar.css') ?>">
-    <link rel="stylesheet" href="<?= Yii::getAlias('@web/css/footer.css') ?>">
+<link rel="stylesheet" href="<?= Yii::getAlias('@web/css/navbar.css') ?>">
+<link rel="stylesheet" href="<?= Yii::getAlias('@web/css/footer.css') ?>">
 
-    <script src="<?= Yii::getAlias('@web/js/navbar.js') ?>"></script>
+<script src="<?= Yii::getAlias('@web/js/navbar.js') ?>"></script>
 
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
@@ -33,9 +33,16 @@ AppAsset::register($this);
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
-<header>
-    <?= $this->render('navbar')?>
-</header>
+<?php
+    $hideNavbarAndFooter = in_array(Yii::$app->controller->action->id, ['login', 'signup']);
+?>
+
+<?php if (!$hideNavbarAndFooter): ?>
+    <!-- Navbar -->
+    <header>
+        <?= $this->render('navbar') ?>
+    </header>
+<?php endif; ?>
 
 <main role="main" class="flex-shrink-0">
     <div class="container">
@@ -47,13 +54,16 @@ AppAsset::register($this);
     </div>
 </main>
 
-<footer>
-    <?= $this->render('footer')?>
-</footer>
+<?php if (!$hideNavbarAndFooter): ?>
+    <!-- Footer -->
+    <footer>
+        <?= $this->render('footer') ?>
+    </footer>
+<?php endif; ?>
 
 <script src="<?= Yii::getAlias('@web/js/navbar.js') ?>"></script>
 
 <?php $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage();
+<?php $this->endPage(); ?>

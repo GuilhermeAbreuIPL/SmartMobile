@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.login-box {
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    width: 900px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-field input {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+}
+
+.extra-options {
+    color: #ccc;
+    font-size: 14px;
+    margin: 15px 0;
+}
+
+.extra-options .link {
+    color: #ffa500;
+    text-decoration: none;
+}
+
+.extra-options .link:hover {
+    text-decoration: underline;
+}
+
+
+.submit-button {
+    background-color: #ffa500;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e69500;
+}
+
+
+/* Adaptação a dispositivos menores */
+@media (max-width: 600px) {
+    .login-box {
+        width: 90%;
+        padding: 20px;
+    }
+}
