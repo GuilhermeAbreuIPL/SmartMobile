@@ -16,7 +16,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c25c377d-7980-4a0f-9c3a-00c80bacbdfc" name="Changes" comment="" />
+    <list default="true" id="c25c377d-7980-4a0f-9c3a-00c80bacbdfc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/smartmobile.sql" beforeDir="false" afterPath="$PROJECT_DIR$/smartmobile.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -276,6 +279,9 @@
       <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\views\site" />
       <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\views\layouts" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\web\uploads" />
+    </key>
   </component>
   <component name="RunManager" selected="Codeception.Main">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
@@ -375,7 +381,11 @@
       <workItem from="1732489291237" duration="141000" />
       <workItem from="1732489768655" duration="201000" />
       <workItem from="1732489978849" duration="641000" />
-      <workItem from="1732546461056" duration="970000" />
+      <workItem from="1732546461056" duration="9067000" />
+      <workItem from="1732619761222" duration="3580000" />
+      <workItem from="1732624689649" duration="649000" />
+      <workItem from="1732987009506" duration="6596000" />
+      <workItem from="1733149588063" duration="16296000" />
     </task>
     <servers />
   </component>

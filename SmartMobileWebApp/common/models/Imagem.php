@@ -3,14 +3,14 @@
 namespace common\models;
 
 use Yii;
+use yii\web\UploadedFile;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "imagens".
  *
  * @property int $id
  * @property string|null $filename
- * @property string|null $fileextension
- * @property float|null $filesize
  *
  * @property Produto[] $produtos
  */
@@ -30,10 +30,12 @@ class Imagem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['filesize'], 'number'],
-            [['filename', 'fileextension'], 'string', 'max' => 45],
+            [['filename'], 'string', 'max' => 255],
+            [['filename'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['filename'], 'required'],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -43,8 +45,6 @@ class Imagem extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'filename' => 'Filename',
-            'fileextension' => 'Fileextension',
-            'filesize' => 'Filesize',
         ];
     }
 

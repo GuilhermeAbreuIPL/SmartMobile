@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 25-Nov-2024 às 15:13
+-- Tempo de geração: 26-Nov-2024 às 11:47
 -- Versão do servidor: 8.2.0
 -- versão do PHP: 8.1.26
 
@@ -344,8 +344,6 @@ DROP TABLE IF EXISTS `imagens`;
 CREATE TABLE IF NOT EXISTS `imagens` (
   `id` int NOT NULL AUTO_INCREMENT,
   `filename` varchar(45) DEFAULT NULL,
-  `fileextension` varchar(45) DEFAULT NULL,
-  `filesize` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -523,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   PRIMARY KEY (`id`),
   KEY `categoria_id` (`categoria_id`),
   KEY `imagem_id` (`imagem_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 

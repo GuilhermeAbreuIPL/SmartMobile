@@ -83,11 +83,9 @@
                         'visible' => Yii::$app->user->can('viewPromocao')
                     ],
 
-                    //header gestao produtos
-                    ['label' => 'Gestão Produtos', 'header' => true],
-                    ['label' => 'Vista Produtos', 'url' => ['produto/index'] /*prems aqui*/],
-
-
+                    //metodo produtos
+                    ['label' => 'Produtos', 'url' => ['produto/index'],
+                    ],
 
                 ],
             ]);
