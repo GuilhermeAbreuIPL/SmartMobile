@@ -87,6 +87,10 @@
                     ['label' => 'Produtos', 'url' => ['produto/index'],
                     ],
 
+                    //metodo produto promocao
+                    ['label' => 'Promoção Produtos', 'url' => ['produtopromocao/index'],
+                        'visible' => Yii::$app->user->can('viewPromocao')
+                    ],
                 ],
             ]);
             ?>

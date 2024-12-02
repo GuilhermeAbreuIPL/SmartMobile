@@ -1,10 +1,6 @@
 <?php
 
-namespace backend\models;
-
-use common\models\Promocao;
-use common\models\Produto;
-use Yii;
+namespace common\models;
 
 /**
  * This is the model class for table "produto_promocao".
@@ -35,6 +31,7 @@ class ProdutoPromocao extends \yii\db\ActiveRecord
     {
         return [
             [['datainicio', 'datafim'], 'safe'],
+            ['datafim', 'compare', 'compareAttribute' => 'datainicio', 'operator' => '>=', 'message' => 'A data de fim não pode ser anterior à data de início.'],
             [['produto_id', 'promocoes_id'], 'integer'],
             [['produto_id'], 'exist', 'skipOnError' => true, 'targetClass' => Produto::class, 'targetAttribute' => ['produto_id' => 'id']],
             [['promocoes_id'], 'exist', 'skipOnError' => true, 'targetClass' => Promocao::class, 'targetAttribute' => ['promocoes_id' => 'id']],
@@ -70,7 +67,7 @@ class ProdutoPromocao extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPromocoes()
+    public function getPromocao()
     {
         return $this->hasOne(Promocao::class, ['id' => 'promocoes_id']);
     }

@@ -2,9 +2,7 @@
 
 namespace common\models;
 
-use Yii;
 use backend\models\CompraLoja;
-use backend\models\ProdutoPromocao;
 
 /**
  * This is the model class for table "produtos".
