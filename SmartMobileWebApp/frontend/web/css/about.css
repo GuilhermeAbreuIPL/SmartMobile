@@ -6,7 +6,6 @@
 }
 
 .person {
-    /*background-color: aqua;*/
     height: 30rem;
 }
 
@@ -52,4 +51,23 @@
     margin-top: -2%;
     font-family: sans-serif;
     cursor: default;
+}
+
+.container-map{
+    width: 90%;
+    height: 500px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: #eee;
+    border-radius: 8px;
+    align-content: center;
+    justify-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.50);
+}
+
+.google-map {
+    width: 900px;
+    height: 450px;
 }

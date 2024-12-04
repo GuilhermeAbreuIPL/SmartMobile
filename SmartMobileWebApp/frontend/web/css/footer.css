@@ -1,16 +1,19 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+:root {
+    --footer-height: 180px; /* Altura do footer */
+}
+
+.body-content {
+    padding-bottom: var(--footer-height); /* Espaço reservado para o footer */
 }
 
 .custom-footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--footer-height);
     background-color: #333;
     color: #fff;
-    padding: 20px 0;
-    font-family: Arial, sans-serif;
-    width: 100%;
+    z-index: 1000;
 }
 
 .footer-container {
@@ -19,7 +22,7 @@
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 2% 40px 0 40px;
     width: 100%;
 }
 
