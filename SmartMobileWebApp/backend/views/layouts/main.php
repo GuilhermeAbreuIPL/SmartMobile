@@ -24,6 +24,7 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <?php $this->beginBody() ?>
@@ -47,7 +48,6 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
     <!-- Main Footer -->
     <?= $this->render('footer') ?>
 </div>
-
 <?php $this->endBody() ?>
 </body>
 </html>
