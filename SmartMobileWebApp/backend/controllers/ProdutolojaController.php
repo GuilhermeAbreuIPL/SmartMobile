@@ -62,7 +62,7 @@ class ProdutolojaController extends Controller
      */
     public function actionIndex($lojaId = null)
     {
-        if ($lojaId === null) {
+        if ($lojaId === null || $lojaId === '') {
             return $this->render('index', [
                 'produtos' => [],
                 'lojas' => Loja::find()->all(),

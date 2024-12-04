@@ -96,6 +96,11 @@
                     ['label' => 'Stock Lojas', 'url' => ['produtoloja/index'],
                         'visible' => Yii::$app->user->can('viewstock')
                     ],
+
+                    //metodo compra loja
+                    ['label' => 'Compras Loja', 'url' => ['compraloja/index'],
+                        'visible' => Yii::$app->user->can('viewcompraloja')
+                    ],
                 ],
             ]);
             ?>
