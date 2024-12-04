@@ -6,6 +6,8 @@ use backend\models\ProdutoForm;
 use common\models\Categoria;
 use common\models\Imagem;
 use common\models\Produto;
+use common\models\ProdutoLoja;
+use common\models\ProdutoPromocao;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -234,6 +236,18 @@ class ProdutoController extends Controller
         $transaction = Yii::$app->db->beginTransaction();
 
         try {
+            //remove todas as promoções e produtos em loja associados ao produto
+            ProdutoPromocao::deleteAll(['produto_id' => $id]);
+            $protecaopromocoes = ProdutoPromocao::find()->where(['produto_id' => $id])->count();
+            ProdutoLoja::deleteAll(['produto_id' => $id]);
+            $protecaoprodutosloja = ProdutoLoja::find()->where(['produto_id' => $id])->count();
+
+            // Verifica se todas as promoções e produtos em loja foram removidas
+            if ($protecaopromocoes > 0 || $protecaoprodutosloja > 0) {
+                throw new Exception("Nem todas as promoções ou produtos em loja foram removidas");
+            }
+
+
             // Apaga o produto
             if (!$model->delete()) {
                 throw new Exception("Erro ao remover o produto da base de dados");

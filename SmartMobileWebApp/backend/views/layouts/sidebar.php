@@ -91,6 +91,11 @@
                     ['label' => 'Promoção Produtos', 'url' => ['produtopromocao/index'],
                         'visible' => Yii::$app->user->can('viewPromocao')
                     ],
+
+                    //metodo produto loja
+                    ['label' => 'Stock Lojas', 'url' => ['produtoloja/index'],
+                        'visible' => Yii::$app->user->can('viewstock')
+                    ],
                 ],
             ]);
             ?>

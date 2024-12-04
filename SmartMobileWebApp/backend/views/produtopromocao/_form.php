@@ -52,20 +52,4 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.mi
     <?php ActiveForm::end(); ?>
 
 </div>
-
-<?php
-$this->registerJs("$('.select2').select2({ allowClear: true, minimumInputLength: 1, width: '100%' });", View::POS_END);
-
-$this->registerJs("
-    $(document).ready(function() {
-        if (typeof flatpickr !== 'undefined') {
-            $('.datetimepicker').flatpickr({
-                enableTime: true,
-                dateFormat: 'Y-m-d H:i',
-                time_24hr: true,
-                allowInput: true
-            });
-        }
-    });
-", View::POS_READY);
-?>
+<script src=" <?= Yii::getAlias('@web/js/produtopromocao.js') ?>"></script>
