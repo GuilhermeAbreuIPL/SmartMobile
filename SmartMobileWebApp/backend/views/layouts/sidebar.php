@@ -59,21 +59,48 @@
                     ['label' => 'Gestão Geral', 'header' => true],
 
                     //fornecedores
-                    ['label' => 'Vista Fornecedores', 'url' => ['fornecedor/index'],
+                    ['label' => 'Fornecedores', 'url' => ['fornecedor/index'],
                         'visible' => Yii::$app->user->can('viewfornecedor'),
                     ],
 
                     //lojas
-                    ['label' => 'Vista Lojas', 'url' => ['loja/index'],
+                    ['label' => 'Lojas', 'url' => ['loja/index'],
                         'visible' => Yii::$app->user->can('viewloja')
                     ],
 
-                    //header gestao produtos
-                    ['label' => 'Gestão Produtos', 'header' => true],
-                    ['label' => 'Vista Produtos', 'url' => ['produto/index'] /*prems aqui*/],
+                    //metodo pagamento
+                    ['label' => 'Métodos de Pagamento', 'url' => ['metodopagamento/index'],
+                       'visible' => Yii::$app->user->can('viewMetodoPagamento')
+                    ],
 
+                    //metodo categoria
+                    ['label' => 'Categorias', 'url' => ['categoria/index'],
+                        'visible' => Yii::$app->user->can('viewCategoria')
+                    ],
 
+                    //metodo promocao
+                    ['label' => 'Promoções', 'url' => ['promocao/index'],
+                        'visible' => Yii::$app->user->can('viewPromocao')
+                    ],
 
+                    //metodo produtos
+                    ['label' => 'Produtos', 'url' => ['produto/index'],
+                    ],
+
+                    //metodo produto promocao
+                    ['label' => 'Promoção Produtos', 'url' => ['produtopromocao/index'],
+                        'visible' => Yii::$app->user->can('viewPromocao')
+                    ],
+
+                    //metodo produto loja
+                    ['label' => 'Stock Lojas', 'url' => ['produtoloja/index'],
+                        'visible' => Yii::$app->user->can('viewstock')
+                    ],
+
+                    //metodo compra loja
+                    ['label' => 'Compras Loja', 'url' => ['compraloja/index'],
+                        'visible' => Yii::$app->user->can('viewcompraloja')
+                    ],
                 ],
             ]);
             ?>

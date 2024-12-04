@@ -138,6 +138,19 @@ class RbacController extends Controller
         $auth->addChild($gestor, $deleteLoja);
         $auth->addChild($gestor, $viewLoja);
 
+        //---------------------- Permissões Compra Loja --------------------------------
+        $createCompraLoja = $auth->createPermission('createCompraLoja');
+        $createCompraLoja->description = 'Criar Compra Loja';
+        $auth->add($createCompraLoja);
+
+        $viewCompraLoja = $auth->createPermission('viewCompraLoja');
+        $viewCompraLoja->description = 'Ver Compra Loja';
+        $auth->add($viewCompraLoja);
+
+        //Permissões para compra loja
+        $auth->addChild($funcionario, $createCompraLoja);
+        $auth->addChild($funcionario, $viewCompraLoja);
+
         //---------------------- Permissões Stock --------------------------------
         $addStock = $auth->createPermission('adicionarStock');
         $addStock->description = 'Adicionar Stock';

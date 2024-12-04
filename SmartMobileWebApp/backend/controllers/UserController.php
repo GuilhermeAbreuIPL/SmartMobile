@@ -6,6 +6,7 @@ use backend\models\UserSearch;
 use common\models\User;
 use common\models\UserForm;
 use common\models\Userprofile;
+use common\models\Morada;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -28,7 +29,7 @@ class UserController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create'],
+                        'actions' => ['index', 'view', 'create', 'moradas'],
                         'roles' => ['admin', 'gestor', 'funcionario'],
                     ],
                 ],
@@ -79,9 +80,28 @@ class UserController extends Controller
         ]);
     }
 
+    public function actionMoradas($id)
+    {
+        $user = User::findOne($id);
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found.');
+        }
+
+        if (!$user->moradas) {
+            Yii::$app->session->setFlash('error', 'Este user não tem moradas associadas.');
+            return $this->redirect(Yii::$app->session->get('lastUrl', ['user/index']));
+        }
+
+        $moradas = $user->moradas;
+
+        return $this->render('moradas', [
+            'user' => $user,
+            'moradas' => $moradas,
+        ]);
+    }
     public function actionCreate(){
         $model = new UserForm();
-
 
         if ($model->load(\Yii::$app->request->post())) {
             $model->create();

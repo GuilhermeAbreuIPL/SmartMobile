@@ -46,6 +46,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;GuilhermeAbreuIPL&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/GuilhermeAbreuIPL/SmartMobile.git&quot;,
+    &quot;accountId&quot;: &quot;d893279d-58ec-45b9-9a3f-ab8dfb73d15e&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -178,7 +190,6 @@
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/composer" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/symfony/var-dumper" />
-      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/yiisoft/yii2-bootstrap5" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/yiisoft/yii2-composer" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/yiisoft/yii2" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/yiisoft/yii2-gii" />
@@ -209,7 +220,6 @@
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/bower-asset/inputmask" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/bower-asset/jquery" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/guzzlehttp/psr7" />
-      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/bower-asset/bootstrap" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/codeception/codeception" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/codeception/lib-asserts" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/bower-asset/punycode" />
@@ -228,6 +238,10 @@
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/npm-asset/bootstrap" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/almasaeed2010/adminlte" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/yiisoft/yii2-bootstrap4" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/kartik-v/yii2-krajee-base" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/kartik-v/yii2-bootstrap5-dropdown" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/yiisoft/yii2-bootstrap5" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/bower-asset/bootstrap" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -244,14 +258,17 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Corrigir-problemas-projeto(new-project)&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;CRUDs-backend&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/SmartMobile/SmartMobileWebApp/backend/views/site&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/SmartMobile&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
@@ -262,6 +279,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\views\site" />
       <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\views\layouts" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\SmartMobile\SmartMobileWebApp\backend\web\uploads" />
     </key>
   </component>
   <component name="RunManager" selected="Codeception.Main">
@@ -339,7 +359,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.15619.9" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PS-243.21565.202" />
+        <option value="bundled-php-predefined-a98d8de5180a-5fbe0c30323e-com.jetbrains.php.sharedIndexes-PS-243.21565.202" />
       </set>
     </attachedChunks>
   </component>
@@ -356,6 +377,18 @@
       <workItem from="1732119430549" duration="5657000" />
       <workItem from="1732140410031" duration="5152000" />
       <workItem from="1732187782874" duration="7393000" />
+      <workItem from="1732460514527" duration="13790000" />
+      <workItem from="1732489260993" duration="14000" />
+      <workItem from="1732489291237" duration="141000" />
+      <workItem from="1732489768655" duration="201000" />
+      <workItem from="1732489978849" duration="641000" />
+      <workItem from="1732546461056" duration="9067000" />
+      <workItem from="1732619761222" duration="3580000" />
+      <workItem from="1732624689649" duration="649000" />
+      <workItem from="1732987009506" duration="6596000" />
+      <workItem from="1733149588063" duration="25978000" />
+      <workItem from="1733224873142" duration="5003000" />
+      <workItem from="1733324145720" duration="10308000" />
     </task>
     <servers />
   </component>
