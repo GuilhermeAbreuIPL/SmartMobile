@@ -65,11 +65,11 @@
   </header>
 
   <!-- Backdrop -->
-  <div id="backdrop" class="backdrop" onclick="closeAllSidebars()"></div>
+  <div id="backdrop" class="backdrop" onclick=""></div>
 
   <!-- Sidebar Menu-->
   <div id="SidebarMenu" class="sidebarMenu">
-    <a href="#" class="closebtn" onclick="closeNavMenu()">×</a>
+    <a href="#" class="closebtn" onclick="closeAllSidebars('SidebarMenu')">×</a>
     <a href="#">About</a>
     <a href="#">Services</a>
     <a href="#">Clients</a>
@@ -78,7 +78,7 @@
 
   <!-- Sidebar Profile -->
   <div id="SidebarProfile" class="sdCartProfile">
-    <a href="#" class="closebtn" onclick="closeNavProfile()">×</a>
+    <a href="#" class="closebtn" onclick="closeAllSidebars('SidebarProfile')">×</a>
 
     <div class="profile-content">
       <hr>
@@ -99,7 +99,7 @@
 
   <!-- Sidebar Cart -->
   <div id="SidebarCart" class="sdCartProfile">
-    <a href="#" class="closebtn" onclick="closeNavCart()">×</a>
+    <a href="#" class="closebtn" onclick="closeAllSidebars('SidebarCart')">×</a>
     <a href="#">Cart</a>
   </div>
 

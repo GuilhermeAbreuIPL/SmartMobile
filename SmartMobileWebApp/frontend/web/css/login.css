@@ -53,7 +53,7 @@ body {
 }
 
 .extra-options .link {
-    color: #ffa500;
+    color: #ff6600;
     text-decoration: none;
 }
 
@@ -63,7 +63,7 @@ body {
 
 
 .submit-button {
-    background-color: #ffa500;
+    background-color: #ff6600;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -74,7 +74,7 @@ body {
 }
 
 .submit-button:hover {
-    background-color: #e69500;
+    background-color: #ff6600;
 }
 
 

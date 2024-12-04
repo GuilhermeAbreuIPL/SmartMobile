@@ -19,8 +19,6 @@ AppAsset::register($this);
 <link rel="stylesheet" href="<?= Yii::getAlias('@web/css/navbar.css') ?>">
 <link rel="stylesheet" href="<?= Yii::getAlias('@web/css/footer.css') ?>">
 
-<script src="<?= Yii::getAlias('@web/js/navbar.js') ?>"></script>
-
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
