@@ -247,7 +247,8 @@ input:checked + .slider::before {
 }
 
 .profile-content .btn-create,
-.profile-content .btn-login {
+.profile-content .btn-login,
+.profile-content .btn-logout {
     padding: 10px 20px;
     background-color: #ff6600;
     color: white;
@@ -255,10 +256,12 @@ input:checked + .slider::before {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    text-align: center;
 }
 
 .profile-content .btn-create:hover,
-.profile-content .btn-login:hover {
+.profile-content .btn-login:hover,
+.profile-content .btn-logout:hover {
     background-color: #e05500;
 }
 

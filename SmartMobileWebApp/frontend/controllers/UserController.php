@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function actionView()
     {
-        $userId = Yii::$app->user->id; // ID do utilizador logado
+        $userId = Yii::$app->user->id;
         $user = User::findOne($userId);
         $profile = Userprofile::findOne(['id' => $userId]);
 
@@ -150,7 +150,7 @@ class UserController extends Controller
     public function actionDeleteMorada($moradaId)
     {
         $userId = Yii::$app->user->id;
-        
+
         $model = Morada::findOne(['id' => $moradaId, 'user_id' => $userId]);
 
         if ($model) {

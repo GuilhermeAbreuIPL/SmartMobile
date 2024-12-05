@@ -82,18 +82,30 @@
 
     <div class="profile-content">
       <hr>
-      <div class="container-white">
-        <h2>Olá! Faz já o teu Registo no smartmobile</h2>
-        <div class="buttons">
-          <a href="<?= \yii\helpers\Url::to(['site/signup'])?>" class="btn-create">Criar conta</a>
-          <a href="<?= \yii\helpers\Url::to(['site/login']) ?>" class="btn-login">Iniciar sessão</a>
-        </div>
-      </div>
-      <hr>
-      <div class="menu">
-        <a href="<?= \yii\helpers\Url::to(['user/view'])?>">Dados pessoais</a>
-        <a href="<?= \yii\helpers\Url::to(['site/#'])?>">Minhas encomendas</a>
-      </div>
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <div class="container-white">
+                <div class="user-info">
+                    <h2>Olá, <?= Yii::$app->user->identity->username ?>!</h2>
+                    <a href="<?= \yii\helpers\Url::to(['site/logout']) ?>" class="btn-logout"
+                       data-method="post">Logout</a>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="container-white">
+                <h2>Olá! Faz já o teu Registo no smartmobile</h2>
+                <div class="buttons">
+                    <a href="<?= \yii\helpers\Url::to(['site/signup']) ?>" class="btn-create">Criar conta</a>
+                    <a href="<?= \yii\helpers\Url::to(['site/login']) ?>" class="btn-login">Iniciar sessão</a>
+                </div>
+            </div>
+        <?php endif; ?>
+        <hr>
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <div class="menu">
+                <a href="<?= \yii\helpers\Url::to(['user/view']) ?>">Dados pessoais</a>
+                <a href="<?= \yii\helpers\Url::to(['site/#']) ?>">Minhas encomendas</a>
+            </div>
+        <?php endif; ?>
     </div>
   </div>
 
