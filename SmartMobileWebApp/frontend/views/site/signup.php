@@ -15,17 +15,17 @@ use yii\bootstrap5\ActiveForm;
     <div class="signup-box">
         <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
+        <?= $form->field($model, 'nome', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => 45]) ?>
+
         <?= $form->field($model, 'username', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength'=> 255 , 'autofocus' => true]) ?>
 
         <?= $form->field($model, 'email', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => 255]) ?>
 
-        <?= $form->field($model, 'password', ['options' => ['class' => 'form-group input-field']])->passwordInput()?>
-
-        <?= $form->field($model, 'nome', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => 45]) ?>
-
         <?= $form->field($model, 'nif', ['options' => ['class' => 'form-group input-field']])->textInput(['minlength' => 9, 'maxlength' => 9]) ?>
 
         <?= $form->field($model, 'telemovel', ['options' => ['class' => 'form-group input-field']])->textInput(['minlength' => 9, 'maxlength' => 9]) ?>
+
+        <?= $form->field($model, 'password', ['options' => ['class' => 'form-group input-field']])->passwordInput()?>
 
         <?= $form->field($model, 'role')->hiddenInput(['value' => 'Cliente'])->label(false) ?>
 

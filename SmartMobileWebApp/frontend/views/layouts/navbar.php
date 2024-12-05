@@ -91,8 +91,8 @@
       </div>
       <hr>
       <div class="menu">
-        <a href="#"><i class="icon-user"></i> Dados pessoais</a>
-        <a href="#"><i class="icon-orders"></i> Minhas encomendas</a>
+        <a href="<?= \yii\helpers\Url::to(['site/#'])?>">Dados pessoais</a>
+        <a href="<?= \yii\helpers\Url::to(['site/#'])?>">Minhas encomendas</a>
       </div>
     </div>
   </div>
