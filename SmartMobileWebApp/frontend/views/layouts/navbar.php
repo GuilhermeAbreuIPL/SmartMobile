@@ -91,7 +91,7 @@
       </div>
       <hr>
       <div class="menu">
-        <a href="<?= \yii\helpers\Url::to(['site/#'])?>">Dados pessoais</a>
+        <a href="<?= \yii\helpers\Url::to(['user/view'])?>">Dados pessoais</a>
         <a href="<?= \yii\helpers\Url::to(['site/#'])?>">Minhas encomendas</a>
       </div>
     </div>

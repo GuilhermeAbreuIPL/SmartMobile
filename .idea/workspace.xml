@@ -262,7 +262,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "DEV",
+    "git-widget-placeholder": "Frontend-Funcionalidades-CSS",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/wamp64/www/SmartMobile",
     "node.js.detected.package.eslint": "true",
@@ -389,6 +389,7 @@
       <workItem from="1733149588063" duration="25978000" />
       <workItem from="1733224873142" duration="5003000" />
       <workItem from="1733324145720" duration="12095000" />
+      <workItem from="1733412193199" duration="3219000" />
     </task>
     <servers />
   </component>
