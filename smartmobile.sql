@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 26-Nov-2024 às 11:47
+-- Tempo de geração: 05-Dez-2024 às 15:24
 -- Versão do servidor: 8.2.0
 -- versão do PHP: 8.1.26
 
@@ -41,11 +41,11 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('admin', '1', 1732297456),
-('cliente', '60', 1732297456),
-('cliente', '64', 1732382439),
-('funcionario', '57', 1732297456),
-('gestor', '56', 1732297456);
+('admin', '1', 1733333310),
+('cliente', '60', 1733333310),
+('cliente', '64', 1733333310),
+('funcionario', '57', 1733333310),
+('gestor', '56', 1733333310);
 
 -- --------------------------------------------------------
 
@@ -72,65 +72,67 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('addToCart', 2, 'Adicionar ao Carrinho', NULL, NULL, 1732297456, 1732297456),
-('adicionarStock', 2, 'Adicionar Stock', NULL, NULL, 1732297456, 1732297456),
-('admin', 1, NULL, NULL, NULL, 1732297456, 1732297456),
-('cliente', 1, NULL, NULL, NULL, 1732297456, 1732297456),
-('createCategoria', 2, 'Criar Categoria', NULL, NULL, 1732297456, 1732297456),
-('createCliente', 2, 'Criar Cliente', NULL, NULL, 1732297456, 1732297456),
-('createFornecedor', 2, 'Criar Fornecedor', NULL, NULL, 1732297456, 1732297456),
-('createFuncionario', 2, 'Criar Funcionario', NULL, NULL, 1732297456, 1732297456),
-('createGestor', 2, 'Criar Gestor', NULL, NULL, 1732297456, 1732297456),
-('createLoja', 2, 'Criar Loja', NULL, NULL, 1732297456, 1732297456),
-('createMetodoEntrega', 2, 'Criar Metodo de Entrega', NULL, NULL, 1732297456, 1732297456),
-('createMetodoPagamento', 2, 'Criar Metodo de Pagamento', NULL, NULL, 1732297456, 1732297456),
-('createOrder', 2, 'Criar Encomenda', NULL, NULL, 1732297456, 1732297456),
-('createProduto', 2, 'Criar Produto', NULL, NULL, 1732297456, 1732297456),
-('createPromocao', 2, 'Criar Promoção', NULL, NULL, 1732297456, 1732297456),
-('deleteCategoria', 2, 'Remover Categoria', NULL, NULL, 1732297456, 1732297456),
-('deleteCliente', 2, 'Remover Cliente', NULL, NULL, 1732297456, 1732297456),
-('deleteFornecedor', 2, 'Remover Fornecedor', NULL, NULL, 1732297456, 1732297456),
-('deleteFuncionario', 2, 'Remover Funcionario', NULL, NULL, 1732297456, 1732297456),
-('deleteGestor', 2, 'Remover Gestor', NULL, NULL, 1732297456, 1732297456),
-('deleteLoja', 2, 'Remover Loja', NULL, NULL, 1732297456, 1732297456),
-('deleteMetodoEntrega', 2, 'Remover Metodo de Entrega', NULL, NULL, 1732297456, 1732297456),
-('deleteMetodoPagamento', 2, 'Remover Metodo de Pagamento', NULL, NULL, 1732297456, 1732297456),
-('deleteMyProfile', 2, 'Remover o seu perfil', NULL, NULL, 1732297456, 1732297456),
-('deleteOrder', 2, 'Remover Encomenda', NULL, NULL, 1732297456, 1732297456),
-('deleteProduto', 2, 'Remover Produto', NULL, NULL, 1732297456, 1732297456),
-('deletePromocao', 2, 'Remover Promoção', NULL, NULL, 1732297456, 1732297456),
-('editQuantityOnCart', 2, 'Editar quantidade no Carrinho', NULL, NULL, 1732297456, 1732297456),
-('funcionario', 1, NULL, NULL, NULL, 1732297456, 1732297456),
-('gestor', 1, NULL, NULL, NULL, 1732297456, 1732297456),
-('removeFromCart', 2, 'Remover do Carrinho', NULL, NULL, 1732297456, 1732297456),
-('removerStock', 2, 'Remover Stock', NULL, NULL, 1732297456, 1732297456),
-('statusOrder', 2, 'Alterar estado da encomenda', NULL, NULL, 1732297456, 1732297456),
-('updateCategoria', 2, 'Atualizar Categoria', NULL, NULL, 1732297456, 1732297456),
-('updateFornecedor', 2, 'Atualizar Fornecedor', NULL, NULL, 1732297456, 1732297456),
-('updateFuncionario', 2, 'Atualizar Funcionario', NULL, NULL, 1732297456, 1732297456),
-('updateGestor', 2, 'Atualizar Gestor', NULL, NULL, 1732297456, 1732297456),
-('updateLoja', 2, 'Atualizar Loja', NULL, NULL, 1732297456, 1732297456),
-('updateMetodoEntrega', 2, 'Atualizar Metodo de Entrega', NULL, NULL, 1732297456, 1732297456),
-('updateMetodoPagamento', 2, 'Atualizar Metodo de Pagamento', NULL, NULL, 1732297456, 1732297456),
-('updateMyProfile', 2, 'Atualizar o seu perfil', NULL, NULL, 1732297456, 1732297456),
-('updateProduto', 2, 'Atualizar Produto', NULL, NULL, 1732297456, 1732297456),
-('updatePromocao', 2, 'Atualizar Promoção', NULL, NULL, 1732297456, 1732297456),
-('viewAllOrders', 2, 'Ver todas as encomendas', NULL, NULL, 1732297456, 1732297456),
-('viewAllProfiles', 2, 'Ver todos os perfis', NULL, NULL, 1732297456, 1732297456),
-('viewBackend', 2, 'Ver Backend', NULL, NULL, 1732297456, 1732297456),
-('viewCart', 2, 'Ver Carrinho', NULL, NULL, 1732297456, 1732297456),
-('viewCategoria', 2, 'Ver Categoria', NULL, NULL, 1732297456, 1732297456),
-('viewCliente', 2, 'Ver Cliente', NULL, NULL, 1732297456, 1732297456),
-('viewFornecedor', 2, 'Ver Fornecedor', NULL, NULL, 1732297456, 1732297456),
-('viewFuncionario', 2, 'Ver Funcionario', NULL, NULL, 1732297456, 1732297456),
-('viewGestor', 2, 'Ver Gestor', NULL, NULL, 1732297456, 1732297456),
-('viewLoja', 2, 'Ver Loja', NULL, NULL, 1732297456, 1732297456),
-('viewMetodoEntrega', 2, 'Ver Metodo de Entrega', NULL, NULL, 1732297456, 1732297456),
-('viewMetodoPagamento', 2, 'Ver Metodo de Pagamento', NULL, NULL, 1732297456, 1732297456),
-('viewMyProfile', 2, 'Ver o seu perfil', NULL, NULL, 1732297456, 1732297456),
-('viewOwnOrders', 2, 'Ver as suas encomendas', NULL, NULL, 1732297456, 1732297456),
-('viewPromocao', 2, 'Ver Promoção', NULL, NULL, 1732297456, 1732297456),
-('viewStock', 2, 'Ver Stock', NULL, NULL, 1732297456, 1732297456);
+('addToCart', 2, 'Adicionar ao Carrinho', NULL, NULL, 1733333310, 1733333310),
+('adicionarStock', 2, 'Adicionar Stock', NULL, NULL, 1733333310, 1733333310),
+('admin', 1, NULL, NULL, NULL, 1733333310, 1733333310),
+('cliente', 1, NULL, NULL, NULL, 1733333310, 1733333310),
+('createCategoria', 2, 'Criar Categoria', NULL, NULL, 1733333310, 1733333310),
+('createCliente', 2, 'Criar Cliente', NULL, NULL, 1733333310, 1733333310),
+('createCompraLoja', 2, 'Criar Compra Loja', NULL, NULL, 1733333310, 1733333310),
+('createFornecedor', 2, 'Criar Fornecedor', NULL, NULL, 1733333310, 1733333310),
+('createFuncionario', 2, 'Criar Funcionario', NULL, NULL, 1733333310, 1733333310),
+('createGestor', 2, 'Criar Gestor', NULL, NULL, 1733333310, 1733333310),
+('createLoja', 2, 'Criar Loja', NULL, NULL, 1733333310, 1733333310),
+('createMetodoEntrega', 2, 'Criar Metodo de Entrega', NULL, NULL, 1733333310, 1733333310),
+('createMetodoPagamento', 2, 'Criar Metodo de Pagamento', NULL, NULL, 1733333310, 1733333310),
+('createOrder', 2, 'Criar Encomenda', NULL, NULL, 1733333310, 1733333310),
+('createProduto', 2, 'Criar Produto', NULL, NULL, 1733333310, 1733333310),
+('createPromocao', 2, 'Criar Promoção', NULL, NULL, 1733333310, 1733333310),
+('deleteCategoria', 2, 'Remover Categoria', NULL, NULL, 1733333310, 1733333310),
+('deleteCliente', 2, 'Remover Cliente', NULL, NULL, 1733333310, 1733333310),
+('deleteFornecedor', 2, 'Remover Fornecedor', NULL, NULL, 1733333310, 1733333310),
+('deleteFuncionario', 2, 'Remover Funcionario', NULL, NULL, 1733333310, 1733333310),
+('deleteGestor', 2, 'Remover Gestor', NULL, NULL, 1733333310, 1733333310),
+('deleteLoja', 2, 'Remover Loja', NULL, NULL, 1733333310, 1733333310),
+('deleteMetodoEntrega', 2, 'Remover Metodo de Entrega', NULL, NULL, 1733333310, 1733333310),
+('deleteMetodoPagamento', 2, 'Remover Metodo de Pagamento', NULL, NULL, 1733333310, 1733333310),
+('deleteMyProfile', 2, 'Remover o seu perfil', NULL, NULL, 1733333310, 1733333310),
+('deleteOrder', 2, 'Remover Encomenda', NULL, NULL, 1733333310, 1733333310),
+('deleteProduto', 2, 'Remover Produto', NULL, NULL, 1733333310, 1733333310),
+('deletePromocao', 2, 'Remover Promoção', NULL, NULL, 1733333310, 1733333310),
+('editQuantityOnCart', 2, 'Editar quantidade no Carrinho', NULL, NULL, 1733333310, 1733333310),
+('funcionario', 1, NULL, NULL, NULL, 1733333310, 1733333310),
+('gestor', 1, NULL, NULL, NULL, 1733333310, 1733333310),
+('removeFromCart', 2, 'Remover do Carrinho', NULL, NULL, 1733333310, 1733333310),
+('removerStock', 2, 'Remover Stock', NULL, NULL, 1733333310, 1733333310),
+('statusOrder', 2, 'Alterar estado da encomenda', NULL, NULL, 1733333310, 1733333310),
+('updateCategoria', 2, 'Atualizar Categoria', NULL, NULL, 1733333310, 1733333310),
+('updateFornecedor', 2, 'Atualizar Fornecedor', NULL, NULL, 1733333310, 1733333310),
+('updateFuncionario', 2, 'Atualizar Funcionario', NULL, NULL, 1733333310, 1733333310),
+('updateGestor', 2, 'Atualizar Gestor', NULL, NULL, 1733333310, 1733333310),
+('updateLoja', 2, 'Atualizar Loja', NULL, NULL, 1733333310, 1733333310),
+('updateMetodoEntrega', 2, 'Atualizar Metodo de Entrega', NULL, NULL, 1733333310, 1733333310),
+('updateMetodoPagamento', 2, 'Atualizar Metodo de Pagamento', NULL, NULL, 1733333310, 1733333310),
+('updateMyProfile', 2, 'Atualizar o seu perfil', NULL, NULL, 1733333310, 1733333310),
+('updateProduto', 2, 'Atualizar Produto', NULL, NULL, 1733333310, 1733333310),
+('updatePromocao', 2, 'Atualizar Promoção', NULL, NULL, 1733333310, 1733333310),
+('viewAllOrders', 2, 'Ver todas as encomendas', NULL, NULL, 1733333310, 1733333310),
+('viewAllProfiles', 2, 'Ver todos os perfis', NULL, NULL, 1733333310, 1733333310),
+('viewBackend', 2, 'Ver Backend', NULL, NULL, 1733333310, 1733333310),
+('viewCart', 2, 'Ver Carrinho', NULL, NULL, 1733333310, 1733333310),
+('viewCategoria', 2, 'Ver Categoria', NULL, NULL, 1733333310, 1733333310),
+('viewCliente', 2, 'Ver Cliente', NULL, NULL, 1733333310, 1733333310),
+('viewCompraLoja', 2, 'Ver Compra Loja', NULL, NULL, 1733333310, 1733333310),
+('viewFornecedor', 2, 'Ver Fornecedor', NULL, NULL, 1733333310, 1733333310),
+('viewFuncionario', 2, 'Ver Funcionario', NULL, NULL, 1733333310, 1733333310),
+('viewGestor', 2, 'Ver Gestor', NULL, NULL, 1733333310, 1733333310),
+('viewLoja', 2, 'Ver Loja', NULL, NULL, 1733333310, 1733333310),
+('viewMetodoEntrega', 2, 'Ver Metodo de Entrega', NULL, NULL, 1733333310, 1733333310),
+('viewMetodoPagamento', 2, 'Ver Metodo de Pagamento', NULL, NULL, 1733333310, 1733333310),
+('viewMyProfile', 2, 'Ver o seu perfil', NULL, NULL, 1733333310, 1733333310),
+('viewOwnOrders', 2, 'Ver as suas encomendas', NULL, NULL, 1733333310, 1733333310),
+('viewPromocao', 2, 'Ver Promoção', NULL, NULL, 1733333310, 1733333310),
+('viewStock', 2, 'Ver Stock', NULL, NULL, 1733333310, 1733333310);
 
 -- --------------------------------------------------------
 
@@ -155,6 +157,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('funcionario', 'adicionarStock'),
 ('gestor', 'createCategoria'),
 ('funcionario', 'createCliente'),
+('funcionario', 'createCompraLoja'),
 ('gestor', 'createFornecedor'),
 ('gestor', 'createFuncionario'),
 ('admin', 'createGestor'),
@@ -198,6 +201,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('cliente', 'viewCart'),
 ('gestor', 'viewCategoria'),
 ('funcionario', 'viewCliente'),
+('funcionario', 'viewCompraLoja'),
 ('gestor', 'viewFornecedor'),
 ('gestor', 'viewFuncionario'),
 ('admin', 'viewGestor'),
@@ -288,7 +292,15 @@ CREATE TABLE IF NOT EXISTS `compraloja` (
   KEY `fornecedor_id` (`fornecedor_id`),
   KEY `loja_id` (`loja_id`),
   KEY `produto_id` (`produto_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `compraloja`
+--
+
+INSERT INTO `compraloja` (`id`, `preçofornecedor`, `quantidade`, `datacompra`, `fornecedor_id`, `loja_id`, `produto_id`) VALUES
+(4, 12.00, 100, '2024-12-04', 1, 4, 7),
+(5, 12.00, 11, '2024-12-04', 1, 4, 7);
 
 -- --------------------------------------------------------
 
@@ -345,7 +357,14 @@ CREATE TABLE IF NOT EXISTS `imagens` (
   `id` int NOT NULL AUTO_INCREMENT,
   `filename` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `imagens`
+--
+
+INSERT INTO `imagens` (`id`, `filename`) VALUES
+(5, 'imagem_produto_5.png');
 
 -- --------------------------------------------------------
 
@@ -502,7 +521,14 @@ CREATE TABLE IF NOT EXISTS `produtolojas` (
   PRIMARY KEY (`id`),
   KEY `produto_id` (`produto_id`),
   KEY `loja_id` (`loja_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `produtolojas`
+--
+
+INSERT INTO `produtolojas` (`id`, `quantidade`, `produto_id`, `loja_id`) VALUES
+(1, 156, 7, 4);
 
 -- --------------------------------------------------------
 
@@ -521,7 +547,14 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   PRIMARY KEY (`id`),
   KEY `categoria_id` (`categoria_id`),
   KEY `imagem_id` (`imagem_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `produtos`
+--
+
+INSERT INTO `produtos` (`id`, `nome`, `preco`, `descricao`, `categoria_id`, `imagem_id`) VALUES
+(7, 'cao2', 0.00, 'a', 9, 5);
 
 -- --------------------------------------------------------
 
@@ -539,7 +572,14 @@ CREATE TABLE IF NOT EXISTS `produto_promocao` (
   PRIMARY KEY (`id`),
   KEY `produto_id` (`produto_id`),
   KEY `promocoes_id` (`promocoes_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `produto_promocao`
+--
+
+INSERT INTO `produto_promocao` (`id`, `datainicio`, `datafim`, `produto_id`, `promocoes_id`) VALUES
+(2, '2024-12-04', '2024-12-05', 7, 1);
 
 -- --------------------------------------------------------
 
