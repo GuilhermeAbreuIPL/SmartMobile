@@ -7,27 +7,36 @@ use yii\widgets\ActiveForm;
 /** @var common\models\Morada $model */
 
 ?>
+    <link rel="stylesheet" href="<?= Yii::getAlias('@web/css/forms.css') ?>">
 
-    <div class="morada-form">
+
         <h1><?= $model->isNewRecord ? 'Criar Morada' : 'Editar Morada' ?></h1>
 
-        <?php $form = ActiveForm::begin(); ?>
+    <div class="container-form">
 
-        <?= $form->field($model, 'rua')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'codpostal')->textInput(['maxlength' => true]) ?>
+        <div class="form-box">
+            <?php $form = ActiveForm::begin(); ?>
 
-        <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => 'btn btn-primary']) ?>
-            <?php if (!$model->isNewRecord): ?>
-                <?= Html::a('Apagar', ['delete-morada', 'moradaId' => $model->id], [
-                    'class' => 'btn btn-danger',
-                    'data-confirm' => 'Tem certeza que deseja apagar esta morada?',
-                    'data-method' => 'post',
-                ]) ?>
-            <?php endif; ?>
+            <?= $form->field($model, 'rua', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'localidade', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'codpostal', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => true]) ?>
+
+            <div class="extra-options">
+                Deseja <?= Html::a('voltar', ['user/view'], ['class' => 'link']) ?>?
+            </div>
+
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => 'btn submit-button', 'name' => 'signup-button']) ?>
+                <?php if (!$model->isNewRecord): ?>
+                    <?= Html::a('Apagar', ['delete-morada', 'moradaId' => $model->id], [
+                        'class' => 'btn danger-button',
+                        'data-confirm' => 'Tem certeza que deseja apagar esta morada?',
+                        'data-method' => 'post',
+                    ]) ?>
+                <?php endif; ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
         </div>
-
-        <?php ActiveForm::end(); ?>
     </div>
 <?php

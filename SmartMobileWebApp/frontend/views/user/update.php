@@ -8,26 +8,38 @@ use yii\widgets\ActiveForm;
 
 $this->title = 'Editar Perfil';
 ?>
-<div class="user-update">
-    <h1><?= Html::encode($this->title) ?></h1>
+<link rel="stylesheet" href="<?= Yii::getAlias('@web/css/forms.css') ?>">
 
-    <?php $form = ActiveForm::begin(); ?>
+<h1><?= Html::encode($this->title) ?></h1>
 
-    <!-- Campo Nome -->
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
-    <!-- Campo Username -->
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true, ]) ?>
-    <!-- Campo Email (desativado) -->
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true, ]) ?>
-    <!-- Campo NIF -->
-    <?= $form->field($model, 'nif')->textInput(['maxlength' => true]) ?>
-    <!-- Campo Telemóvel -->
-    <?= $form->field($model, 'telemovel')->textInput(['maxlength' => true]) ?>
+<div class="container-form">
 
-    <!-- Botão para salvar alterações -->
-    <div class="form-group">
-        <?= Html::submitButton('Guardar Alterações', ['class' => 'btn btn-success']) ?>
+    <div class="form-box"
+
+
+        <?php $form = ActiveForm::begin(); ?>
+
+        <!-- Campo Nome -->
+        <?= $form->field($model, 'nome', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => true]) ?>
+        <!-- Campo Username -->
+        <?= $form->field($model, 'username', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => true, ]) ?>
+        <!-- Campo Email (desativado) -->
+        <?= $form->field($model, 'email', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => true, ]) ?>
+        <!-- Campo NIF -->
+        <?= $form->field($model, 'nif', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => true]) ?>
+        <!-- Campo Telemóvel -->
+        <?= $form->field($model, 'telemovel', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => true]) ?>
+
+        <div class="extra-options">
+            Deseja <?= Html::a('voltar', ['user/view'], ['class' => 'link']) ?>?
+        </div>
+
+        <!-- Botão para salvar alterações -->
+        <div class="form-group">
+            <?= Html::submitButton('Guardar Alterações', ['class' => 'btn submit-button', 'name' => 'signup-button']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
 </div>
+

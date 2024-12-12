@@ -1,0 +1,187 @@
+/* Layout principal */
+
+h1{
+    text-align: center;
+    margin-top: 2%;
+}
+
+.config-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logo-box {
+    background-color: #444;
+    border-radius: 8px;
+    padding: 15px;
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-box .text {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    font-family: 'Trebuchet MS';
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    cursor: default;
+}
+
+.user-box{
+    background-color: #444;
+    border-radius: 8px;
+    padding: 15px;
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-box h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.user-details-widget {
+
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-details-widget h2 {
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 1.5rem;
+}
+
+.user-details-widget .btn-edit-dados {
+    margin-top: 20px;
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.user-details-widget .btn-edit-dados:hover {
+    background-color: #e05500;
+}
+
+.user-details-widget p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* Moradas */
+.morada-list {
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.morada-list h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.morada-card {
+    background-color: #444;
+    border-radius: 8px;
+    padding: 15px;
+    flex: 1 1 calc(33.333% - 20px);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 120px;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.morada-card:hover {
+    background-color: #555;
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.morada-card.add-new-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    border: 2px dashed #555;
+    color: #ffa500;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.morada-card.add-new-card:hover {
+    background-color: #444;
+    color: #ff7f00;
+}
+
+.morada-card p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Botão central no widget de moradas */
+.morada-card.add-new-card span {
+    font-size: 1.5rem;
+}
+
+/* Ajustes de espaçamento */
+.user-details-widget,
+.morada-list {
+    margin-bottom: 20px;
+    padding: 30px; /* Melhor espaçamento interno */
+}
+
+/* Layout responsivo */
+@media (max-width: 768px) {
+    .morada-card {
+        flex: 1 1 100%;
+    }
+    .user-details-widget,
+    .morada-list {
+        padding: 20px;
+    }
+}
