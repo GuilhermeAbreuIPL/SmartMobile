@@ -31,6 +31,7 @@
     <option name="configs">
       <option value="$PROJECT_DIR$/SmartMobileWebApp/backend/web/assets/20fa5ebc/composer.json" />
       <option value="$PROJECT_DIR$/SmartMobileWebApp/frontend/web/assets/20fa5ebc/composer.json" />
+      <option value="$PROJECT_DIR$/SmartMobileWebApp/backend/web/assets/750125a0/composer.json" />
     </option>
   </component>
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
@@ -55,13 +56,13 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/GuilhermeAbreuIPL/SmartMobile.git&quot;,
-    &quot;accountId&quot;: &quot;d893279d-58ec-45b9-9a3f-ab8dfb73d15e&quot;
+    &quot;accountId&quot;: &quot;6d8aee0f-568d-4f9f-8151-778cb77d608b&quot;
   }
 }</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\wamp64\bin\php\php8.1.28\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/sebastian/type" />
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
@@ -262,7 +263,7 @@
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;CRUDs-backend&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;API-REGISTO&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/SmartMobile&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -359,8 +360,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PS-243.21565.202" />
-        <option value="bundled-php-predefined-a98d8de5180a-5fbe0c30323e-com.jetbrains.php.sharedIndexes-PS-243.21565.202" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.23726.107" />
+        <option value="bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.23726.107" />
       </set>
     </attachedChunks>
   </component>
@@ -389,10 +390,24 @@
       <workItem from="1733149588063" duration="25978000" />
       <workItem from="1733224873142" duration="5003000" />
       <workItem from="1733324145720" duration="10308000" />
+      <workItem from="1733842546701" duration="1646000" />
+      <workItem from="1733934014864" duration="1069000" />
+      <workItem from="1734007636082" duration="3413000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

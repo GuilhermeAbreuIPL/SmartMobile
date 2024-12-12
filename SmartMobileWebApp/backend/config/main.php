@@ -12,7 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-        'api' => [
+        'api' =>[
             'class' => 'backend\modules\api\ModuleAPI',
         ]
     ],
@@ -45,8 +45,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //Rules relativas a api
-                'POST api/register' => 'registration/register',
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/user'],
 
             ],
         ],
