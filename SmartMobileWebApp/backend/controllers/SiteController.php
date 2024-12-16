@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\ProdutoPromocao;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -73,6 +74,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->verificarPromocoesExpiradas();
         if (Yii::$app->user->can('viewbackend')){
 
             return $this->render('index');
@@ -123,5 +125,25 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function verificarPromocoesExpiradas()
+    {
+        $promocoes = ProdutoPromocao::find()->all();
+
+        foreach ($promocoes as $promocao) {
+            if (strtotime($promocao->datafim) < time()) {
+                try {
+                    // Tenta apagar a promoção
+                    if ($promocao->delete()) {
+                        Yii::info("Promoção de produto ID {$promocao->produto_id} apagada com sucesso.", __METHOD__);
+                    } else {
+                        Yii::error("Erro ao tentar apagar a promoção de produto ID {$promocao->produto_id}.", __METHOD__);
+                    }
+                } catch (\Exception $e) {
+                    Yii::error("Erro ao tentar apagar a promoção: " . $e->getMessage(), __METHOD__);
+                }
+            }
+        }
     }
 }
