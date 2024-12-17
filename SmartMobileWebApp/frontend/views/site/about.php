@@ -3,6 +3,7 @@
 /** @var yii\web\View $this */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'About';
 ?>
@@ -18,29 +19,29 @@ $this->title = 'About';
     <div class="row">
         <div class="col person">
             <div class="moldura">
-                <img src="#" class="img-responsive" alt="...">
+                <img src="<?= Url::to('@web/foto_grupo/PedroLatado.jpeg' )?>" class="img-responsive" alt="...">
             </div>
             <div class="info-perfil">
                 <p>Pedro André Santos Latado</p>
-                <p>Nº 2231619</p>
+                <p>Nº 2231694</p>
             </div>
         </div>
         <div class="col person">
             <div class="moldura">
-                <img src="#" class="img-responsive" alt="...">
-            </div>
-            <div class="info-perfil">
-                <p>Pedro Gaspar</p>
-                <p>Nº 2231991</p>
-            </div>
-        </div>
-        <div class="col person">
-            <div class="moldura">
-                <img src="#" class="img-responsive" alt="...">
+                <img src="<?= Url::to('@web/foto_grupo/GuilhermeAbreu.png' )?>" class="img-responsive" alt="...">
             </div>
             <div class="info-perfil">
                 <p>Guilherme Nunes Abreu</p>
                 <p>Nº 2232352</p>
+            </div>
+        </div>
+        <div class="col person">
+            <div class="moldura">
+                <img src="<?= Url::to('@web/foto_grupo/PedroGaspar.jpg' )?>" class="img-responsive" alt="...">
+            </div>
+            <div class="info-perfil">
+                <p>Pedro Miguel Cavaleiro Gaspar</p>
+                <p>Nº 2231991</p>
             </div>
         </div>
     </div>
