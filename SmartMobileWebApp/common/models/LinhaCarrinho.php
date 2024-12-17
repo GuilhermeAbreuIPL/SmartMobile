@@ -72,4 +72,27 @@ class LinhaCarrinho extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Produto::class, ['id' => 'produto_id']);
     }
+
+    /**
+     * Verifica se há alterações no preço unitário de um produto e atualiza as linhas correspondentes.
+     * Remove a linha do carrinho se o produto não existir.
+     *
+     * @return void
+     */
+    public static function verificarPrecoProdutos()
+    {
+        $linhasCarrinho = self::find()->all();
+
+        foreach ($linhasCarrinho as $linha) {
+            $produto = Produto::findOne($linha->produto_id);
+            if ($produto) {
+                if ($linha->precounitario != $produto->preco) {
+                    $linha->precounitario = $produto->preco;
+                    $linha->save();
+                }
+            } else {
+                $linha->delete();
+            }
+        }
+    }
 }

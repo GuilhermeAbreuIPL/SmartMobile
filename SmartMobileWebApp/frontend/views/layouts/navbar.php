@@ -53,13 +53,16 @@
           </svg>
 
 
-        <!-- Carrinho -->
-        <svg class="iconClick" onclick="openSidebar('SidebarCart')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2 14h13"></path>
-          <path d="M16 5h5l-1 7H6"></path>
-        </svg>
+
+
+              <!-- Carrinho -->
+
+            <svg class="iconClick" onclick="openSidebar('SidebarCart'); loadCart()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2 14h13"></path>
+              <path d="M16 5h5l-1 7H6"></path>
+            </svg>
       </div>
     </div>
   </header>
@@ -111,8 +114,9 @@
 
   <!-- Sidebar Cart -->
   <div id="SidebarCart" class="sdCartProfile">
-    <a href="#" class="closebtn" onclick="closeAllSidebars('SidebarCart')">×</a>
-    <a href="#">Cart</a>
+    <a class="closebtn" onclick="closeAllSidebars('SidebarCart')">×</a>
+    <h2 href="" id="teste" data-urlCarrinhoView="<?= \yii\helpers\Url::to(['carrinho/view']) ?>"> Carrinho</h2>
+      <div id="cart-container"></div>
   </div>
 
 </body>
