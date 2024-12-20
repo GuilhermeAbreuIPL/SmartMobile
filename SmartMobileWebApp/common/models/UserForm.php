@@ -63,8 +63,10 @@ class UserForm extends Model
      * @return bool whether the creating new account was successful and email was sent
      */
     public function create()
-    {/*
+    {
+        /*
         if (!$this->validate()) {
+            dd($this->getErrorSummary(true));
             return null;
         }*/
 

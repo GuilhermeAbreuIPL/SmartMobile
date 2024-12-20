@@ -23,8 +23,10 @@ class ModuleAPI extends \yii\base\Module
 
         parent::init();
 
-
         // custom initialization code goes here
+
+        YII::$app->user->enableSession = false;
+
         /*Este código faz com que todos os pedidos façam parse para json*/
         Yii::$app->set('request', [
             'class' => '\yii\web\Request',
