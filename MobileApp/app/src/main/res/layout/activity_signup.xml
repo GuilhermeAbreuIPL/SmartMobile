@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
-    tools:context=".LoginActivity">
+    tools:context=".SignupActivity">
 
     <!-- Title -->
     <TextView
         android:id="@+id/titleProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sessão"
+        android:text="Signup"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -49,10 +48,30 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
-            android:text="Iniciar sessão"
+            android:text="Signup"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <!-- Nome Label -->
+        <TextView
+            android:id="@+id/nomeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- Nome EditText -->
+        <EditText
+            android:id="@+id/nomeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: João Antunes"
+            android:inputType="text" />
 
         <!-- Username Label -->
         <TextView
@@ -74,6 +93,68 @@
             android:hint="Ex: João Antunes"
             android:inputType="text" />
 
+        <!-- Email Label -->
+        <TextView
+            android:id="@+id/emailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- Email EditText -->
+        <EditText
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: JoaoAntunes@gmail.com"
+            android:inputType="text" />
+
+        <!-- NIF Label -->
+        <TextView
+            android:id="@+id/nifLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NIF"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- NIF EditText -->
+        <EditText
+            android:id="@+id/nifInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: 123456789"
+            android:maxLength="9"
+            android:inputType="number" />
+
+        <!-- Telemovel Label -->
+        <TextView
+            android:id="@+id/telemovelLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telemovel"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- Telemovel EditText -->
+        <EditText
+            android:id="@+id/telemovelInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: 911323555"
+            android:maxLength="9"
+            android:inputType="number" />
+
         <!-- Password Label -->
         <TextView
             android:id="@+id/passwordLabel"
@@ -94,24 +175,16 @@
             android:hint="Ex: **********"
             android:inputType="textPassword" />
 
-        <!-- Login Button -->
+        <!-- Register Button -->
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/orange"
-            android:text="Iniciar Sessão"
+            android:text="Signup"
             android:textColor="#FFFFFF" />
 
-        <!-- Reset Password -->
-        <TextView
-            android:id="@+id/resetPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Reset Password"
-            android:textColor="#0000FF"
-            android:textSize="14sp" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
