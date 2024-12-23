@@ -106,7 +106,7 @@
         <?php if (!Yii::$app->user->isGuest): ?>
             <div class="menu">
                 <a href="<?= \yii\helpers\Url::to(['user/view']) ?>">Dados pessoais</a>
-                <a href="<?= \yii\helpers\Url::to(['site/#']) ?>">Minhas encomendas</a>
+                <a href="<?= \yii\helpers\Url::to(['fatura/index']) ?>">Minhas encomendas</a>
             </div>
         <?php endif; ?>
     </div>

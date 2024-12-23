@@ -12,7 +12,7 @@ use backend\models\Compraloja;
  * @property string|null $nome
  * @property string|null $contacto
  * @property string $rua
- * @property string|null $localizacao
+ * @property string|null $localidade
  * @property string $codpostal
  *
  * @property Compraloja[] $compralojas
@@ -35,7 +35,7 @@ class Loja extends \yii\db\ActiveRecord
     {
         return [
             [['rua', 'codpostal'], 'required'],
-            [['nome', 'localizacao'], 'string', 'max' => 45],
+            [['nome', 'localidade'], 'string', 'max' => 45],
             [['contacto'], 'string', 'max' => 15],
             [['rua'], 'string', 'max' => 85],
             [['codpostal'], 'string', 'max' => 8],
@@ -52,7 +52,7 @@ class Loja extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'contacto' => 'Contacto',
             'rua' => 'Rua',
-            'localizacao' => 'Localizacao',
+            'localidade' => 'Localidade',
             'codpostal' => 'Codpostal',
         ];
     }

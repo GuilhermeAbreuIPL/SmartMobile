@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'rua')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'localizacao')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'codpostal')->textInput(['maxlength' => true]) ?>
 

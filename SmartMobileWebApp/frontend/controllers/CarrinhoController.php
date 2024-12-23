@@ -7,7 +7,9 @@ use common\models\Produto;
 use common\models\Carrinho;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -24,11 +26,18 @@ class CarrinhoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'actions' => ['index', 'view', 'add', 'remove'],
+                            'roles' => ['@'], // Only logged-in users can access
+                        ],
                     ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
+                    },
                 ],
             ]
         );

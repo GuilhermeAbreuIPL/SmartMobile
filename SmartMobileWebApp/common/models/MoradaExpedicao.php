@@ -30,10 +30,11 @@ class MoradaExpedicao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['rua'], 'required'],
-            [['rua'], 'integer'],
+            [['rua', 'localidade', 'codpostal'], 'required'],
+            [['rua'], 'string', 'max' => 255],
             [['localidade'], 'string', 'max' => 100],
             [['codpostal'], 'string', 'max' => 8],
+            [['codpostal'], 'match', 'pattern' => '/^\d{4}-\d{3}$/', 'message' => 'Formato de código postal inválido.'],
         ];
     }
 
@@ -57,6 +58,6 @@ class MoradaExpedicao extends \yii\db\ActiveRecord
      */
     public function getFaturas()
     {
-        return $this->hasMany(Fatura::class, ['moradaexpedicao_id' => 'id']);
+        return $this->hasOne(Fatura::class, ['moradaexpedicao_id' => 'id']);
     }
 }

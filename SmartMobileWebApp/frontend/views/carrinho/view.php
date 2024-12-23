@@ -23,11 +23,11 @@ use yii\widgets\DetailView;
                 <?php if ($linha->produto->imagem && file_exists(Yii::getAlias('@backend/web/uploads/' . $linha->produto->imagem->filename))): ?>
                     <img src="<?= Yii::getAlias('@backendUrl/uploads/' . $linha->produto->imagem->filename) ?>"
                          alt="<?= Html::encode($linha->produto->nome) ?>"
-                         width="10" height="10" class="product img-fluid">
+                         width="35" height="35" class="product img-fluid">
                 <?php else: ?>
                     <img src="<?= Yii::getAlias('@backendUrl/uploads/default.jpg') ?>"
                          alt="Imagem padrão"
-                         width="10" height="10" class="product img-fluid">
+                         width="35" height="35" class="product img-fluid">
                 <?php endif; ?>
             </td>
             <td><?= Html::encode($linha->produto->nome) ?></td>
@@ -44,5 +44,5 @@ use yii\widgets\DetailView;
 </table>
 
 <div class="mt-3">
-    <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-secondary']) ?>
+    <?= Html::a('Carrinho', ['index'], ['class' => 'btn btn-primary']) ?>
 </div>

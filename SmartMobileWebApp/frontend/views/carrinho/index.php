@@ -54,5 +54,5 @@ use yii\grid\GridView;
 ]); ?>
 
 <div class="mt-3">
-    <?= Html::a('Finalizar Compra', ['checkout/index'], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Finalizar Compra', ['fatura/checkout'], ['class' => 'btn btn-primary']) ?>
 </div>
