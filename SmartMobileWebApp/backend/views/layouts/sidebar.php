@@ -1,4 +1,3 @@
-
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Sidebar -->
     <div class="sidebar">
@@ -8,104 +7,69 @@
                 <img src="<?= Yii::$app->request->baseUrl ?>/img/smartmobile_logo.png" alt="SmartMobile Logo" class="brand-image" style="opacity: .8; height: 40px;">
             </div>
             <div class="info mt-2 d-flex align-items-center">
-                <!-- Imagem KEKW ajustada para o mesmo tamanho da logo -->
                 <img src="<?= Yii::$app->request->baseUrl ?>/img/kekw_image.png" alt="KEKW" class="img-circle mr-2" style="height: 40px; width: 40px;">
-                <!-- Nome do usuário sem a tag <a>, com texto branco -->
                 <span class="d-block" style="font-size: 16px; font-weight: 600; color: #c2c7d0; margin-left: 10px;"><?= Yii::$app->user->identity->userprofile->nome ?></span>
             </div>
         </div>
-
-
-
-
-        <!-- SidebarSearch Form -->
-        <!-- href be escaped -->
-        <!-- <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div> -->
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
-                    //header dashboard
+                    // Header dashboard
                     ['label' => 'Dashboard', 'header' => true],
                     ['label' => 'Smart Mobile', 'icon' => 'tachometer-alt', 'url' => ['site/index']],
 
+                    // Feramentas Yii2
                     [
                         'label' => 'Feramentas Yii2',
                         'icon' => 'tools',
                         'items' => [
-                            ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
+                            ['label' => 'Gii', 'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
                             ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
                         ]
                     ],
 
-                    //Gestao de Contas e Roles
+                    // Gestão de Contas e Roles
                     ['label' => 'Gestão Roles', 'header' => true],
-                    ['label' => 'Gerir Contas', 'url' => ['user/index'],
-                        'visible' => Yii::$app->user->can('viewallprofiles')
-                    ],
+                    ['label' => 'Gerir Contas', 'icon' => 'users', 'url' => ['user/index'], 'visible' => Yii::$app->user->can('viewallprofiles')],
 
-                    //header gestao geral
+                    // Gestão Geral
                     ['label' => 'Gestão Geral', 'header' => true],
 
-                    //fornecedores
-                    ['label' => 'Fornecedores', 'url' => ['fornecedor/index'],
-                        'visible' => Yii::$app->user->can('viewfornecedor'),
-                    ],
+                    // Fornecedores
+                    ['label' => 'Fornecedores', 'icon' => 'industry', 'url' => ['fornecedor/index'], 'visible' => Yii::$app->user->can('viewfornecedor')],
 
-                    //lojas
-                    ['label' => 'Lojas', 'url' => ['loja/index'],
-                        'visible' => Yii::$app->user->can('viewloja')
-                    ],
+                    // Lojas
+                    ['label' => 'Lojas', 'icon' => 'store', 'url' => ['loja/index'], 'visible' => Yii::$app->user->can('viewloja')],
 
-                    //metodo pagamento
-                    ['label' => 'Métodos de Pagamento', 'url' => ['metodopagamento/index'],
-                       'visible' => Yii::$app->user->can('viewMetodoPagamento')
-                    ],
+                    // Métodos de Pagamento
+                    ['label' => 'Métodos de Pagamento', 'icon' => 'credit-card', 'url' => ['metodopagamento/index'], 'visible' => Yii::$app->user->can('viewMetodoPagamento')],
 
-                    //metodo categoria
-                    ['label' => 'Categorias', 'url' => ['categoria/index'],
-                        'visible' => Yii::$app->user->can('viewCategoria')
-                    ],
+                    // Categorias
+                    ['label' => 'Categorias', 'icon' => 'tags', 'url' => ['categoria/index'], 'visible' => Yii::$app->user->can('viewCategoria')],
 
-                    //metodo promocao
-                    ['label' => 'Promoções', 'url' => ['promocao/index'],
-                        'visible' => Yii::$app->user->can('viewPromocao')
-                    ],
+                    // Promoções
+                    ['label' => 'Promoções', 'icon' => 'gift', 'url' => ['promocao/index'], 'visible' => Yii::$app->user->can('viewPromocao')],
 
-                    //metodo produtos
-                    ['label' => 'Produtos', 'url' => ['produto/index'],
-                    ],
+                    // Produtos
+                    ['label' => 'Produtos', 'icon' => 'box', 'url' => ['produto/index']],
 
-                    //metodo produto promocao
-                    ['label' => 'Promoção Produtos', 'url' => ['produtopromocao/index'],
-                        'visible' => Yii::$app->user->can('viewPromocao')
-                    ],
+                    // Promoção Produtos
+                    ['label' => 'Promoção Produtos', 'icon' => 'percentage', 'url' => ['produtopromocao/index'], 'visible' => Yii::$app->user->can('viewPromocao')],
 
-                    //metodo produto loja
-                    ['label' => 'Stock Lojas', 'url' => ['produtoloja/index'],
-                        'visible' => Yii::$app->user->can('viewstock')
-                    ],
+                    // Stock Lojas
+                    ['label' => 'Stock Lojas', 'icon' => 'warehouse', 'url' => ['produtoloja/index'], 'visible' => Yii::$app->user->can('viewstock')],
 
-                    //metodo compra loja
-                    ['label' => 'Compras Loja', 'url' => ['compraloja/index'],
-                        'visible' => Yii::$app->user->can('viewcompraloja')
-                    ],
+                    // Compras Loja
+                    ['label' => 'Compras Loja', 'icon' => 'shopping-cart', 'url' => ['compraloja/index'], 'visible' => Yii::$app->user->can('viewcompraloja')],
+
+                    // Faturas
+                    ['label' => 'Faturas', 'icon' => 'file-invoice', 'url' => ['fatura/index'], 'visible' => Yii::$app->user->can('viewcompraloja')],
                 ],
             ]);
             ?>
         </nav>
-        <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
 </aside>

@@ -75,9 +75,44 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->verificarPromocoesExpiradas();
-        if (Yii::$app->user->can('viewbackend')){
+        if (Yii::$app->user->can('viewbackend')) {
+            // Quantidade de faturas concluídas
+            $faturasConcluidas = \common\models\Fatura::find()->where(['statusorder' => 'Concluído'])->count();
 
-            return $this->render('index');
+            // Quantidade de faturas pendentes
+            $faturasPendentes = \common\models\Fatura::find()->where(['statusorder' => 'Confirmação Pendente'])->orWhere(['statusorder' => 'Processamento'])->count();
+
+            // Quantidade de clientes registados
+            $clientesRegistados = \common\models\User::find()->count();
+
+            //rendimento do mês atual
+            $rendimentoMes = \common\models\Fatura::find()->where(['statusorder' => 'Concluído'])->andWhere(['MONTH(datafatura)' => date('m')])->sum('total');
+
+            //rendimento total
+            $rendimentoTotal = \common\models\Fatura::find()->where(['statusorder' => 'Concluído'])->sum('total');
+
+            //produtos a venda
+            $produtosVenda = \common\models\Produto::find()->count();
+
+            //promoções ativas
+            $promoAtivas = \common\models\ProdutoPromocao::find()->where(['>', 'datafim', date('Y-m-d H:i:s')])->count();
+
+            if ($rendimentoMes == null) {
+                $rendimentoMes = 0;
+            }
+            if ($rendimentoTotal == null) {
+                $rendimentoTotal = 0;
+            }
+
+            return $this->render('index', [
+                'faturasConcluidas' => $faturasConcluidas,
+                'faturasPendentes' => $faturasPendentes,
+                'clientesRegistados' => $clientesRegistados,
+                'rendimentoMes' => $rendimentoMes,
+                'rendimentoTotal' => $rendimentoTotal,
+                'produtosVenda' => $produtosVenda,
+                'promoAtivas' => $promoAtivas,
+            ]);
         }
     }
 
