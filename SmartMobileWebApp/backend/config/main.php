@@ -45,8 +45,33 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule','controller' => 'api/auth'],
-                ['class' => 'yii\rest\UrlRule','controller' => 'api/user'],
+                //Rules relativas á auth
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/auth'
+                ],
+                //Rules relativas ao user
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/user',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET' => 'show'
+                    ]
+                ],
+                //Rules relativas ao produto
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/produto',
+                    'pluralize'=>true,
+                    'extraPatterns' => [
+                        'GET' => 'produtos', /* api/produtos */
+                        'GET {id}' => 'detalhe', /*api/produtos/{id}*/
+                        'GET categoria/{id}' => 'categorias',
+                    ],
+
+
+                ],
 
             ],
         ],
