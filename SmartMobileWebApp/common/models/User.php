@@ -40,6 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $scenarios = parent::scenarios();
         $scenarios['update'] = ['username', 'email'];
+
         return $scenarios;
     }
 
@@ -65,6 +66,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             //alterado para que o user tenha sempre o status 10
+            ['username', 'unique', 'message' => 'O username tem de ser unico'],
+            ['email', 'unique', 'message' => 'O email tem de ser unico'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];

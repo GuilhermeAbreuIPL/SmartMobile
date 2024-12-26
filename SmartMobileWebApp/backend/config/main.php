@@ -56,7 +56,9 @@ return [
                     'controller' => 'api/user',
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'GET' => 'show'
+                        'GET' => 'show',
+                        'PUT morada/{id}' => 'update-morada',
+                        'PUT' => 'update-user-profile',
                     ]
                 ],
                 //Rules relativas ao produto

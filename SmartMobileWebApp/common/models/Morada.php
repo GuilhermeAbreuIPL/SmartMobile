@@ -31,7 +31,7 @@ class Morada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['rua'], 'required'],
+            [['rua', 'localidade', 'codpostal'], 'required'],
             [['user_id'], 'integer'],
             [['rua'], 'string', 'max' => 85],
             [['localidade'], 'string', 'max' => 100],
