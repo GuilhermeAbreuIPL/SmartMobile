@@ -85,11 +85,16 @@ class LinhaCarrinho extends \yii\db\ActiveRecord
 
         foreach ($linhasCarrinho as $linha) {
             $produto = Produto::findOne($linha->produto_id);
+
             if ($produto) {
-                if ($linha->precounitario != $produto->preco) {
+                if ($produtopromocao = ProdutoPromocao::findOne(['produto_id' => $linha->produto_id])) {
+                    $promocao = Promocao::findOne($produtopromocao->promocoes_id);
+                    $linha->precounitario = $produto->preco * (1 - $promocao->descontopercentual / 100);
+                }else{
                     $linha->precounitario = $produto->preco;
-                    $linha->save();
                 }
+
+                $linha->save();
             } else {
                 $linha->delete();
             }

@@ -120,6 +120,8 @@ class CarrinhoController extends Controller
             $linhaCarrinho->save();
         }
 
+        LinhaCarrinho::verificarPrecoProdutos();
+
         return $this->redirect(['index']);
     }
 
@@ -142,6 +144,8 @@ class CarrinhoController extends Controller
                 $linhaCarrinho->save();
             }
         }
+
+        LinhaCarrinho::verificarPrecoProdutos();
 
         return $this->redirect(['index']);
     }

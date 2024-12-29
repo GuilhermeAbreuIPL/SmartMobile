@@ -28,6 +28,7 @@ class Promocao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nome', 'descricao', 'descontopercentual'], 'required'],
             [['descricao'], 'string'],
             [['descontopercentual'], 'number'],
             [['nome'], 'string', 'max' => 100],

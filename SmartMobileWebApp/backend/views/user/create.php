@@ -10,7 +10,7 @@ $this->title = 'Create User';
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-create">
+<div class="form-group user-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -33,12 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ['prompt' => 'Seleciona a role do user...', 'required' => true]
     );
     ?>
-</div>
 
-<div class="form-group">
-    <?= Html::submitButton('create', ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton('Create User', ['class' => 'btn btn-success']) ?>
 </div>
 
 <?php ActiveForm::end(); ?>
 
-</div>

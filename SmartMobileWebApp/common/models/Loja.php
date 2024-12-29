@@ -34,6 +34,7 @@ class Loja extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nome', 'contacto', 'rua', 'localidade', 'codpostal'], 'required'],
             [['rua', 'codpostal'], 'required'],
             [['nome', 'localidade'], 'string', 'max' => 45],
             [['contacto'], 'string', 'max' => 15],
