@@ -45,7 +45,7 @@ class AuthController extends Controller
             ];
         }
 
-
+        $user->create();
         return[
             'success' => true,
             'model' => $user,

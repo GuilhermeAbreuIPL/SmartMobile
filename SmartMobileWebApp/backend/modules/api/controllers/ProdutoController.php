@@ -3,6 +3,7 @@ namespace backend\modules\api\controllers;
 use backend\modules\api\components\CustomAuth;
 use common\models\LoginForm;
 use common\models\Produto;
+use common\models\ProdutoPromocao;
 use common\models\UserForm;
 use common\models\Userprofile;
 use Yii;
@@ -33,7 +34,11 @@ class ProdutoController extends Controller
     public function actionProdutos()
     {
 
-        $produtos = Produto::find()->asArray()->with('imagem')->all();
+        //$produtos = Produto::find()->asArray()->with('imagem')->all();
+        //$promocaoProduto = ProdutoPromocao::findAll();
+        $produtos = Produto::find()->with(['produtoPromocao.promocao', "imagem"])->asArray()->all();
+        //TODO: Adicionar disponibilidade de produtos por loja se necessário.
+
         return [
             $produtos
         ];
