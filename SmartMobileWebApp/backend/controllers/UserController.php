@@ -111,9 +111,9 @@ class UserController extends Controller
             return $this->redirect(['user/index']);
         }
 
-            $roles = $this->getAvailableRoles();
+        $roles = $this->getAvailableRoles();
 
-            return $this->render('create', [
+        return $this->render('create', [
             'model' => $model,
             'roles' => $roles,
         ]);

@@ -66,10 +66,10 @@ class UserForm extends Model
      */
     public function create()
     {
+
         if(!$this->validate()) {
             return null;
         }
-
 
         $user = new User();
         $user->username = $this->username;
@@ -107,7 +107,7 @@ class UserForm extends Model
         }*/
 
 
-        // Atualizar dados do utilizador
+        //Atualizar dados do utilizador
         $user->username = $this->username;
         $user->email = $this->email;
 

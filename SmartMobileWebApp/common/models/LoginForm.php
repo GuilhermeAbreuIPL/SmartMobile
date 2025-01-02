@@ -17,6 +17,10 @@ class LoginForm extends Model
     private $_user;
 
 
+
+
+
+
     /**
      * {@inheritdoc}
      */
@@ -61,6 +65,20 @@ class LoginForm extends Model
         }
         
         return false;
+    }
+
+    /**
+     * Tenta efetuar o login de um utilizador com o username e password.
+     *
+     * @returns string token se o utilizador foi logado com sucesso. Null Caso contrário.
+     */
+    public function LoginApi()
+    {
+        if($this->validate()){
+            $user = $this->getUser();
+            return $user->auth_key; //Token para usos futuros.
+        }
+        return null;
     }
 
     /**

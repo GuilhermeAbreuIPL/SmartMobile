@@ -11,7 +11,11 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'api' =>[
+            'class' => 'backend\modules\api\ModuleAPI',
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -41,6 +45,44 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                //Rules relativas á auth
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/auth'
+                ],
+                //Rules relativas ao user
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/user',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET' => 'show',
+                        'PUT morada/{id}' => 'update-morada',
+                        'PUT' => 'update-user-profile',
+                    ]
+                ],
+                //Rules relativas ao produto
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/produto',
+                    'pluralize'=>true,
+                    'extraPatterns' => [
+                        'GET' => 'produtos', /* api/produtos */
+                        'GET {id}' => 'detalhe', /*api/produtos/{id}*/
+                        'GET categoria/{id}' => 'categorias',
+                    ],
+
+
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/carrinho',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'POST add/{id}' => 'adicionar-item'
+                    ]
+                ]
+
             ],
         ],
     ],
