@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * ProdutopromocaoController implements the CRUD actions for ProdutoPromocao model.
@@ -55,7 +56,6 @@ class ProdutopromocaoController extends Controller
      */
     public function actionIndex()
     {
-
         $dataProvider = new ActiveDataProvider([
             'query' => ProdutoPromocao::find(),
             /*
@@ -100,8 +100,17 @@ class ProdutopromocaoController extends Controller
         $produtos = Produto::find()->all();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $produtoId = $model->produto_id;
+                $existingPromotion = ProdutoPromocao::find()->where(['produto_id' => $produtoId])->one();
+
+                if ($existingPromotion) {
+                    Yii::$app->session->setFlash('error', 'Este produto já tem uma promoção ativa.');
+                } else {
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -113,6 +122,7 @@ class ProdutopromocaoController extends Controller
             'produtos' => $produtos,
         ]);
     }
+
 
     /**
      * Updates an existing ProdutoPromocao model.
@@ -168,4 +178,5 @@ class ProdutopromocaoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

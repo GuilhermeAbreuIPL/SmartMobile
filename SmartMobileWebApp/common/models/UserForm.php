@@ -50,6 +50,8 @@ class UserForm extends Model
             ['nome', 'required', 'message' => 'O nome é obrigatório'],
             ['nome', 'string', 'max' => 45],
             ['nif', 'required', 'message' => 'O NIF é obrigatório'],
+            ['nif', 'string', 'min' => 9, 'max' => 9, 'message' => 'Nif must be exactly 9 characters.'],
+            ['telemovel', 'string', 'min' => 9, 'max' => 9, 'message' => 'Telemovel must be exactly 9 characters.'],
             ['telemovel', 'required', 'message' => 'O numero de telemóvel é obrigatório'],
 
             //Campo Role
@@ -64,12 +66,10 @@ class UserForm extends Model
      */
     public function create()
     {
-        /*
-        if (!$this->validate()) {
-            dd($this->getErrorSummary(true));
-            return null;
-        }*/
 
+        if(!$this->validate()) {
+            return null;
+        }
 
         $user = new User();
         $user->username = $this->username;

@@ -53,13 +53,16 @@
           </svg>
 
 
-        <!-- Carrinho -->
-        <svg class="iconClick" onclick="openSidebar('SidebarCart')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2 14h13"></path>
-          <path d="M16 5h5l-1 7H6"></path>
-        </svg>
+
+
+              <!-- Carrinho -->
+
+            <svg class="iconClick" onclick="openSidebar('SidebarCart'); loadCart()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2 14h13"></path>
+              <path d="M16 5h5l-1 7H6"></path>
+            </svg>
       </div>
     </div>
   </header>
@@ -82,25 +85,38 @@
 
     <div class="profile-content">
       <hr>
-      <div class="container-white">
-        <h2>Olá! Faz já o teu Registo no smartmobile</h2>
-        <div class="buttons">
-          <a href="<?= \yii\helpers\Url::to(['site/signup'])?>" class="btn-create">Criar conta</a>
-          <a href="<?= \yii\helpers\Url::to(['site/login']) ?>" class="btn-login">Iniciar sessão</a>
-        </div>
-      </div>
-      <hr>
-      <div class="menu">
-        <a href="<?= \yii\helpers\Url::to(['site/#'])?>">Dados pessoais</a>
-        <a href="<?= \yii\helpers\Url::to(['site/#'])?>">Minhas encomendas</a>
-      </div>
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <div class="container-white">
+                <div class="user-info">
+                    <h2>Olá, <?= Yii::$app->user->identity->username ?>!</h2>
+                    <a href="<?= \yii\helpers\Url::to(['site/logout']) ?>" class="btn-logout"
+                       data-method="post">Logout</a>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="container-white">
+                <h2>Olá! Faz já o teu Registo no smartmobile</h2>
+                <div class="buttons">
+                    <a href="<?= \yii\helpers\Url::to(['site/signup']) ?>" class="btn-create">Criar conta</a>
+                    <a href="<?= \yii\helpers\Url::to(['site/login']) ?>" class="btn-login">Iniciar sessão</a>
+                </div>
+            </div>
+        <?php endif; ?>
+        <hr>
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <div class="menu">
+                <a href="<?= \yii\helpers\Url::to(['user/view']) ?>">Dados pessoais</a>
+                <a href="<?= \yii\helpers\Url::to(['fatura/index']) ?>">Minhas encomendas</a>
+            </div>
+        <?php endif; ?>
     </div>
   </div>
 
   <!-- Sidebar Cart -->
   <div id="SidebarCart" class="sdCartProfile">
-    <a href="#" class="closebtn" onclick="closeAllSidebars('SidebarCart')">×</a>
-    <a href="#">Cart</a>
+    <a class="closebtn" onclick="closeAllSidebars('SidebarCart')">×</a>
+    <h2 href="" id="teste" data-urlCarrinhoView="<?= \yii\helpers\Url::to(['carrinho/view']) ?>"> Carrinho</h2>
+      <div id="cart-container"></div>
   </div>
 
 </body>

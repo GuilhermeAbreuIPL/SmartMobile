@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             'contacto',
             'rua',
-            'localizacao',
-            //'codpostal',
+            'localidade',
+            'codpostal',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Loja $model, $key, $index, $column) {

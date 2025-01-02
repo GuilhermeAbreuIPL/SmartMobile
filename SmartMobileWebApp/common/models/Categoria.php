@@ -31,6 +31,7 @@ class Categoria extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nome'], 'required'],
             [['categoria_principal_id'], 'integer'],
             [['nome'], 'string', 'max' => 45],
             [['categoria_principal_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['categoria_principal_id' => 'id']],

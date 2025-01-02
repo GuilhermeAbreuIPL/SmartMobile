@@ -1,5 +1,4 @@
 <?php
-
 /** @var yii\web\View $this */
 
 $this->title = 'My Yii Application';
@@ -57,63 +56,7 @@ $this->title = 'My Yii Application';
     </div>
 
     <div class="body-content">
-        <div class="row">
-            <div class="col-md-auto">
-                <div class="card">
-                    <div class="imgBox">
-                        <img src="https://raw.githubusercontent.com/hdpngworld/HPW/main/uploads/6503838502c49-iphone%2015%20blue.png" alt="Product" class="product">
-                    </div>
-                    <div class="contentBox">
-                        <h3>Iphone cenas</h3>
-                        <h2 class="price">61.<small>98</small> €</h2>
-                        <a href="#" class="btnInfo">Mais detalhes</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-auto">
-                <div class="card">
-                    <div class="imgBox">
-                        <img src="https://png.pngtree.com/png-vector/20240728/ourmid/pngtree-abstract-art-phone-case-for-iphone-png-image_13267490.png" alt="Product" class="product">
-                    </div>
-                    <div class="contentBox">
-                        <h3>Capa cenas</h3>
-                        <h2 class="price">61.<small>98</small> €</h2>
-                        <a href="#" class="btnInfo">Mais detalhes</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-auto">
-                <div class="card">
-                    <div class="imgBox">
-                        <img src="https://png.pngtree.com/png-clipart/20230508/original/pngtree-airpods-png-image_9149137.png" alt="Product" class="product">
-                    </div>
-                    <div class="contentBox">
-                        <h3>Airpods cenas</h3>
-                        <h2 class="price">61.<small>98</small> €</h2>
-                        <a href="#" class="btnInfo">Mais detalhes</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-auto">
-                <div class="card">
-                    <div class="imgBox">
-                        <img src="https://png.pngtree.com/png-vector/20240728/ourmid/pngtree-abstract-art-phone-case-for-iphone-png-image_13267490.png" alt="Product" class="product">
-                    </div>
-                    <div class="contentBox">
-                        <h3>Capa cenas</h3>
-                        <h2 class="price">61.<small>98</small> €</h2>
-                        <a href="#" class="btnInfo">Mais detalhes</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <?= Yii::$app->runAction('//produto/index') ?>
     </div>
-</div>
 
 <script src="<?= Yii::getAlias('@web/js/index.js') ?>"></script>

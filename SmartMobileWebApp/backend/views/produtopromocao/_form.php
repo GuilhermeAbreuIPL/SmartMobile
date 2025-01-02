@@ -7,26 +7,32 @@ use yii\web\View;
 
 $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 $this->registerCssFile('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
-$this->registerJsFile('https://cdn.jsdelivr.net/npm/flatpickr', ['depends' => [\yii\web\JqueryAsset::class]]);
-$this->registerCssFile('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
+
+$this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js', ['depends' => [\yii\web\JqueryAsset::class]]);
+$this->registerCssFile('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css');
 
 /** @var yii\web\View $this */
 /** @var common\models\ProdutoPromocao $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
 <div class="produto-promocao-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php if (Yii::$app->session->hasFlash('error')): ?>
+        <div class="alert alert-danger">
+            <?= Yii::$app->session->getFlash('error') ?>
+        </div>
+    <?php endif; ?>
+
     <?= $form->field($model, 'datainicio')->textInput([
-        'class' => 'form-control datetimepicker',
-        'value' => $model->datainicio ? Yii::$app->formatter->asDatetime($model->datainicio, 'php:Y-m-d H:i') : ''
+        'class' => 'form-control datepicker',
+        'value' => $model->datainicio ? Yii::$app->formatter->asDate($model->datainicio, 'php:Y-m-d') : ''
     ]) ?>
 
     <?= $form->field($model, 'datafim')->textInput([
-        'class' => 'form-control datetimepicker',
-        'value' => $model->datafim ? Yii::$app->formatter->asDatetime($model->datafim, 'php:Y-m-d H:i') : ''
+        'class' => 'form-control datepicker',
+        'value' => $model->datafim ? Yii::$app->formatter->asDate($model->datafim, 'php:Y-m-d') : ''
     ]) ?>
 
     <?= $form->field($model, 'produto_id')->dropDownList(
@@ -52,4 +58,5 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.mi
     <?php ActiveForm::end(); ?>
 
 </div>
+
 <script src=" <?= Yii::getAlias('@web/js/produtopromocao.js') ?>"></script>

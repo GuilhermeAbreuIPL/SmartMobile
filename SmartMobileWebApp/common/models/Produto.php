@@ -119,7 +119,7 @@ class Produto extends \yii\db\ActiveRecord
      */
     public function getProdutoPromocao()
     {
-        return $this->hasMany(ProdutoPromocao::class, ['produto_id' => 'id']);
+        return $this->hasOne(ProdutoPromocao::class, ['produto_id' => 'id']);
     }
 
     /**
