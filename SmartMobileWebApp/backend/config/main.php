@@ -74,6 +74,14 @@ return [
 
 
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/carrinho',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'POST add/{id}' => 'adicionar-item'
+                    ]
+                ]
 
             ],
         ],
