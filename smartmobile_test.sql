@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `smartmobile`
+-- Banco de dados: `smartmobile_test`
 --
 
 -- --------------------------------------------------------
@@ -46,8 +46,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('cliente', '64', 1733333310),
 ('cliente', '66', 1734962394),
 ('funcionario', '57', 1733333310),
-('gestor', '56', 1733333310),
-('gestor', '68', 1735241484);
+('gestor', '56', 1733333310);
 
 -- --------------------------------------------------------
 
@@ -269,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `categoria_principal_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `categoria_principal_id` (`categoria_principal_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `categorias`
@@ -284,8 +283,7 @@ INSERT INTO `categorias` (`id`, `nome`, `categoria_principal_id`) VALUES
 (7, 'Com menos de 80% de bateria', 5),
 (8, 'Samsung', 1),
 (9, 'TLC', 1),
-(10, '70%', 5),
-(11, 'Categoria de Teste', NULL);
+(10, '70%', 5);
 
 -- --------------------------------------------------------
 
@@ -344,9 +342,9 @@ CREATE TABLE IF NOT EXISTS `faturas` (
 --
 
 INSERT INTO `faturas` (`id`, `datafatura`, `total`, `statusorder`, `userprofile_id`, `metodopagamento_id`, `tipoentrega`, `moradaexpedicao_id`) VALUES
-(17, '2024-11-23 14:12:37', 30.00, 'Concluído', 1, 4, 'loja', 25),
-(18, '2024-12-23 14:14:39', 20.00, 'Concluído', 1, 3, 'loja', 26),
-(19, '2024-12-23 16:23:56', 20.00, 'Concluído', 1, 5, 'loja', 27);
+(17, '2024-12-23 14:12:37', 30.00, 'Confirmação Pendente', 1, 4, 'loja', 25),
+(18, '2024-12-23 14:14:39', 20.00, 'Confirmação Pendente', 1, 3, 'loja', 26),
+(19, '2024-12-23 16:23:56', 20.00, 'Confirmação Pendente', 1, 5, 'loja', 27);
 
 -- --------------------------------------------------------
 
@@ -407,19 +405,17 @@ CREATE TABLE IF NOT EXISTS `linhacarrinho` (
   PRIMARY KEY (`id`),
   KEY `carrinho_id` (`carrinho_id`),
   KEY `produto_id` (`produto_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `linhacarrinho`
 --
 
 INSERT INTO `linhacarrinho` (`id`, `quantidade`, `precounitario`, `carrinho_id`, `produto_id`) VALUES
-(5, 1, 9.00, 56, 9),
-(6, 1, 9.00, 57, 9),
-(7, 1, 9.00, 60, 9),
-(8, 1, 9.00, 64, 9),
-(13, 3, 9.00, 67, 9),
-(15, 1, 10.00, 67, 7);
+(5, 1, 10.00, 56, 9),
+(6, 1, 10.00, 57, 9),
+(7, 1, 10.00, 60, 9),
+(8, 1, 10.00, 64, 9);
 
 -- --------------------------------------------------------
 
@@ -464,15 +460,14 @@ CREATE TABLE IF NOT EXISTS `lojas` (
   `localidade` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `codpostal` varchar(8) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `lojas`
 --
 
 INSERT INTO `lojas` (`id`, `nome`, `contacto`, `rua`, `localidade`, `codpostal`) VALUES
-(4, 'Leiria', '999999999', 'Rua da gandara', 'Leiria, Rua dos Inventarios', '2400-441'),
-(5, 'Loja Teste', '12345678', 'Endereço da Loja Teste', 'Localidade da Loja Teste', '1234-567');
+(4, 'Leiria', '999999999', 'Rua da gandara', 'Leiria, Rua dos Inventarios', '2400-441');
 
 -- --------------------------------------------------------
 
@@ -522,8 +517,7 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 ('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1730135631),
 ('m180523_151638_rbac_updates_indexes_without_prefix', 1730135631),
 ('m190124_110200_add_verification_token_column_to_user_table', 1730135287),
-('m200409_110543_rbac_update_mssql_trigger', 1730135631),
-('m241226_140155_create_lojas', 1735221754);
+('m200409_110543_rbac_update_mssql_trigger', 1730135631);
 
 -- --------------------------------------------------------
 
@@ -573,10 +567,8 @@ CREATE TABLE IF NOT EXISTS `moradas` (
 
 INSERT INTO `moradas` (`id`, `rua`, `localidade`, `codpostal`, `user_id`) VALUES
 (1, 'Rua vale dos minhos', 'Leiria', '2400-441', 1),
-(19, 'Rua da trunqueira', 'vale de moinhos', '2005-500', 1),
 (20, 'Vale dos Poços', 'parceiros', '2400-441', 60),
-(21, 'samago ', 'leiria', '2400-852', 60),
-(22, 'TESTE', 'leiria', '2400-441', 1);
+(21, 'samago ', 'leiria', '2400-852', 60);
 
 -- --------------------------------------------------------
 
@@ -646,7 +638,7 @@ CREATE TABLE IF NOT EXISTS `produto_promocao` (
   PRIMARY KEY (`id`),
   KEY `produto_id` (`produto_id`),
   KEY `promocoes_id` (`promocoes_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -693,20 +685,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
---
--- Extraindo dados da tabela `user`
---
-
-INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
-(1, 'admin', 'FOPLSfyTgNgESknjyUYEyxE6o-QRjq8A', '$2y$13$4JacQBtU82QQMCoYbvkM6OUTQJE.mLtJXqJAm8skKqJxvzBHCQYxi', NULL, 'admin@gmail.com', 10, 1730739149, 1730739149, 'XeFjZRGBQN5iAZqiDEYQ6yn8IczwLy8V_1730739149'),
-(56, 'gestor', 'aO10di9PZJLkhMwo95oC-8brEWgeCBk4', '$2y$13$8r2IuJWlTTDmU2OBvS8ZduRmnfeKCW30uZ9raxh9c7ruwuSHtTZlm', NULL, 'gestor@gmail.com', 10, 1732190497, 1732190497, NULL),
-(57, 'funcionario', 'vJbDifuZ1jBm-ccQ2_pBGUfXLsVGgCZX', '$2y$13$x3/JSgbcTqChu044k55cnOuE.hKDs281p1xpX2OaXm8/KoKM8I2rG', NULL, 'funcionario@gmail.com', 10, 1732190524, 1732297397, NULL),
-(60, 'Cliente', 'aKvmZXH_VW0igwgEDGi0izA85cF1Org2', '$2y$13$9KS.kCIvU3lR3HkdaYU7V.0rha1x7eV/hTTn/qHfoqVcrQOGylBy.', NULL, 'cliente@gmail.com', 10, 1732296687, 1733415101, NULL),
-(64, 'beatriz', 'BrDd1rJmmcqMKKqYVRZfeJKa0W34Mn8C', '$2y$13$ZWXdSh8UeWGdMVWb5fnErensQ14Qmmr1sO4w/89zfAllDz0V1/ciS', NULL, 'beatrizc@hotmail.com', 10, 1732382439, 1732382439, NULL),
-(66, 'latado', 'TGABuG-AK4aJe-7lokE3EqIFVNBLAFVH', '$2y$13$jl2XElQh/20RcRATgGZeGe5PFJwAxHm1xUntRZCtoIBrNG/NmqOuC', NULL, 'latado@leiria.pt', 10, 1734962394, 1734962394, NULL),
-(68, 'teste', '3NNB6wkDN1UWUP5Qua-w9k8PPxYZjlXi', '$2y$13$nXjneisDkVR2z2zzx6a.0uGh0lV/tcQSrnRINb6HeXrlQ5YLfug6.', NULL, 'teste@gmail.com', 10, 1735241484, 1735241484, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -733,8 +712,7 @@ INSERT INTO `userprofiles` (`id`, `nome`, `nif`, `telemovel`) VALUES
 (57, 'Funcionario', 123123123, 111111111),
 (60, 'Cliente', 123123123, 111111111),
 (64, 'beatriz', 123321123, 912432567),
-(66, 'latado', 123123123, 123123123),
-(68, 'Teste', 123456789, 123456789);
+(66, 'latado', 123123123, 123123123);
 
 --
 -- Restrições para despejos de tabelas
