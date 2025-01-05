@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 02-Jan-2025 às 19:06
+-- Tempo de geração: 05-Jan-2025 às 16:07
 -- Versão do servidor: 8.2.0
 -- versão do PHP: 8.1.26
 
@@ -337,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `faturas` (
   KEY `userprofile_id` (`userprofile_id`),
   KEY `metodopagamento_id` (`metodopagamento_id`),
   KEY `moradaexpedicao_id` (`moradaexpedicao_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `faturas`
@@ -346,7 +346,10 @@ CREATE TABLE IF NOT EXISTS `faturas` (
 INSERT INTO `faturas` (`id`, `datafatura`, `total`, `statusorder`, `userprofile_id`, `metodopagamento_id`, `tipoentrega`, `moradaexpedicao_id`) VALUES
 (17, '2024-11-23 14:12:37', 30.00, 'Concluído', 1, 4, 'loja', 25),
 (18, '2024-12-23 14:14:39', 20.00, 'Concluído', 1, 3, 'loja', 26),
-(19, '2024-12-23 16:23:56', 20.00, 'Concluído', 1, 5, 'loja', 27);
+(19, '2024-12-23 16:23:56', 20.00, 'Concluído', 1, 5, 'loja', 27),
+(20, '2025-01-05 12:42:15', 20.00, 'Confirmação Pendente', 1, 3, 'loja', 28),
+(21, '2025-01-05 12:44:50', 10.00, 'Confirmação Pendente', 1, 3, 'morada', 29),
+(22, '2025-01-05 12:47:43', 10.00, 'Confirmação Pendente', 1, 4, 'loja', 30);
 
 -- --------------------------------------------------------
 
@@ -407,19 +410,17 @@ CREATE TABLE IF NOT EXISTS `linhacarrinho` (
   PRIMARY KEY (`id`),
   KEY `carrinho_id` (`carrinho_id`),
   KEY `produto_id` (`produto_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `linhacarrinho`
 --
 
 INSERT INTO `linhacarrinho` (`id`, `quantidade`, `precounitario`, `carrinho_id`, `produto_id`) VALUES
-(5, 1, 9.00, 56, 9),
-(6, 1, 9.00, 57, 9),
-(7, 1, 9.00, 60, 9),
-(8, 1, 9.00, 64, 9),
-(13, 3, 9.00, 67, 9),
-(15, 1, 10.00, 67, 7);
+(5, 1, 10.00, 56, 9),
+(6, 1, 10.00, 57, 9),
+(7, 1, 10.00, 60, 9),
+(8, 1, 10.00, 64, 9);
 
 -- --------------------------------------------------------
 
@@ -437,7 +438,7 @@ CREATE TABLE IF NOT EXISTS `linhafatura` (
   PRIMARY KEY (`id`),
   KEY `fatura_id` (`fatura_id`),
   KEY `produto_id` (`produto_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `linhafatura`
@@ -447,7 +448,11 @@ INSERT INTO `linhafatura` (`id`, `quantidade`, `precounitario`, `fatura_id`, `pr
 (21, 2, 10.00, 17, 7),
 (22, 1, 10.00, 17, 9),
 (23, 2, 10.00, 18, 7),
-(24, 2, 10.00, 19, 9);
+(24, 2, 10.00, 19, 9),
+(25, 1, 10.00, 20, 7),
+(26, 1, 10.00, 20, 9),
+(27, 1, 10.00, 21, 9),
+(28, 1, 10.00, 22, 7);
 
 -- --------------------------------------------------------
 
@@ -534,21 +539,24 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 DROP TABLE IF EXISTS `moradaexpedicao`;
 CREATE TABLE IF NOT EXISTS `moradaexpedicao` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `rua` int NOT NULL,
+  `rua` varchar(45) NOT NULL,
   `localidade` varchar(100) DEFAULT NULL,
   `codpostal` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `moradaexpedicao`
 --
 
 INSERT INTO `moradaexpedicao` (`id`, `rua`, `localidade`, `codpostal`) VALUES
-(1, 0, 'Leiria, Rua dos Inventarios', '2400-441'),
-(25, 0, 'Leiria, Rua dos Inventarios', '2400-441'),
-(26, 0, 'Leiria, Rua dos Inventarios', '2400-441'),
-(27, 0, 'Leiria, Rua dos Inventarios', '2400-441');
+(1, '0', 'Leiria, Rua dos Inventarios', '2400-441'),
+(25, '0', 'Leiria, Rua dos Inventarios', '2400-441'),
+(26, '0', 'Leiria, Rua dos Inventarios', '2400-441'),
+(27, '0', 'Leiria, Rua dos Inventarios', '2400-441'),
+(28, '0', 'Leiria, Rua dos Inventarios', '2400-441'),
+(29, '0', 'Leiria', '2400-441'),
+(30, 'Rua da gandara', 'Leiria, Rua dos Inventarios', '2400-441');
 
 -- --------------------------------------------------------
 
@@ -559,7 +567,7 @@ INSERT INTO `moradaexpedicao` (`id`, `rua`, `localidade`, `codpostal`) VALUES
 DROP TABLE IF EXISTS `moradas`;
 CREATE TABLE IF NOT EXISTS `moradas` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `rua` varchar(85) NOT NULL,
+  `rua` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `localidade` varchar(100) DEFAULT NULL,
   `codpostal` varchar(8) DEFAULT NULL,
   `user_id` int DEFAULT NULL,
@@ -600,8 +608,8 @@ CREATE TABLE IF NOT EXISTS `produtolojas` (
 --
 
 INSERT INTO `produtolojas` (`id`, `quantidade`, `produto_id`, `loja_id`) VALUES
-(1, 152, 7, 4),
-(3, 23, 9, 4);
+(1, 150, 7, 4),
+(3, 22, 9, 4);
 
 -- --------------------------------------------------------
 

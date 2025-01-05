@@ -37,12 +37,12 @@
     &quot;assignee&quot;: &quot;UniDro&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/GuilhermeAbreuIPL/SmartMobile.git",
-    "accountId": "d893279d-58ec-45b9-9a3f-ab8dfb73d15e"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/GuilhermeAbreuIPL/SmartMobile.git&quot;,
+    &quot;accountId&quot;: &quot;d893279d-58ec-45b9-9a3f-ab8dfb73d15e&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -400,6 +400,7 @@
       <workItem from="1735218732424" duration="22813000" />
       <workItem from="1735463972271" duration="3989000" />
       <workItem from="1735844112978" duration="147000" />
+      <workItem from="1736080886882" duration="561000" />
     </task>
     <servers />
   </component>
