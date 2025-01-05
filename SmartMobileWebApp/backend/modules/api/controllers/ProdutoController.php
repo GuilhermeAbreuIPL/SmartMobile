@@ -49,11 +49,16 @@ class ProdutoController extends Controller
     {
         $produto = Produto::findOne($id);
         $imagem = $produto->imagem;
+        $promocao = $produto->produtoPromocao->promocao;
+        $campanha = $produto->produtoPromocao;
+
         //$promocao = $produto->produtoPromocaos;
 
         return [
             $produto,
             $imagem,
+            $promocao,
+            $campanha,
         ];
     }
 

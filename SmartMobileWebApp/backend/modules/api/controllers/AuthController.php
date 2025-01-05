@@ -1,6 +1,7 @@
 <?php
 namespace backend\modules\api\controllers;
 use backend\modules\api\components\CustomAuth;
+use common\models\LinhaCarrinho;
 use common\models\LoginForm;
 use common\models\UserForm;
 use Yii;

@@ -79,7 +79,9 @@ return [
                     'controller' => 'api/carrinho',
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'POST add/{id}' => 'adicionar-item'
+                        'POST add/{id}' => 'adicionar-item',
+                        'PUT edit/{id}' => 'atualizar-quantidade',
+                        'POST checkout' => 'checkout',
                     ]
                 ]
 
