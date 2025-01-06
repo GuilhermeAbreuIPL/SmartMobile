@@ -160,7 +160,7 @@ class UserController extends Controller
             Yii::$app->session->setFlash('error', 'Morada não encontrada ou não pertence a este utilizador.');
         }
 
-        return $this->redirect(['user/index']);
+        return $this->redirect(['user/view']);
     }
 
 }
