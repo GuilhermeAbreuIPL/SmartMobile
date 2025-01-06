@@ -57,8 +57,10 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET' => 'show',
+                        'POST create-morada' => 'create-morada',
                         'PUT morada/{id}' => 'update-morada',
                         'PUT' => 'update-user-profile',
+                        'DELETE morada/{id}' => 'delete-morada',
                     ]
                 ],
                 //Rules relativas ao produto

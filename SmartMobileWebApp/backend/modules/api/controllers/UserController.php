@@ -1,6 +1,8 @@
 <?php
 namespace backend\modules\api\controllers;
 use backend\modules\api\components\CustomAuth;
+use Bluerhinos\phpMQTT;
+use common\models\HelperMosquitto;
 use common\models\LoginForm;
 use common\models\UserForm;
 use common\models\Userprofile;
@@ -14,6 +16,7 @@ use yii\rest\Controller;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+
 
 
 class UserController extends Controller
@@ -34,6 +37,9 @@ class UserController extends Controller
         //Mostra um user e seu respetivo profile através do token.
         $user = User::findIdentityByAccessToken(Yii::$app->request->getQueryParam('access-token'));
         $userProfile = $user->getUserProfile()->one();
+        //teste
+        //mosquitto_sub -h localhost -p 1883 -t teste1
+        HelperMosquitto::FazPublishNoMosquitto('teste1', "Teste fixe");
 
         return[
             'user' =>$user,
@@ -205,6 +211,45 @@ class UserController extends Controller
             'errors' => $morada->errors,
         ];
 
+
+
     }
 
+    public function actionDeleteMorada($id)
+    {
+        $request = Yii::$app->request;
+        $user = User::findIdentityByAccessToken($request->getQueryParam('access-token'));
+        $morada = Morada::findOne($id);
+
+        if(!$morada){
+            Yii::$app->response->statusCode = 404;
+            return[
+                'success' => false,
+                'message' => 'A morada não foi encontrada'
+            ];
+        }
+
+        if ($morada->user_id !== $user->id) {
+            Yii::$app->response->statusCode = 403;
+            return [
+                'success' => false,
+                'message' => 'O utilizador apenas pode dar delete as suas moradas.'
+            ];
+        }
+
+        if (!$morada->delete()){
+            return [
+                'success' => false,
+                'message' => 'Algo estranho aconteceu. Delete nao efetuado'
+            ];
+        }
+
+        return[
+            'success' => true,
+            'message' => 'Morada apagada com sucesso',
+        ];
+
+
+
+    }
 }

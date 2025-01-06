@@ -2,8 +2,9 @@
 
 namespace common\models;
 
-use Yii;
 
+use Yii;
+use yii\helpers\Json;
 /**
  * This is the model class for table "faturas".
  *
@@ -104,4 +105,36 @@ class Fatura extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Moradaexpedicao::class, ['id' => 'moradaexpedicao_id']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $idFatura = $this->id;
+        $topic = "smartmobile/faturas/{$idFatura}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem= 'A fatura foi criada ou modificada';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        $id = $this->id;
+        $topic = "smartmobile/fatura/{$id}/delete";
+
+        // Concatenar o id à mensagem
+        $mensagem = "Uma fatura foi removida. ID da fatura: {$id}";
+
+        HelperMosquitto::FazPublishNoMosquitto($topic, $mensagem);
+    }
+
+
 }

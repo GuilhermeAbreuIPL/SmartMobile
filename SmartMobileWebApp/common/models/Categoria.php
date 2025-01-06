@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "categorias".
@@ -79,4 +80,34 @@ class Categoria extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Produto::class, ['categoria_id' => 'id']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->id;
+        $topic = "smartmobile/categoria/{$id}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem= 'O categoria foi criado ou modificado';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
+    }
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        $id = $this->id;
+        $topic = "smartmobile/categoria/{$id}/delete";
+
+        // Concatenar o id à mensagem
+        $mensagem = "Uma categoria foi removida. ID da categoria: {$id}";
+
+        HelperMosquitto::FazPublishNoMosquitto($topic, $mensagem);
+    }
 }
+
