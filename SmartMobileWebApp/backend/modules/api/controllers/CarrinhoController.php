@@ -50,7 +50,7 @@ class CarrinhoController extends Controller
         //Primeiro encontrar o produto.
         $produto = Produto::findOne($id);
         if(!$produto){
-
+            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'mensagem' => 'O id do produto que está a tentar adicionar ao carrinho não existe.'
@@ -86,7 +86,7 @@ class CarrinhoController extends Controller
             ];
         }
 
-        //Adição de quantidade. //Resposta se a linha de carrinho existe.
+
 
         $linhaCarrinho->quantidade += 1;
         //TODO: Chamar uma função que atualize / verifique os preços do carrinho (Modelo LinhaCarrinho ou Carrinho)
@@ -104,13 +104,14 @@ class CarrinhoController extends Controller
     }
 
     public function actionAtualizarQuantidade($id){
-        //TODO: Mudar para adcionarQuantidade
+        
         $request = Yii::$app->request;
         $user = User::findIdentityByAccessToken($request->getQueryParam('access-token'));
         $linhacarrinho = LinhaCarrinho::findOne($id);
 
 
         if(!$linhacarrinho){
+            Yii::$app->response->statusCode = 404;
             return[
                 'success' => false,
                 'message' => 'Linha de carrinho a atualizar não existe.'
@@ -119,6 +120,7 @@ class CarrinhoController extends Controller
 
         $quantidade = $request->post('quantidade');
         if($quantidade == null){
+            Yii::$app->response->statusCode = 400;
             return [
                 'success' => false,
                 'message' => 'A quantidade tem de estar preenchida',
@@ -126,16 +128,26 @@ class CarrinhoController extends Controller
         }
 
         if(!is_numeric($quantidade)){
+            Yii::$app->response->statusCode = 400;
             return[
                 'success' => false,
                 'message' => 'A quantidade tem de ser um número',
             ];
         }
 
-        if($quantidade < 1){
+        if($quantidade < 0){
+            Yii::$app->response->statusCode = 400;
             return[
                 'success' => false,
-                'error' => 'A quantidade não pode ser menor que 1'
+                'error' => 'A quantidade não pode ser menor que 0'
+            ];
+        }
+
+        if($quantidade == 0){
+            $linhacarrinho->delete();
+            return[
+                'success' => true,
+                'message' => 'A quantidade foi alterada para 0 logo o item foi removido'
             ];
         }
 
@@ -176,11 +188,19 @@ class CarrinhoController extends Controller
         $user = User::findIdentityByAccessToken($request->getQueryParam('access-token'));
         $carrinho = Carrinho::findOne(['userprofile_id' => $user->id]);
         if(!$carrinho){
-            return 'n existe carrinho';
+            Yii::$app->response->statusCode = 404;
+            return [
+                'success' => false,
+                'message' => 'Carrinho não encontrado',
+            ];
         }
         $linhascarrinho = $carrinho->linhacarrinhos;
         if(!$linhascarrinho){
-            return 'Não existem linhas carrinho';
+            Yii::$app->response->statusCode = 404;
+            return [
+                'success' => false,
+                'message' => 'Não existem items no carrinho'
+            ];
         }
 
 
@@ -188,6 +208,7 @@ class CarrinhoController extends Controller
         $metodoPagamentoId = $request->post('metodoPagamento');
 
         if(!$metodoPagamentoId || !is_numeric($metodoPagamentoId)){
+            Yii::$app->response->statusCode = 400;
             return[
                 'success' => false,
                 'message' => 'Metodo de pagamento (metodoPagamento) tem de ser preenchido.'
@@ -197,9 +218,10 @@ class CarrinhoController extends Controller
         $metodoPagamento = MetodoPagamento::findOne($metodoPagamentoId);
 
         if(!$metodoPagamento){
+            Yii::$app->response->statusCode = 404;
             return[
                 'success' => false,
-                'message' => 'Metodo pagamento inserido inválido'
+                'message' => 'Metodo pagamento inserido não foi encontrado'
             ];
         }
 
@@ -253,6 +275,7 @@ class CarrinhoController extends Controller
                     $fatura->save(false);
                     $transaction->commit();
                     return [
+                        'success' => true,
                         'fatura' => $fatura
                     ];
                     break;
@@ -262,6 +285,7 @@ class CarrinhoController extends Controller
                     $result = $this->verificaTipoEntrega('Loja' ,$request);
                     if ($result['success'] == false){
                         $transaction->rollBack();
+                        Yii::$app->response->statusCode = 404;
                         return [
                             'success' => false,
                             'message' => $result['error']
@@ -282,6 +306,7 @@ class CarrinhoController extends Controller
 
                     if(!$stockDisponivel){
                         $transaction->rollBack();
+                        Yii::$app->response->statusCode = 409;
                         return[
                             'success' => false,
                             'message' => 'Stock Indisponivel num dos items tente diminuir a quantidade.'
@@ -316,6 +341,7 @@ class CarrinhoController extends Controller
                     $fatura->save(false);
                     $transaction->commit();
                     return [
+                        'success' => true,
                         'fatura' => $fatura
                     ];
                     break;
@@ -329,7 +355,11 @@ class CarrinhoController extends Controller
 
         }catch (\Exception $e){
             $transaction->rollBack();
-            dd($e);
+            Yii::$app->response->statusCode = 500;
+            return[
+                'success' => false,
+                'message' => 'Um erro inesperado aconteceu:'. $e
+            ];
 
         }
 
@@ -339,6 +369,47 @@ class CarrinhoController extends Controller
 
 
     }
+
+    public function actionRemoverItem($id)
+    {
+        $request = Yii::$app->request;
+        $user = User::findIdentityByAccessToken($request->getQueryParam('access-token'));
+        $linhacarrinho = LinhaCarrinho::findOne($id);
+        if(!$linhacarrinho){
+            Yii::$app->response->statusCode = 404;
+            return[
+                'success' => false,
+                'message' => 'Linha carrinho não encontrada.'
+            ];
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Linha carrinho removida com sucesso'
+        ];
+    }
+
+    public function actionCarrinho(){
+        $request = YII::$app->request;
+        $user = User::findIdentityByAccessToken($request->getQueryParam('access-token'));
+        $carrinho = Carrinho::find()->where(['userprofile_id' => $user->id])->with(['linhacarrinhos.produto.imagem'])->asArray()->all();
+
+        if(!$carrinho){
+            Yii::$app->response->statusCode = 404;
+            return [
+                'success' => false,
+                'message' => 'Carrinho do utilizador não encontrado',
+            ];
+        }
+
+        return[
+            'success' => true,
+            'carrinho' => $carrinho,
+        ];
+
+    }
+
+
 
 
     private function verificaTipoEntrega($tipoEntrega, $request, $user_id = null){
@@ -393,7 +464,7 @@ class CarrinhoController extends Controller
             if(!$loja){
                 return [
                     'success' =>false,
-                    'error' =>'loja n existe'
+                    'error' =>'Loja inserida não existe.'
                 ];
             }
 

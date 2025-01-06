@@ -82,6 +82,26 @@ return [
                         'POST add/{id}' => 'adicionar-item',
                         'PUT edit/{id}' => 'atualizar-quantidade',
                         'POST checkout' => 'checkout',
+                        'GET' => 'carrinho',
+                    ]
+                ],
+
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/metodo',
+                    'pluralize' => true,
+                    'extraPatterns' => [
+                        'GET' => 'show',
+                    ]
+                ],
+
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/fatura',
+                    'pluralize' => true,
+                    'extraPatterns' => [
+                        'GET' => 'show',
+                        'GET {id}' => 'detalhes',
                     ]
                 ]
 

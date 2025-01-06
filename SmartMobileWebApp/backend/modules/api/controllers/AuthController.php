@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function actionRegister(){
         //Link + endpoint: localhost/SmartMobile/SmartMobileWebApp/backend/web/api/user/register
         $request = Yii::$app->request;
-        $rawbody = $request->rawBody;
+
 
 
         if(!$request->isPost){
@@ -50,7 +50,6 @@ class AuthController extends Controller
         return[
             'success' => true,
             'model' => $user,
-            'rawbody' => $rawbody,
         ];
    }
 

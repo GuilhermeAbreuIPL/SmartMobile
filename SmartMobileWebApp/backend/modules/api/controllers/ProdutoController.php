@@ -1,6 +1,7 @@
 <?php
 namespace backend\modules\api\controllers;
 use backend\modules\api\components\CustomAuth;
+use common\models\Categoria;
 use common\models\LoginForm;
 use common\models\Produto;
 use common\models\ProdutoPromocao;
@@ -37,40 +38,76 @@ class ProdutoController extends Controller
         //$produtos = Produto::find()->asArray()->with('imagem')->all();
         //$promocaoProduto = ProdutoPromocao::findAll();
         $produtos = Produto::find()->with(['produtoPromocao.promocao', "imagem"])->asArray()->all();
-        //TODO: Adicionar disponibilidade de produtos por loja se necessário.
+
+
+        if(!$produtos){
+            Yii::$app->response->statusCode = 404;
+            return [
+                'success' => false,
+                'message' => 'Não foram encontrados produtos',
+            ];
+        }
 
         return [
-            $produtos
+            'success' => true,
+            'produtos' => $produtos
         ];
 
     }
 
     public function actionDetalhe($id)
     {
-        $produto = Produto::findOne($id);
-        $imagem = $produto->imagem;
-        $promocao = $produto->produtoPromocao->promocao;
-        $campanha = $produto->produtoPromocao;
 
-        //$promocao = $produto->produtoPromocaos;
-
-        return [
-            $produto,
-            $imagem,
-            $promocao,
-            $campanha,
+        $produtos = Produto::find()->where(['id' => $id])->with('produtoPromocao.promocao', 'imagem', 'categoria')->asArray()->one();
+        if(!$produtos){
+            Yii::$app->response->statusCode = 404;
+            return[
+                'success' => false,
+                'message' => 'O produto não foi encontrado'
+            ];
+        }
+        return[
+            'success' => true,
+            'produto' => $produtos
         ];
     }
 
     public function actionCategorias($id)
     {
-        //TODO: Descobrir como fazer a query recursivamente. De forma a que se a categoria selecionada for telemoveis aparecam todos.
-
+        /*
         $produtos = Produto::find()->asArray()->with('imagem')->where(['categoria_id' => $id])->all();
+        if(!$produtos){
+            Yii::$app->response->statusCode = 404;
+            return[
+                'success' => false,
+                'message' => 'Não foram encontrados produtos com a categoria escolhida ou a mesma não existe'
+            ];
+        }
         return [
-            $produtos,
+            'success' => true,
+            'produtos' => $produtos,
+
+        ];
+        */
+        $ids =  $this->getCategoriasRelacionais($id);
+        $produtos = Produto::find()->where(['categoria_id' => $ids])->asArray()->all();
+
+        return[
+            $produtos
         ];
     }
 
+    //Function recursiva
+    private function getCategoriasRelacionais($categoriaId)
+    {
+        $ids = [$categoriaId];
+        $subcategorias = Categoria::find()->where(['categoria_principal_id' => $categoriaId])->all();
+
+        foreach ($subcategorias as $subcategoria) {
+            $ids = array_merge($ids, $this->getCategoriasRelacionais($subcategoria->id));
+        }
+
+        return $ids;
+    }
 
 }

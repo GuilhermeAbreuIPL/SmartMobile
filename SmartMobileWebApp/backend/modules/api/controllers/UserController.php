@@ -70,8 +70,8 @@ class UserController extends Controller
                 $transaction->commit();
 
                 return [
-                    'status' => 'success',
-                    'message' => 'User and profile updated successfully.',
+                    'success' => true,
+                    'message' => 'User e profile alterados com sucesso!.',
                     'data' => [
                         'user' => $user,
                         'profile' => $profile,
@@ -80,8 +80,8 @@ class UserController extends Controller
             } else {
                 $transaction->rollBack();
                 return [
-                    'status' => 'error',
-                    'message' => 'Validation failed.',
+                    'success' => false,
+                    'message' => 'Algo correu mal, não foi possivel dar update.',
                     'errors' => [
                         'user' => $user->errors,
                         'profile' => $profile->errors,
@@ -90,7 +90,7 @@ class UserController extends Controller
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
-            throw new BadRequestHttpException("An error occurred while updating: " . $e->getMessage());
+            throw new BadRequestHttpException("Um erro estranho aconteceu: " . $e->getMessage());
         }
 
 
@@ -107,7 +107,8 @@ class UserController extends Controller
             $request = YII::$app->response->statusCode = 409;
             //Proibir não é possivel adicionar uma nova morada.
             return[
-                'erro' => 'Só são permitidas 3 moradas.'
+                'success' => false,
+                'message' => 'Só são permitidas 3 moradas.'
             ];
         }
 
@@ -118,6 +119,8 @@ class UserController extends Controller
         if(!$morada->save()){
             $request = YII::$app->response->statusCode = 400;
             return [
+                'success' => false,
+                'message'=> 'Não foi possivel guardar a morada',
                 'errors' => $morada->getErrors(),
             ];
         }
@@ -136,6 +139,14 @@ class UserController extends Controller
         $user = User::findIdentityByAccessToken(Yii::$app->request->getQueryParam('access-token'));
         $moradasUser = Morada::find()->where(['user_id' => $user->id])->all();
 
+        if(!$moradasUser){
+            Yii::$app->response->statusCode = 404;
+            return[
+                'success' => false,
+                'message' => 'Não foram encontradas moradas'
+            ];
+        }
+
         return [
             'success' => true,
             'moradas' => $moradasUser,
@@ -148,7 +159,7 @@ class UserController extends Controller
         $user = User::findIdentityByAccessToken(Yii::$app->request->getQueryParam('access-token'));
         $morada = Morada::findOne($id);
         if (!$morada) {
-            //TODO: Resposta a dizer que a morada não foi encontrada
+            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'message' => 'Morada não encontrada.'
@@ -157,7 +168,7 @@ class UserController extends Controller
 
 
         if ($morada->user_id !== $user->id) {
-            //TODO: Resposta a dizer que o utilizador só pode mudar as suas moradas.
+            Yii::$app->response->statusCode = 403;
             return [
                 'success' => false,
                 'message' => 'O utilizador apenas pode atualizar as suas moradas.'
@@ -167,7 +178,7 @@ class UserController extends Controller
         // Load the data and validate
         $data = \Yii::$app->request->post();
         if (isset($data['id']) || isset($data['user_id'])) {
-            //TODO: Resposta a dizer que o id e o user_id não podem ser alterados.
+            YII::$app->response->statusCode = 400;
             return[
                 'success' => false,
                 'message' => 'O id e o user_id não podem ser alterados'
@@ -187,7 +198,7 @@ class UserController extends Controller
             }
         }
 
-
+        Yii::$app->response->statusCode = 400;
         return [
             'success' => false,
             'message' => 'Erro a atualizar a morada.',
