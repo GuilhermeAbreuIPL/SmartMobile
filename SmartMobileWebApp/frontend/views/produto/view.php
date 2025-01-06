@@ -9,5 +9,5 @@ $this->title = $model->nome;
     <p><strong>Preço:</strong> <?= Yii::$app->formatter->asCurrency($model->preco) ?></p>
     <p><strong>Descrição:</strong> <?= Html::encode($model->descricao) ?></p>
 
-<?= Html::a('Adicionar ao Carrinho', ['carrinho/add', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+<?= Html::a('Adicionar ao Carrinho', ['add-to-cart', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
 <?php
