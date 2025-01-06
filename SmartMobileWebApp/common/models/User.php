@@ -7,6 +7,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
 use yii\web\IdentityInterface;
 
 /**
@@ -247,5 +248,34 @@ class User extends ActiveRecord implements IdentityInterface
     public function getAuth()
     {
         return $this->hasOne(AuthAssignment::class, ['user_id' => 'id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->id;
+        $topic = "smartmobile/user/{$id}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem= 'O user foi criado ou modificado';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
+    }
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        $id = $this->id;
+        $topic = "smartmobile/user/{$id}/delete";
+
+        // Concatenar o id à mensagem
+        $mensagem = "Uma user foi removida. ID da user: {$id}";
+
+        HelperMosquitto::FazPublishNoMosquitto($topic, $mensagem);
     }
 }

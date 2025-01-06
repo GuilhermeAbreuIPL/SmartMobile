@@ -197,6 +197,7 @@
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/codeception/module-webdriver" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/php-webdriver/webdriver" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/bluerhinos/phpmqtt" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4">

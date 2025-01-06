@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use yii\helpers\Json;
+
 /**
  * This is the model class for table "promocoes".
  *
@@ -56,5 +58,22 @@ class Promocao extends \yii\db\ActiveRecord
     public function getProdutoPromocaos()
     {
         return $this->hasMany(ProdutoPromocao::class, ['promocoes_id' => 'id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->id;
+        $topic = "smartmobile/promocao/{$id}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem = 'A promocao foi criada ou modificada';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
     }
 }
