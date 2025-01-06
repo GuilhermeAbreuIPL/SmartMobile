@@ -7,7 +7,7 @@
                 para "<strong><?= \yii\helpers\Html::encode($search) ?></strong>"
             <?php endif; ?>
             <?php if ($categoria): ?>
-                na categoria "<strong><?= \yii\helpers\Html::encode($categoria) ?></strong>"
+                na categoria "<strong><?= \yii\helpers\Html::encode($categoria->nome) ?></strong>"
             <?php endif; ?>
         </h2>
     </div>

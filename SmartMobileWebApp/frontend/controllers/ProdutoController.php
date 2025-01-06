@@ -130,6 +130,8 @@ class ProdutoController extends Controller
         // Query base para os produtos
         $query = Produto::find();
 
+        $categoriaModel = null;
+
         if ($categoria) {
             // Obter a categoria e suas subcategorias relacionadas
             $categoriaModel = Categoria::findOne($categoria);
@@ -148,6 +150,7 @@ class ProdutoController extends Controller
             $query->andWhere(['like', 'nome', $search]);
         }
 
+
         // Obter os resultados
         $produtos = $query->all();
 
@@ -155,7 +158,7 @@ class ProdutoController extends Controller
         return $this->render('search', [
             'produtos' => $produtos,
             'search' => $search,
-            'categoria' => $categoria,
+            'categoria' => $categoriaModel,
         ]);
     }
 

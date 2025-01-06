@@ -74,12 +74,69 @@
 
   <!-- Sidebar Menu-->
   <div id="SidebarMenu" class="sidebarMenu">
-    <a href="#" class="closebtn" onclick="closeAllSidebars('SidebarMenu')">×</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
+      <a href="#" class="closebtn" onclick="closeAllSidebars('SidebarMenu')">×</a>
+
+      <!-- Exibir as categorias no Sidebar -->
+      <div class="categories-sidebar">
+          <?php
+          $categorias = \common\models\Categoria::find()->all();
+
+          function renderCategoryTree($categorias, $parentId = null)
+          {
+              // Variável para armazenar o HTML da lista de categorias
+              $treeHtml = '<ul class="category-branch" data-parent-id="' . ($parentId ?? 'root') . '">';
+
+              foreach ($categorias as $categoria) {
+                  // Verifica se a categoria é uma categoria principal ou uma subcategoria
+                  if ($categoria->categoria_principal_id == $parentId) {
+                      $treeHtml .= '<li>';
+                      $treeHtml .= yii\helpers\Html::a(
+                          "{$categoria->nome}",
+                          ['produto/search', 'categoria' => $categoria->id],  // Rota de pesquisa por categoria
+                          [
+                              'class' => 'category-link',
+                              'data-id' => $categoria->id,
+                          ]
+                      );
+
+                      $subcategorias = \common\models\Categoria::find()->where(['categoria_principal_id' => $categoria->id])->all();
+                      if (!empty($subcategorias)) {
+                          $treeHtml .= '<ul class="subcategory-list">';
+                          foreach ($subcategorias as $subcategoria) {
+                              $treeHtml .= '<li>';
+                              $treeHtml .= yii\helpers\Html::a(
+                                  "{$subcategoria->nome}",
+                                  ['produto/search', 'categoria' => $subcategoria->id],  // Rota de pesquisa por categoria
+                                  [
+                                      'class' => 'category-link',
+                                      'data-id' => $subcategoria->id,
+                                  ]
+                              );
+                              $treeHtml .= '</li>';
+                          }
+                          $treeHtml .= '</ul>';
+                      }
+
+                      $treeHtml .= '</li>';
+                  }
+              }
+
+              $treeHtml .= '</ul>';
+              return $treeHtml;
+          }
+
+          // Renderiza as categorias principais e suas subcategorias no Sidebar
+          echo renderCategoryTree($categorias);
+          ?>
+      </div>
+
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
   </div>
+
+
 
   <!-- Sidebar Profile -->
   <div id="SidebarProfile" class="sdCartProfile">
