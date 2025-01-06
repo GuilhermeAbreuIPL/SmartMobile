@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Categoria;
 use common\models\Produto;
 use common\models\Carrinho;
 use Yii;
@@ -29,12 +30,12 @@ class ProdutoController extends Controller
                     'rules' => [
                         [
                             'allow' => true,
-                            'actions' => ['index', 'view', 'add-to-cart'],
+                            'actions' => ['index', 'view', 'add-to-cart', 'search'],
                             'roles' => ['@'], // Only logged-in users can access
                         ],
                         [
                             'allow' => true,
-                            'actions' => ['index', 'view'],
+                            'actions' => ['index', 'view', 'search'],
                             'roles' => ['?'], // Guests can view products
                         ],
                     ],
@@ -121,4 +122,59 @@ class ProdutoController extends Controller
 
         return $this->redirect(['index']);
     }
+
+
+
+    public function actionSearch($search = null, $categoria = null)
+    {
+        // Query base para os produtos
+        $query = Produto::find();
+
+        if ($categoria) {
+            // Obter a categoria e suas subcategorias relacionadas
+            $categoriaModel = Categoria::findOne($categoria);
+
+            if ($categoriaModel) {
+                // Obter todas as categorias relacionadas
+                $categoriasIds = $this->getCategoriasRelacionais($categoriaModel->id);
+
+                // Filtrar produtos pela categoria e subcategorias
+                $query->andWhere(['categoria_id' => $categoriasIds]);
+            }
+        }
+
+        if ($search) {
+            // Se houver uma categoria, limitar a busca por nome dentro dessa categoria
+            $query->andWhere(['like', 'nome', $search]);
+        }
+
+        // Obter os resultados
+        $produtos = $query->all();
+
+        // Renderizar a view
+        return $this->render('search', [
+            'produtos' => $produtos,
+            'search' => $search,
+            'categoria' => $categoria,
+        ]);
+    }
+
+    /**
+     * Função recursiva para obter IDs de todas as categorias relacionadas
+     * @param int $categoriaId
+     * @return array
+     */
+    private function getCategoriasRelacionais($categoriaId)
+    {
+        $ids = [$categoriaId];
+        $subcategorias = Categoria::find()->where(['categoria_principal_id' => $categoriaId])->all();
+
+        foreach ($subcategorias as $subcategoria) {
+            $ids = array_merge($ids, $this->getCategoriasRelacionais($subcategoria->id));
+        }
+
+        return $ids;
+    }
+
+
 }

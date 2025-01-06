@@ -12,16 +12,18 @@
     </div>
     <a href="<?= \yii\helpers\Url::to(['site/index']) ?>" class="Logo">SmartMobile</a>
     <div class="Nav">
-      <div class="search-bar">
-            <input type="text" placeholder="Hinted search text" />
-            <button type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </button>
-      </div>
-      <div class="navbar-icons">
+        <form action="<?= \yii\helpers\Url::to(['produto/search']) ?>" method="get">
+            <div class="search-bar">
+                    <input type="text" name="search" placeholder="Procurar um produto" />
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+            </div>
+        </form>
+        <div class="navbar-icons">
         <!-- Modo escuro -->
         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
