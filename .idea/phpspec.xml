@@ -8,9 +8,6 @@
       <PhpSpecSuiteConfiguration>
         <option name="myPath" value="$PROJECT_DIR$/SmartMobileWebApp" />
       </PhpSpecSuiteConfiguration>
-      <PhpSpecSuiteConfiguration>
-        <option name="myPath" value="$PROJECT_DIR$/SmartMobileWebApp" />
-      </PhpSpecSuiteConfiguration>
     </suites>
   </component>
 </project>

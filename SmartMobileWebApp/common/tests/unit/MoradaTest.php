@@ -1,8 +1,8 @@
 <?php
 
+namespace common\tests\unit;
 
-namespace common\tests\Unit;
-
+Use common\fixtures\MoradaFixture;
 use common\tests\UnitTester;
 use common\models\Morada;
 use common\models\User;
@@ -12,64 +12,157 @@ class MoradaTest extends \Codeception\Test\Unit
 
     protected UnitTester $tester;
 
-    protected function _before()
+    public function _fixtures()
     {
+        return [
+            'moradas' => [
+                'class' => MoradaFixture::class,
+                'dataFile' => codecept_data_dir() . 'morada.php'
+            ]
+        ];
+    }
+
+
+    public function getUser($id)
+    {
+        //criar um user_id 1 válido
+        $user = new User();
+        $user->id = $id;
+        $user->username = 'teste' . $id;
+        $user->email = 'teste' . $id . '@teste.com';
+        $user->setPassword('teste' . $id);
+        $user->generateAuthKey();
+        $user->save();
+    }
+
+    public function testValidationWithInvalidData()
+    {
+        $model = new Morada();
+
+        // Teste com dados inválidos
+
+        $model->rua = str_repeat('a', 86);
+        $this->assertFalse($model->validate(['rua']), 'Rua não deveria ter mais de 85 caracteres.');
+
+        $model->localidade = str_repeat('a', 101);
+        $this->assertFalse($model->validate(['localidade']), 'Localidade não deveria ter mais de 100 caracteres.');
+
+        $model->codpostal = '123456789';
+        $this->assertFalse($model->validate(['codpostal']), 'Código Postal não deveria ter mais de 8 caracteres.');
+
+        // Teste com dados required
+
+        $model->rua = null;
+        $this->assertFalse($model->validate(['rua']), 'Rua é obrigatória.');
+
+        $model->localidade = null;
+        $this->assertFalse($model->validate(['localidade']), 'Localidade é obrigatória.');
+
+        $model->codpostal = null;
+        $this->assertFalse($model->validate(['codpostal']), 'Código Postal é obrigatório.');
+
+        $model->user_id = null;
+        $this->assertFalse($model->validate(['user_id']), 'User_id é obrigatório.');
+
+        // Teste com dados de tipo errado
+
+        $model->rua = 123;
+        $this->assertFalse($model->validate(['rua']), 'Rua não deveria ser um número.');
+
+        $model->localidade = 123;
+        $this->assertFalse($model->validate(['localidade']), 'Localidade não deveria ser um número.');
+
+        $model->codpostal = 123;
+        $this->assertFalse($model->validate(['codpostal']), 'Código Postal não deveria ser um número.');
+
+        $model->user_id = 'string';
+        $this->assertFalse($model->validate(['user_id']), 'User_id não deveria ser uma string.');
+
+    }
+
+    public function testValidationWithValidData()
+    {
+        $model = new Morada();
+
+        // Teste com dados válidos
+
+        $model->rua = 'Rua de Teste';
+        $this->assertTrue($model->validate(['rua']), 'Rua deveria ser válida.');
+
+        $model->localidade = 'Localidade de Teste';
+        $this->assertTrue($model->validate(['localidade']), 'Localidade deveria ser válida.');
+
+        $model->codpostal = '1234-567';
+        $this->assertTrue($model->validate(['codpostal']), 'Código Postal deveria ser válido.');
+
+        $model->user_id = 1;
+        $this->getUser($model->user_id);
+        $this->assertTrue($model->validate(['user_id']), 'User_id deveria ser válido.');
+
     }
 
     public function testCreateMoradaWithValidData()
     {
-        $morada = new Morada([
-            'rua' => 'Rua de Teste',
-            'localidade' => 'Localidade Teste',
-            'codpostal' => '1234-567',
-            'user_id' => 1, // ID de usuário válido
-        ]);
+        $morada = new Morada();
 
-        $this->assertTrue($morada->validate(), 'A morada com dados válidos deveria ser validada.');
+        $morada->rua = 'Rua de Teste';
+        $this->assertTrue($morada->validate(['rua']), 'Rua deveria ser válida.');
+
+        $morada->localidade = 'Localidade de Teste';
+        $this->assertTrue($morada->validate(['localidade']), 'Localidade deveria ser válida.');
+
+        $morada->codpostal = '1234-567';
+        $this->assertTrue($morada->validate(['codpostal']), 'Código Postal deveria ser válido.');
+
+        $morada->user_id = 1;
+        $this->getUser($morada->user_id);
+        $this->assertTrue($morada->validate(['user_id']), 'User_id deveria ser válido.');
+
     }
 
-    public function testCreateMoradaWithInvalidData()
-    {
-        $morada = new Morada([
-            'rua' => '', // Campo obrigatório em branco
-            'localidade' => str_repeat('a', 101), // Excede o limite de 100 caracteres
-            'codpostal' => '12345678A', // Formato inválido
-            'user_id' => 'x', // ID de usuário inexistente
-        ]);
 
-        $this->assertFalse($morada->validate(), 'A morada com dados inválidos não deveria ser validada.');
-        $this->assertArrayHasKey('rua', $morada->errors, 'Deveria ter erro para o campo "rua".');
-        $this->assertArrayHasKey('localidade', $morada->errors, 'Deveria ter erro para o campo "localidade".');
-        $this->assertArrayHasKey('codpostal', $morada->errors, 'Deveria ter erro para o campo "codpostal".');
-        $this->assertArrayHasKey('user_id', $morada->errors, 'Deveria ter erro para o campo "user_id".');
+    public function testCreateMoradaSucessfully()
+    {
+        $model = new Morada();
+
+        $model->rua = 'Rua de Teste';
+        $model->localidade = 'Localidade de Teste';
+        $model->codpostal = '1234-567';
+        $model->user_id = 1;
+
+        $this->getUser($model->user_id);
+
+        $this->assertTrue($model->validate(), 'Morada deveria ser válida.');
+
+        $this->assertTrue($model->save(), 'Erro ao guardar a Morada.');
+
+        $this->assertEquals('Rua de Teste', Morada::findOne(['id' => $model->id])->rua);
     }
 
-    public function testCreateMoradaWithMinimalData()
+    public function testUpdateMoradaSuccessfully()
     {
-        $morada = new Morada([
-            'rua' => 'Rua Simples',
-        ]);
+        $morada = $this->tester->grabFixture('moradas', 'morada1');
 
-        $this->assertTrue($morada->validate(), 'A morada deveria ser válida com apenas o campo obrigatório "rua".');
+        $morada->rua = 'Nova Rua';
+        $morada->localidade = 'Nova Localidade';
+        $morada->codpostal = '1234-567';
+        $morada->user_id = 1;
+
+        $this->getUser($morada->user_id);
+
+        $this->assertTrue($morada->validate(), 'Morada deveria ser válida.');
+
+        $this->assertTrue($morada->save(), 'Erro ao guardar a Morada.');
+
+        $this->assertEquals('Nova Rua', Morada::findOne(['id' => $morada->id])->rua);
     }
 
-    public function testRelationshipWithUser()
+    public function testDeleteMoradaSuccessfully()
     {
-        // Criar um usuário fictício para o teste
-        $user = new User([
-            'id' => 90,
-            'username' => 'teste_user',
-        ]);
-        $user->save(false);
+        $morada = $this->tester->grabFixture('moradas', 'morada1');
 
-        $morada = new Morada([
-            'rua' => 'Rua do Usuário',
-            'localidade' => 'Localidade do Usuário',
-            'codpostal' => '1234-567',
-            'user_id' => $user->id,
-        ]);
+        $this->assertGreaterThan(0, $morada->delete(), 'Erro ao apagar a Morada.');
 
-        $this->assertTrue($morada->validate(), 'A morada com referência a um usuário válido deveria ser validada.');
-        $this->assertEquals($user->id, $morada->user_id, 'O campo "user_id" deveria corresponder ao ID do usuário associado.');
+        $this->assertNull(Morada::findOne(['id' => $morada->id]), 'A morada não deveria mais existir na base de dados.');
     }
 }

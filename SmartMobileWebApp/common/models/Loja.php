@@ -38,7 +38,7 @@ class Loja extends \yii\db\ActiveRecord
             [['nome', 'contacto', 'rua', 'localidade', 'codpostal'], 'required'],
             [['rua', 'codpostal'], 'required'],
             [['nome', 'localidade'], 'string', 'max' => 45],
-            [['contacto'], 'string', 'max' => 15],
+            [['contacto'], 'string', 'max' => 15, 'min' => 9],
             [['rua'], 'string', 'max' => 85],
             [['codpostal'], 'string', 'max' => 8],
         ];

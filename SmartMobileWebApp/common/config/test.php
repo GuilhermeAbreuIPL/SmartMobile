@@ -14,6 +14,7 @@ return [
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
+            'enableSchemaCache' => false,
         ],
         'log' => [
             'targets' => [

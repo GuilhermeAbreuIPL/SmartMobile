@@ -1,61 +1,139 @@
 <?php
 
-namespace common\tests\Unit;
+namespace common\tests\unit;
 
+use common\fixtures\LojaFixture;
 use common\models\Loja;
 use common\tests\UnitTester;
 
-/**
- * Testes unitários para a classe Loja.
- */
 class LojaTest extends \Codeception\Test\Unit
 {
     protected UnitTester $tester;
 
-    protected function _before()
+    public function _fixtures()
     {
+        return [
+            'lojas' => [
+                'class' => LojaFixture::class,
+                'dataFile' => codecept_data_dir() . 'loja.php'
+            ]
+        ];
     }
 
-    public function testCreateLojaWithValidData()
+    public function testValidationWithInvalidData()
     {
-        $loja = new Loja([
-            'nome' => 'Loja Teste',
-            'contacto' => '123456789',
-            'rua' => 'Rua Teste 123',
-            'localidade' => 'Localidade Teste',
-            'codpostal' => '1234-567'
-        ]);
+        $model = new Loja();
 
-        $this->assertTrue($loja->validate(), 'Se os dados estiverem corretos a loja é valida');
+        // Teste com dados inválidos
+
+        $model->nome = str_repeat('a', 46);
+        $this->assertFalse($model->validate(['nome']), 'Nome não deveria ter mais de 45 caracteres.');
+
+        $model->contacto = '123';
+        $this->assertFalse($model->validate(['contacto']), 'Contacto não deveria ter menos de 9 caracteres.');
+
+        $model->rua = str_repeat('a', 86);
+        $this->assertFalse($model->validate(['rua']), 'Rua não deveria ter mais de 85 caracteres.');
+
+        $model->codpostal = '123456789';
+        $this->assertFalse($model->validate(['codpostal']), 'Código Postal não deveria ter mais de 8 caracteres.');
+
+        $model->localidade = str_repeat('a', 46);
+        $this->assertFalse($model->validate(['localidade']), 'Localidade não deveria ter mais de 45 caracteres.');
+
+        //Teste com dados required
+
+        $model->nome = null;
+        $this->assertFalse($model->validate(['nome']), 'Nome é obrigatório.');
+
+        $model->contacto = null;
+        $this->assertFalse($model->validate(['contacto']), 'Contacto é obrigatório.');
+
+        $model->rua = null;
+        $this->assertFalse($model->validate(['rua']), 'Rua é obrigatória.');
+
+        $model->codpostal = null;
+        $this->assertFalse($model->validate(['codpostal']), 'Código Postal é obrigatório.');
+
+        $model->localidade = null;
+        $this->assertFalse($model->validate(['localidade']), 'Localidade é obrigatória.');
+
+        //Teste com dados de tipo errado
+
+        $model->nome= 2;
+        $this->assertFalse($model->validate(['nome']), 'Nome não deveria ser um número.');
+
+        $model->contacto = 2;
+        $this->assertFalse($model->validate(['contacto']), 'Contacto não deveria ser um número.');
+
+        $model->rua = 2;
+        $this->assertFalse($model->validate(['rua']), 'Rua não deveria ser um número.');
+
+        $model->codpostal = 2;
+        $this->assertFalse($model->validate(['codpostal']), 'Código Postal não deveria ser um número.');
+
+        $model->localidade = 2;
+        $this->assertFalse($model->validate(['localidade']), 'Localidade não deveria ser um número.');
     }
 
-    public function testCreateLojaWithInvalidData()
+    public function testValidationWithValidData()
     {
-        $loja = new Loja([
-            'nome' => 'Loja de Teste',
-            'contacto' => '123456789',
-            'rua' => '', // campo obrigatório em branco
-            'localidade' => 'Localidade Teste',
-            'codpostal' => '' // campo obrigatório em branco
-        ]);
+        $model = new Loja();
 
-        $this->assertFalse($loja->validate(), 'A loja com campos obrigatórios em branco não deve ser valida');
-        $this->assertArrayHasKey('rua', $loja->errors, 'Deve ter erro para o campo "rua"');
-        $this->assertArrayHasKey('codpostal', $loja->errors, 'Deve ter erro para o campo "codpostal"');
+        $model->nome = 'Loja Teste';
+        $this->assertTrue($model->validate(['nome']), 'Nome deveria ser válido.');
+
+        $model->contacto = '912345678';
+        $this->assertTrue($model->validate(['contacto']), 'Contacto deveria ser válido.');
+
+        $model->rua = 'Rua de Teste';
+        $this->assertTrue($model->validate(['rua']), 'Rua deveria ser válida.');
+
+        $model->codpostal = '2400-400';
+        $this->assertTrue($model->validate(['codpostal']), 'Código Postal deveria ser válido.');
+
+        $model->localidade = 'Localidade';
+        $this->assertTrue($model->validate(['localidade']), 'Localidade deveria ser válida.');
     }
 
-    public function testLojaWithMaxStringLength()
+    public function testCreateLojaSuccessfully()
     {
-        $loja = new Loja([
-            'nome' => str_repeat('a', 46), // excede o limite de 45 caracteres
-            'contacto' => '123456789',
-            'rua' => str_repeat('a', 86), // excede o limite de 85 caracteres
-            'localidade' => 'Localidade Teste',
-            'codpostal' => '1234-567'
-        ]);
+        $model = new Loja();
+        $model->nome = 'Loja Exemplo';
+        $model->contacto = '912345678';
+        $model->rua = 'Rua Exemplo, 123';
+        $model->localidade = 'Cidade Exemplo';
+        $model->codpostal = '1234-567';
 
-        $this->assertFalse($loja->validate(), 'A loja com campos com tamanho máximo excedido não deve ser valida');
-        $this->assertArrayHasKey('nome', $loja->errors, 'Deve ter erro para o campo "nome"');
-        $this->assertArrayHasKey('rua', $loja->errors, 'Deve ter erro para o campo "rua"');
+        $this->assertTrue($model->validate(), 'Erro ao validar o modelo.');
+
+        $this->assertTrue($model->save(), 'Erro ao salvar o modelo.');
+
+        $this->assertEquals('Loja Exemplo', Loja::findOne(['id' => $model->id])->nome);
+    }
+
+    public function testUpdateLojaSuccessfully()
+    {
+        $loja = $this->tester->grabFixture('lojas', 'loja1');
+        $loja->nome = 'Novo Nome da Loja';
+        $loja->contacto = '987654321';
+        $loja->rua = 'Nova Rua, 456';
+        $loja->localidade = 'Nova Cidade';
+        $loja->codpostal = '2345-678';
+
+        $this->assertTrue($loja->validate(), 'Erro ao validar o modelo.');
+
+        $this->assertTrue($loja->save(), 'Erro ao salvar o modelo.');
+
+        $this->assertEquals('Novo Nome da Loja', Loja::findOne(['id' => $loja->id])->nome);
+    }
+
+    public function testDeleteLojaSuccessfully()
+    {
+        $loja = $this->tester->grabFixture('lojas', 'loja1');
+
+        $this->assertGreaterThan(0, $loja->delete(), 'Erro ao Apagar a Loja.');
+
+        $this->assertNull(Loja::findOne(['id' => $loja->id]), 'A loja não deveria existir na base de dados.');
     }
 }

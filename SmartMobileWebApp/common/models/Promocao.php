@@ -31,8 +31,8 @@ class Promocao extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'descricao', 'descontopercentual'], 'required'],
-            [['descricao'], 'string'],
-            [['descontopercentual'], 'number'],
+            [['descricao'], 'string', 'min' => 0],
+            [['descontopercentual'], 'number', 'min' => 0, 'max' => 100],
             [['nome'], 'string', 'max' => 100],
         ];
     }

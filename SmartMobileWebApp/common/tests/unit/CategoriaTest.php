@@ -1,63 +1,98 @@
 <?php
 
+namespace common\tests\unit;
 
-namespace common\tests\Unit;
-
-use common\tests\UnitTester;
+use common\fixtures\CategoriaFixture;
 use common\models\Categoria;
+use common\tests\UnitTester;
 
 class CategoriaTest extends \Codeception\Test\Unit
 {
-
     protected UnitTester $tester;
 
-    protected function _before()
+    public function _fixtures()
     {
+        return [
+            'categorias' => [
+                'class' => CategoriaFixture::class,
+                'dataFile' => codecept_data_dir() . 'categorias.php'
+            ]
+        ];
     }
 
-    public function testCreateCategoriaWithValidData()
+    public function testValidationWithInvalidData()
     {
-        $categoria = new Categoria([
-            'nome' => 'Eletrônicos',
-        ]);
+        $model = new Categoria();
 
-        $this->assertTrue($categoria->validate(), 'A categoria com dados válidos deveria ser validada.');
+        // Teste com dados inválidos
+
+        $model->nome = str_repeat('a', 46);
+        $this->assertFalse($model->validate(['nome']), 'Nome não deveria ter mais de 45 caracteres.');
+
+
+        // Teste com dados required
+
+        $model->nome = null;
+        $this->assertFalse($model->validate(['nome']), 'Nome é obrigatório.');
+
+        //teste com dados de tipo errado
+
+        $model->nome = 123;
+        $this->assertFalse($model->validate(['nome']), 'Nome não deveria ser um número.');
+
+        $model->categoria_principal_id = 'string';
+        $this->assertFalse($model->validate(['categoria_principal_id']), 'Categoria Principal não deveria ser uma string.');
+
     }
 
-    public function testCreateCategoriaWithInvalidData()
+    public function testValidationWithValidData()
     {
-        $categoria = new Categoria([
-            'nome' => str_repeat('a', 46), // Excede o limite de 45 caracteres
-            'categoria_principal_id' => 'invalid_id', // Tipo inválido
-        ]);
+        $model = new Categoria();
 
-        $this->assertFalse($categoria->validate(), 'A categoria com dados inválidos não deveria ser validada.');
-        $this->assertArrayHasKey('nome', $categoria->errors, 'Deveria ter erro para o campo "nome".');
-        $this->assertArrayHasKey('categoria_principal_id', $categoria->errors, 'Deveria ter erro para o campo "categoria_principal_id".');
+        // Teste com dados válidos
+
+        $model->nome = 'Eletrônicos';
+        $this->assertTrue($model->validate(['nome']), 'Nome deveria ser válido.');
+
+        $model->categoria_principal_id = null;
+        $this->assertTrue($model->validate(['categoria_principal_id']), 'Categoria Principal deveria ser válida.');
     }
 
-    public function testCreateCategoriaWithMinimalData()
+    public function testCreateCategoriaSuccessfully()
     {
-        $categoria = new Categoria([
-            'nome' => 'Roupas',
-        ]);
+        $model = new Categoria();
 
-        $this->assertTrue($categoria->validate(), 'A categoria deveria ser válida com apenas o campo opcional "nome".');
+        $model->nome = 'Eletrônicos';
+        $model->categoria_principal_id = null;
+
+        $this->assertTrue($model->validate(), 'Erro ao validar o modelo.');
+
+        $this->assertTrue($model->save(), 'Erro ao salvar o modelo.');
+
+        $this->assertEquals('Eletrônicos', Categoria::findOne(['id' => $model->id])->nome);
     }
 
-    public function testRelationshipWithCategoriaPrincipal()
+    public function testUpdateCategoriaSuccessfully()
     {
-        $categoriaPrincipal = new Categoria([
-            'nome' => 'Eletrodomésticos',
-        ]);
-        $categoriaPrincipal->save(false);
+        $categoria = $this->tester->grabFixture('categorias', 'categoria1');
+        $categoria->nome = 'Novo Nome';
+        $categoria->categoria_principal_id = null;
 
-        $categoriaFilha = new Categoria([
-            'nome' => 'Refrigeradores',
-            'categoria_principal_id' => $categoriaPrincipal->id,
-        ]);
-        $categoriaFilha->save(false);
+        $this->assertTrue($categoria->validate(), 'Erro ao validar o modelo.');
 
-        $this->assertEquals($categoriaPrincipal->id, $categoriaFilha->categoria_principal_id, 'A categoria filha deveria estar associada à categoria principal.');
+        $this->assertTrue($categoria->save(), 'Erro ao salvar o modelo.');
+
+        $this->assertEquals('Novo Nome', Categoria::findOne(['id' => $categoria->id])->nome);
+    }
+
+    public function testDeleteCategoriaSuccessfully()
+    {
+        $categoria = $this->tester->grabFixture('categorias', 'categoria1');
+
+        Categoria::deleteAll(['categoria_principal_id' => $categoria->id]);
+
+        $this->assertGreaterThan(0, $categoria->delete(), 'Erro ao apagar a Categoria.');
+
+        $this->assertNull(Categoria::findOne(['id' => $categoria->id]), 'A categoria não deveria mais existir na base de dados.');
     }
 }
