@@ -10,58 +10,60 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Faturas';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="fatura-index">
+
+    <link rel="stylesheet" href="<?= Yii::getAlias('@web/css/faturas.css') ?>">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            // Data da fatura, com formatação mais amigável
             [
                 'attribute' => 'datafatura',
                 'format' => ['date', 'php:d/m/Y H:i:s'],
+                'label' => 'Data',
             ],
 
-            // Total da fatura formatado como moeda
             [
                 'attribute' => 'total',
                 'format' => ['currency'],
+                'label' => 'Total',
             ],
 
-            // Status do pedido
-            'statusorder',
+            [
+                'attribute' => 'statusorder',
+                'label' => 'Estado da Encomenda',
+            ],
 
-            // Método de pagamento - se desejar mostrar o nome em vez do ID, você pode fazer um relacionamento
             [
                 'attribute' => 'metodopagamento_id',
+                'label' => 'Metodo Pagamento',
                 'value' => function ($model) {
                     return $model->metodopagamento ? $model->metodopagamento->nome : 'Não especificado';
                 },
             ],
 
-            // Tipo de entrega
             [
                 'attribute' => 'tipoentrega',
+                'label' => 'Entrega',
                 'value' => function ($model) {
-                    return ucfirst($model->tipoentrega); // Exibe 'Morada' ou 'Loja' com a primeira letra maiúscula
+                    return ucfirst($model->tipoentrega);
                 },
             ],
 
-            // Ação: Visualizar fatura
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, fatura $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 },
-                'template' => '{view}', // Exibe apenas o botão de visualização
+                'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url, $model) {
                         return Html::a('Ver Detalhes', $url, [
-                            'class' => 'btn btn-warning', // Estilo do botão amarelo
-                            'style' => 'background-color: #f0ad4e; color: white;', // Estilo adicional para garantir a cor amarela
+                            'class' => 'btn btn-warning',
                         ]);
                     },
                 ],

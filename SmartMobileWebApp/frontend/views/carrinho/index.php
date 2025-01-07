@@ -2,57 +2,55 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
 
 /** @var $carrinho app\models\Carrinho */
 ?>
 
-<h1>Meu Carrinho</h1>
+<link rel="stylesheet" href="<?= Yii::getAlias('@web/css/carrinho_index.css') ?>">
 
-<?= GridView::widget([
-    'dataProvider' => new \yii\data\ArrayDataProvider([
-        'allModels' => $carrinho->linhacarrinhos,
-        'pagination' => false,
-    ]),
-    'columns' => [
-        [
-            'label' => 'Produto',
-            'value' => function ($model) {
-                return $model->produto->nome;
-            },
-        ],
-        [
-            'label' => 'Preço Unitário',
-            'value' => function ($model) {
-                return Yii::$app->formatter->asCurrency($model->precounitario);
-            },
-        ],
-        'quantidade',
-        [
-            'label' => 'Total',
-            'value' => function ($model) {
-                return Yii::$app->formatter->asCurrency($model->quantidade * $model->precounitario);
-            },
-        ],
-        [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{add} {remove}',
-            'buttons' => [
-                'add' => function ($url, $model) {
-                    return Html::a('Adicionar', Url::to(['carrinho/add', 'id' => $model->produto_id]), [
-                        'class' => 'btn btn-success btn-sm',
-                    ]);
-                },
-                'remove' => function ($url, $model) {
-                    return Html::a('Remover', Url::to(['carrinho/remove', 'id' => $model->produto_id]), [
-                        'class' => 'btn btn-danger btn-sm',
-                    ]);
-                },
-            ],
-        ],
-    ],
-]); ?>
+<div class="container">
+    <div class="orders">
+        <h1 class="title">O meu carrinho</h1>
 
-<div class="mt-3">
-    <?= Html::a('Finalizar Compra', ['fatura/checkout'], ['class' => 'btn btn-primary']) ?>
+        <?php foreach ($carrinho->linhacarrinhos as $linha): ?>
+            <div class="order-card">
+                <div class="order-info">
+                    <div class="container_img">
+                        <?php if ($linha->produto->imagem && file_exists(Yii::getAlias('@backend/web/uploads/' . $linha->produto->imagem->filename))): ?>
+                            <img src="<?= Yii::getAlias('@backendUrl/uploads/' . $linha->produto->imagem->filename) ?>"
+                                 alt="<?= Html::encode($linha->produto->nome) ?>" class="order-image" />
+                        <?php else: ?>
+                            <img src="<?= Yii::getAlias('@backendUrl/uploads/default.jpg') ?>"
+                                 alt="Imagem padrão" class="order-image" />
+                        <?php endif; ?>
+                    </div>
+                    <div class="infos">
+                        <div>
+                            <p class="order-label">Nome</p>
+                            <p class="order-value"><?= Html::encode($linha->produto->nome) ?></p>
+                        </div>
+                        <div>
+                            <p class="order-label">Preço Unitário</p>
+                            <p class="order-value"><?= Yii::$app->formatter->asCurrency($linha->precounitario) ?></p>
+                        </div>
+                        <div>
+                            <p class="order-label">Quantidade</p>
+                            <p class="order-value"><?= Html::encode($linha->quantidade) ?></p>
+                            <div class="btn-quantity-container">
+                                <a href="<?= Url::to(['carrinho/add', 'id' => $linha->produto_id]) ?>" class="btn-quantity">+</a>
+                                <a href="<?= Url::to(['carrinho/remove', 'id' => $linha->produto_id]) ?>" class="btn-quantity">-</a>
+                            </div>
+                        </div>
+                        <div class="total-info">
+                            <p class="order-label">Total</p>
+                            <p class="order-value"><?= Yii::$app->formatter->asCurrency($linha->quantidade * $linha->precounitario) ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <div class="checkout-btn-container">
+            <a href="<?= Url::to(['fatura/checkout']) ?>" class="btn-checkout">Finalizar Compra</a>
+        </div>
+    </div>
 </div>

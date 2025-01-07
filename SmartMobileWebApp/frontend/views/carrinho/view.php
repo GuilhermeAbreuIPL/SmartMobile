@@ -5,44 +5,37 @@ use yii\widgets\DetailView;
 
 /** @var $carrinho app\models\Carrinho */
 ?>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Foto</th>
-        <th>Produto</th>
-        <th>Preço Unitário</th>
-        <th>Quantidade</th>
-        <th>Total</th>
-        <th>Ações</th>
-    </tr>
-    </thead>
-    <tbody>
+
+<link rel="stylesheet" href="<?= Yii::getAlias('@web/css/card_carrinho.css') ?>">
+
+<div class="container_carrinho">
     <?php foreach ($carrinho->linhacarrinhos as $linha): ?>
-        <tr>
-            <td>
+        <div class="card_carrinho">
+            <div class="card_carrinho_img">
                 <?php if ($linha->produto->imagem && file_exists(Yii::getAlias('@backend/web/uploads/' . $linha->produto->imagem->filename))): ?>
                     <img src="<?= Yii::getAlias('@backendUrl/uploads/' . $linha->produto->imagem->filename) ?>"
-                         alt="<?= Html::encode($linha->produto->nome) ?>"
-                         width="35" height="35" class="product img-fluid">
+                         alt="<?= Html::encode($linha->produto->nome) ?>" />
                 <?php else: ?>
                     <img src="<?= Yii::getAlias('@backendUrl/uploads/default.jpg') ?>"
-                         alt="Imagem padrão"
-                         width="35" height="35" class="product img-fluid">
+                         alt="Imagem padrão" />
                 <?php endif; ?>
-            </td>
-            <td><?= Html::encode($linha->produto->nome) ?></td>
-            <td><?= Yii::$app->formatter->asCurrency($linha->precounitario) ?></td>
-            <td><?= Html::encode($linha->quantidade) ?></td>
-            <td><?= Yii::$app->formatter->asCurrency($linha->quantidade * $linha->precounitario) ?></td>
-            <td>
-                <?= Html::a('Adicionar', ['add', 'id' => $linha->produto_id], ['class' => 'btn btn-success btn-sm']) ?>
-                <?= Html::a('Remover', ['remove', 'id' => $linha->produto_id], ['class' => 'btn btn-danger btn-sm']) ?>
-            </td>
-        </tr>
+            </div>
+            <div class="card_carrinho_content">
+                <h5><?= Html::encode($linha->produto->nome) ?></h5>
+                <p><?= Yii::$app->formatter->asCurrency($linha->precounitario) ?></p>
+                <div class="card_carrinho_quantity">
+                    <div class="card_carrinho_quantity">
+                        <?= Html::a('+', ['add', 'id' => $linha->produto_id], ['class' => 'btn_carrinho']) ?>
+                        <input type="text" id="quantidade_<?= $linha->produto_id ?>" value="<?= Html::encode($linha->quantidade) ?>" readonly />
+                        <?= Html::a('-', ['remove', 'id' => $linha->produto_id], ['class' => 'btn_carrinho']) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php endforeach; ?>
-    </tbody>
-</table>
+</div>
 
 <div class="mt-3">
-    <?= Html::a('Carrinho', ['index'], ['class' => 'btn btn-primary']) ?>
+    <?= Html::button('Carrinho', ['class' => 'btn btn-primary carrinho', 'onclick' => 'location.href="' . Yii::$app->urlManager->createUrl(['carrinho/index']) . '"']) ?>
+
 </div>

@@ -35,6 +35,12 @@ AppAsset::register($this);
     $hideNavbarAndFooter = in_array(Yii::$app->controller->action->id, ['login', 'signup']);
 ?>
 
+<?php
+$hideFooter = (Yii::$app->controller->id === 'fatura' && Yii::$app->controller->action->id === 'index') ||
+              (Yii::$app->controller->id === 'fatura' && Yii::$app->controller->action->id === 'view') ||
+              (Yii::$app->controller->id === 'carrinho' && Yii::$app->controller->action->id === 'index');
+?>
+
 <?php if (!$hideNavbarAndFooter): ?>
     <!-- Navbar -->
     <header>
@@ -52,7 +58,7 @@ AppAsset::register($this);
     </div>
 </main>
 
-<?php if (!$hideNavbarAndFooter): ?>
+<?php if (!$hideNavbarAndFooter && !$hideFooter): ?>
     <!-- Footer -->
     <footer>
         <?= $this->render('footer') ?>

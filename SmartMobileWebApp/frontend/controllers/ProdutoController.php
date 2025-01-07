@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use common\models\Categoria;
+use common\models\Loja;
 use common\models\Produto;
 use common\models\Carrinho;
+use common\models\ProdutoLoja;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -79,13 +81,29 @@ class ProdutoController extends Controller
     public function actionView($id)
     {
         $model = Produto::findOne($id);
+        $stock = $this->getStockLoja($id);
+
         if (!$model) {
             throw new NotFoundHttpException('Produto não encontrado.');
         }
 
         return $this->render('view', [
             'model' => $model,
+            'stock' => $stock,
         ]);
+    }
+
+    private function getStockLoja($produtoId)
+    {
+        $lojas = Loja::find()->all();
+        $stock = [];
+
+        foreach ($lojas as $loja) {
+            $produtoLoja = ProdutoLoja::findOne(['produto_id' => $produtoId, 'loja_id' => $loja->id]);
+            $stock[$loja->nome] = $produtoLoja ? $produtoLoja->quantidade : 0;
+        }
+
+        return $stock;
     }
 
     /**

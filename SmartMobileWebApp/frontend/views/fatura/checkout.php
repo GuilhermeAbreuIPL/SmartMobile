@@ -6,19 +6,83 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var common\models\fatura $model */
 
-$this->title = 'Create Fatura';
-$this->params['breadcrumbs'][] = ['label' => 'Faturas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Finalizar compra';
 ?>
 
+<link rel="stylesheet" href="<?= Yii::getAlias('@web/css/finalizar_compra.css') ?>">
 
-<div class="fatura-create">
+<div class="checkout-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="Titulo"><?= Html::encode($this->title) ?></h1>
 
-    <div class="fatura-form">
 
         <?php $form = ActiveForm::begin(); ?>
+
+        <div class="opcao_entrega">
+            <div class="escolha">
+                <label class="card-escolha">
+                    <input type="radio" name="tipoentrega" value="morada" checked />
+                    <div class="card-escolha-content">
+                        <i class="fa fa-truck"></i>
+                        <span>Desejo receber a encomenda numa morada</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="escolha">
+                <label class="card-escolha">
+                    <input type="radio" name="tipoentrega" value="loja" />
+                    <div class="card-escolha-content">
+                        <i class="fa fa-store"></i>
+                        <span>Desejo levantar a encomenda em loja</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Container Dinâmico -->
+        <div class="dynamic-list">
+            <!-- Lista de Moradas -->
+            <div class="morada-list" id="morada-list">
+                <?php foreach ($moradas as $morada): ?>
+                    <!-- Cartão de morada existente -->
+                    <div class="morada-card" data-id="<?= $morada->id ?>">
+                        <input type="radio" name="morada" value="<?= $morada->id ?>" />
+                        <p><strong>Rua:</strong> <?= Html::encode($morada->rua) ?></p>
+                        <p><strong>Localidade:</strong> <?= Html::encode($morada->localidade) ?></p>
+                        <p><strong>Código Postal:</strong> <?= Html::encode($morada->codpostal) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Lista de Lojas -->
+            <div class="loja-list" id="loja-list" style="display: none;">
+                <?php foreach ($lojas as $loja): ?>
+                    <label class="loja-card" data-id="<?= $loja->id ?>">
+                        <input type="radio" name="loja" value="<?= $loja->id ?>" />
+                        <p><strong>Nome:</strong> <?= Html::encode($loja->nome) ?></p>
+                        <p><strong>Rua:</strong> <?= Html::encode($loja->rua) ?></p>
+                        <p><strong>Localidade:</strong> <?= Html::encode($loja->localidade) ?></p>
+                        <p><strong>Código Postal:</strong> <?= Html::encode($loja->codpostal) ?></p>
+                    </label>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+
+        <div class="opcao_pagamento">
+            <?php foreach ($metodopagamento as $id => $nome): ?>
+                <div class="escolha">
+                    <label class="card-pagamento">
+                        <input type="radio" name="metodopagamento_id" value="<?= $id ?>" />
+                        <div class="card-pagamento-content">
+                            <i class="fa fa-credit-card"></i>
+                            <span><?= Html::encode($nome) ?></span>
+                        </div>
+                    </label>
+                </div>
+            <?php endforeach; ?>
+        </div>
 
         <table class="table table-striped">
             <thead>
@@ -59,97 +123,10 @@ $this->params['breadcrumbs'][] = $this->title;
             </tfoot>
         </table>
 
-        <div class="row">
-            <!-- Opção: Receber numa morada -->
-            <div class="col-md-6">
-                <label class="radio-card">
-                    <input type="radio" name="tipoentrega" value="morada" checked onchange="toggleDeliveryOption()">
-                    <div class="card-content">
-                        <i class="fa fa-truck"></i>
-                        <span>Desejo receber a encomenda numa morada</span>
-                    </div>
-                </label>
+            <div>
+                <?= Html::submitButton('Finalizar Compra', ['class' => 'btn-finalizar']) ?>
             </div>
-
-            <!-- Opção: Levantar em loja -->
-            <div class="col-md-6">
-                <label class="radio-card">
-                    <input type="radio" name="tipoentrega" value="loja" onchange="toggleDeliveryOption()">
-                    <div class="card-content">
-                        <i class="fa fa-store"></i>
-                        <span>Desejo levantar a encomenda em loja</span>
-                    </div>
-                </label>
-            </div>
-        </div>
-
-        <table class="morada-table">
-            <thead>
-            <tr>
-                <th>Selecionar</th>
-                <th>Rua</th>
-                <th>Localidade</th>
-                <th>Código Postal</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($moradas as $morada): ?>
-                <!-- Linha da morada existente -->
-                <tr data-id="<?= $morada->id ?>">
-                    <td>
-                        <input type="radio" name="morada" value="<?= $morada->id ?>" />
-                    </td>
-                    <td><?= Html::encode($morada->rua) ?></td>
-                    <td><?= Html::encode($morada->localidade) ?></td>
-                    <td><?= Html::encode($morada->codpostal) ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-
-        <table class="loja-table">
-            <thead>
-            <tr>
-                <th>Selecionar</th>
-                <th>Nome</th>
-                <th>Morada</th>
-                <th>Localidade</th>
-                <th>Código Postal</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($lojas as $loja): ?>
-                <!-- Linha da loja existente -->
-                <tr data-id="<?= $loja->id ?>">
-                    <td>
-                        <input type="radio" name="loja" value="<?= $loja->id ?>" />
-                    </td>
-                    <td><?= Html::encode($loja->nome) ?></td>
-                    <td><?= Html::encode($loja->rua) ?></td>
-                    <td><?= Html::encode($loja->localidade) ?></td>
-                    <td><?= Html::encode($loja->codpostal) ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-
-
-
-        <?= $form->field($model, 'metodopagamento_id')->radioList(
-            $metodopagamento,
-            [
-                'itemOptions' => ['class' => 'radio-inline'],
-            ]
-        ) ?>
-
-
-
-        <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        </div>
-
         <?php ActiveForm::end(); ?>
-
-    </div>
-
 </div>
+
+<script src="<?= Yii::getAlias('@web/js/checkout.js') ?>"></script>

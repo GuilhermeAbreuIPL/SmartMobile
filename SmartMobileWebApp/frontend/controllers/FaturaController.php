@@ -164,8 +164,9 @@ class FaturaController extends Controller
             }
             $model->total = $totalPrice;
 
+
             if ($this->request->isPost) {
-                if ($model->load($this->request->post())) {
+                if ($model->load($this->request->post(),"")) {
 
                     // Verificar se o metodo de pagamento é válido
                     $metodoPagamentoId = $model->metodopagamento_id;
@@ -185,8 +186,15 @@ class FaturaController extends Controller
                     $moradaId = Yii::$app->request->post('morada');
                     $lojaId = Yii::$app->request->post('loja');
 
+                    $stockloja = $this->verificarStockLoja($lojaId);
+                    if (!$stockloja) {
+                        Yii::$app->session->setFlash('error', 'Stock insuficiente de produto(s) na loja selecionada.');
+                        return $this->redirect('checkout'); // Redireciona em caso de erro
+                    }
+
                     $expedicao = $this->criarMoradaExpedicao($tipoEntrega, $moradaId, $lojaId);
                     if (!$expedicao) {
+                        Yii::$app->session->setFlash('error', 'Erro ao criar morada de expedição.');
                         return $this->redirect('checkout'); // Redireciona em caso de erro
                     }
 
