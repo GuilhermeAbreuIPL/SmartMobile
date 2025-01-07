@@ -6,10 +6,6 @@
             <div class="brand-link">
                 <img src="<?= Yii::$app->request->baseUrl ?>/img/smartmobile_logo.png" alt="SmartMobile Logo" class="brand-image" style="opacity: .8; height: 40px;">
             </div>
-            <div class="info mt-2 d-flex align-items-center">
-                <img src="<?= Yii::$app->request->baseUrl ?>/img/kekw_image.png" alt="KEKW" class="img-circle mr-2" style="height: 40px; width: 40px;">
-                <span class="d-block" style="font-size: 16px; font-weight: 600; color: #c2c7d0; margin-left: 10px;"><?= Yii::$app->user->identity->userprofile->nome ?></span>
-            </div>
         </div>
 
         <!-- Sidebar Menu -->

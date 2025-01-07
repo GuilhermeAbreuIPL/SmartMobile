@@ -1,7 +1,7 @@
 <?php
 
 
-namespace backend\tests\Functional;
+namespace backend\tests\functional;
 
 use backend\tests\FunctionalTester;
 use common\models\Categoria;
@@ -20,7 +20,7 @@ class CreateCategoriasCest
     // tests
     public function createCategoriasWithFunctionalData(FunctionalTester $I)
     {
-        $I->amOnPage('categoria/create?categoriaprincipalid=0');
+        $I->amOnPage('/categoria/create?categoriaprincipalid=0');
         $I->fillField('Categoria[nome]', 'Categoria de teste');
         $I->click('submit-button');
 
@@ -36,6 +36,7 @@ class CreateCategoriasCest
         $I->click('submit-button');
 
         $I->see('Nome cannot be blank.');
+        $I->dontSeeRecord(Categoria::class, ['nome' => '']);
     }
 
     public function createCategoriasWithInvalidData2(FunctionalTester $I)
@@ -45,5 +46,6 @@ class CreateCategoriasCest
         $I->click('submit-button');
 
         $I->see('Nome should contain at most 45 characters.');
+        $I->dontSeeRecord(Categoria::class, ['nome' => str_repeat('a', 46)]);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace backend\tests\Functional;
+namespace backend\tests\functional;
 
 use backend\tests\FunctionalTester;
 
