@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/cena1"
+            android:title="Telemoveis"/>
+        <item android:id="@+id/cena2"
+            android:title="Relogios"/>
+    </group>
+    <item
+        android:title="" >
+
+        <menu >
+            <item android:id="@+id/light_mode"
+                android:title="Light Mode"/>
+            <item android:id="@+id/comparador"
+                android:title="Comparador"/>
+            <item android:id="@+id/perfil"
+                android:title="Perfil"/>
+        </menu>
+    </item>
+</menu>

@@ -103,14 +103,17 @@ class UserController extends Controller
     public function actionCreate(){
         $model = new UserForm();
 
+
+
         if ($model->load(\Yii::$app->request->post())) {
             $model->create();
+            Yii::$app->session->setFlash('success', 'Utilizador criado com sucesso!');
             return $this->redirect(['user/index']);
         }
 
-            $roles = $this->getAvailableRoles();
+        $roles = $this->getAvailableRoles();
 
-            return $this->render('create', [
+        return $this->render('create', [
             'model' => $model,
             'roles' => $roles,
         ]);

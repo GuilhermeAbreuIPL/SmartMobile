@@ -36,6 +36,19 @@
           </option>
         </Configuration>
         <Configuration>
+          <option name="namespace" value="Tests" />
+          <option name="path" value="$PROJECT_DIR$/SmartMobileWebApp/tests" />
+        </Configuration>
+        <Configuration>
+          <option name="path" value="$PROJECT_DIR$/SmartMobileWebApp/tests" />
+        </Configuration>
+        <Configuration>
+          <option name="path" value="$PROJECT_DIR$/SmartMobileWebApp/tests" />
+        </Configuration>
+        <Configuration>
+          <option name="path" value="$PROJECT_DIR$/SmartMobileWebApp/tests" />
+        </Configuration>
+        <Configuration>
           <option name="path" value="$PROJECT_DIR$/SmartMobileWebApp/tests" />
         </Configuration>
         <Configuration>

@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use backend\models\Compraloja;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "lojas".
@@ -12,7 +13,7 @@ use backend\models\Compraloja;
  * @property string|null $nome
  * @property string|null $contacto
  * @property string $rua
- * @property string|null $localizacao
+ * @property string|null $localidade
  * @property string $codpostal
  *
  * @property Compraloja[] $compralojas
@@ -34,9 +35,10 @@ class Loja extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nome', 'contacto', 'rua', 'localidade', 'codpostal'], 'required'],
             [['rua', 'codpostal'], 'required'],
-            [['nome', 'localizacao'], 'string', 'max' => 45],
-            [['contacto'], 'string', 'max' => 15],
+            [['nome', 'localidade'], 'string', 'max' => 45],
+            [['contacto'], 'string', 'max' => 15, 'min' => 9],
             [['rua'], 'string', 'max' => 85],
             [['codpostal'], 'string', 'max' => 8],
         ];
@@ -52,7 +54,7 @@ class Loja extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'contacto' => 'Contacto',
             'rua' => 'Rua',
-            'localizacao' => 'Localizacao',
+            'localidade' => 'Localidade',
             'codpostal' => 'Codpostal',
         ];
     }
@@ -75,5 +77,35 @@ class Loja extends \yii\db\ActiveRecord
     public function getProdutolojas()
     {
         return $this->hasMany(Produtoloja::class, ['loja_id' => 'id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->id;
+        $topic = "smartmobile/loja/{$id}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem= 'A loja foi criada ou modificada';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
+
+    }
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        $id = $this->id;
+        $topic = "smartmobile/loja/{$id}/delete";
+
+        // Concatenar o id à mensagem
+        $mensagem = "Uma loja foi removida. ID da loja: {$id}";
+
+        HelperMosquitto::FazPublishNoMosquitto($topic, $mensagem);
     }
 }

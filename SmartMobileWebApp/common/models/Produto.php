@@ -3,6 +3,7 @@
 namespace common\models;
 
 use backend\models\CompraLoja;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "produtos".
@@ -117,9 +118,9 @@ class Produto extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProdutoPromocaos()
+    public function getProdutoPromocao()
     {
-        return $this->hasMany(ProdutoPromocao::class, ['produto_id' => 'id']);
+        return $this->hasOne(ProdutoPromocao::class, ['produto_id' => 'id']);
     }
 
     /**
@@ -130,5 +131,34 @@ class Produto extends \yii\db\ActiveRecord
     public function getProdutolojas()
     {
         return $this->hasMany(ProdutoLoja::class, ['produto_id' => 'id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->id;
+        $topic = "smartmobile/produto/{$id}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem= 'O produto foi criado ou modificado';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
+    }
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        $id = $this->id;
+        $topic = "smartmobile/produto/{$id}/delete";
+
+        // Concatenar o id à mensagem
+        $mensagem = "Um produto foi removido. ID do produto: {$id}";
+
+        HelperMosquitto::FazPublishNoMosquitto($topic, $mensagem);
     }
 }

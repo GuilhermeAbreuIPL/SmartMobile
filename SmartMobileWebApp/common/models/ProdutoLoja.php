@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "produtolojas".
@@ -68,5 +69,35 @@ class ProdutoLoja extends \yii\db\ActiveRecord
     public function getProduto()
     {
         return $this->hasOne(Produto::class, ['id' => 'produto_id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->id;
+        $topic = "smartmobile/produtoloja/{$id}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem= 'O produtoloja foi criado ou modificado';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        $id = $this->id;
+        $topic = "smartmobile/produtoloja/{$id}/delete";
+
+        // Concatenar o id à mensagem
+        $mensagem = "Uma produtoloja foi removida. ID da produtoloja: {$id}";
+
+        HelperMosquitto::FazPublishNoMosquitto($topic, $mensagem);
     }
 }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Json;
 use yii\web\UploadedFile;
 use yii\db\ActiveRecord;
 
@@ -56,5 +57,33 @@ class Imagem extends \yii\db\ActiveRecord
     public function getProdutos()
     {
         return $this->hasMany(Produto::class, ['imagem_id' => 'id']);
+    }
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->id;
+        $topic = "smartmobile/imagem/{$id}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem= 'A imagem foi criado ou modificado';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
+    }
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        $id = $this->id;
+        $topic = "smartmobile/imagem/{$id}/delete";
+
+        // Concatenar o id à mensagem
+        $mensagem = "Uma imagem foi removida. ID da imagem: {$id}";
+
+        HelperMosquitto::FazPublishNoMosquitto($topic, $mensagem);
     }
 }

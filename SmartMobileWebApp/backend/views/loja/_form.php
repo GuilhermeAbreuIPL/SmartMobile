@@ -18,12 +18,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'rua')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'localizacao')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'localidade')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'codpostal')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success', 'id' => 'submit-button']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

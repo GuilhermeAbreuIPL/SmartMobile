@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "linhacarrinho".
@@ -71,5 +72,62 @@ class LinhaCarrinho extends \yii\db\ActiveRecord
     public function getProduto()
     {
         return $this->hasOne(Produto::class, ['id' => 'produto_id']);
+    }
+
+    /**
+     * Verifica se há alterações no preço unitário de um produto e atualiza as linhas correspondentes.
+     * Remove a linha do carrinho se o produto não existir.
+     *
+     * @return void
+     */
+    public static function verificarPrecoProdutos()
+    {
+        $linhasCarrinho = self::find()->all();
+
+        foreach ($linhasCarrinho as $linha) {
+            $produto = Produto::findOne($linha->produto_id);
+
+            if ($produto) {
+                if ($produtopromocao = ProdutoPromocao::findOne(['produto_id' => $linha->produto_id])) {
+                    $promocao = Promocao::findOne($produtopromocao->promocoes_id);
+                    $linha->precounitario = $produto->preco * (1 - $promocao->descontopercentual / 100);
+                }else{
+                    $linha->precounitario = $produto->preco;
+                }
+
+                $linha->save();
+            } else {
+                $linha->delete();
+            }
+        }
+    }
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->id;
+        $topic = "smartmobile/linhacarrinho/{$id}/save";
+
+
+        $jsonAttributes = Json::encode($this->attributes);
+
+        $mensagem= 'A LinhaCarrinho foi criado ou modificado';
+
+        HelperMosquitto::FazPublishNoMosquitto($topic,$jsonAttributes);
+        HelperMosquitto::FazPublishNoMosquitto($topic,$mensagem);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        $id = $this->id;
+        $topic = "smartmobile/linhacarrinho/{$id}/delete";
+
+        // Concatenar o id à mensagem
+        $mensagem = "Uma linhacarrinho foi removida. ID da linhacarrinho: {$id}";
+
+        HelperMosquitto::FazPublishNoMosquitto($topic, $mensagem);
     }
 }

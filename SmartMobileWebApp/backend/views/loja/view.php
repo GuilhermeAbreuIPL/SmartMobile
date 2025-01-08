@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             'contacto',
             'rua',
-            'localizacao',
+            'localidade',
             'codpostal',
         ],
     ]) ?>
