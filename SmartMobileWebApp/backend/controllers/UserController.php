@@ -3,10 +3,13 @@
 namespace backend\controllers;
 
 use backend\models\UserSearch;
+use common\models\MetodoPagamento;
+use common\models\MoradaExpedicao;
 use common\models\User;
 use common\models\UserForm;
 use common\models\Userprofile;
 use common\models\Morada;
+use common\models\Fatura;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -29,7 +32,7 @@ class UserController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'moradas'],
+                        'actions' => ['index', 'view', 'create', 'moradas', 'faturas'],
                         'roles' => ['admin', 'gestor', 'funcionario'],
                     ],
                 ],
@@ -100,6 +103,32 @@ class UserController extends Controller
             'moradas' => $moradas,
         ]);
     }
+
+    public function actionFaturas($id)
+    {
+        //procurar faturas com o user ID
+        $user = User::findOne($id);
+        $faturas = Fatura::find()->where(['userprofile_id' => $id])->all();
+        $metodopagamento = MetodoPagamento::find()->all();
+        $moradaexpedicao = MoradaExpedicao::find()->all();
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found.');
+        }
+
+        if (!$faturas) {
+            Yii::$app->session->setFlash('error', 'Este user não tem faturas associadas.');
+            return $this->redirect(Yii::$app->session->get('lastUrl', ['user/index']));
+        }
+
+        return $this->render('faturas', [
+            'user' => $user,
+            'faturas' => $faturas,
+            'metodopagamento' => $metodopagamento,
+            'moradaexpedicao' => $moradaexpedicao,
+        ]);
+    }
+
     public function actionCreate(){
         $model = new UserForm();
 
