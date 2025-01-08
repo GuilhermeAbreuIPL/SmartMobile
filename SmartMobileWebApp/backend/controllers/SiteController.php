@@ -160,7 +160,7 @@ class SiteController extends Controller
         $promocoes = ProdutoPromocao::find()->all();
 
         foreach ($promocoes as $promocao) {
-            if (strtotime($promocao->datafim) < time()) {
+            if (strtotime($promocao->datafim) < strtotime(date('Y-m-d'))) {
                 try {
                     // Tenta apagar a promoção
                     if ($promocao->delete()) {

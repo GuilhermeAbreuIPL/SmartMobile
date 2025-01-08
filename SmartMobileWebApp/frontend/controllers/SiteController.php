@@ -215,13 +215,12 @@ class SiteController extends Controller
     }
 
     // Verifica se existem promoções expiradas e apaga-as
-    private function verificarPromocesExpiradas()
+    public function verificarPromocoesExpiradas()
     {
         $promocoes = ProdutoPromocao::find()->all();
 
         foreach ($promocoes as $promocao) {
-            // Verifica se a data de fim já passou
-            if (strtotime($promocao->datafim) < time()) {
+            if (strtotime($promocao->datafim) < strtotime(date('Y-m-d'))) {
                 try {
                     // Tenta apagar a promoção
                     if ($promocao->delete()) {
