@@ -74,7 +74,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->verificarPromocesExpiradas();
+        $this->verificarPromocoesExpiradas();
         return $this->render('index');
     }
 
