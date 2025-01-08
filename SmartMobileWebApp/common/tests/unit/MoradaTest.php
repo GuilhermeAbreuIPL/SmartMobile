@@ -3,9 +3,9 @@
 namespace common\tests\unit;
 
 Use common\fixtures\MoradaFixture;
+Use common\fixtures\UserFixture;
 use common\tests\UnitTester;
 use common\models\Morada;
-use common\models\User;
 
 class MoradaTest extends \Codeception\Test\Unit
 {
@@ -18,22 +18,28 @@ class MoradaTest extends \Codeception\Test\Unit
             'moradas' => [
                 'class' => MoradaFixture::class,
                 'dataFile' => codecept_data_dir() . 'morada.php'
+            ],
+            'users' => [
+                'class' => UserFixture::class,
+                'dataFile' => codecept_data_dir() . 'user.php'
             ]
         ];
     }
 
-
-    public function getUser($id)
+/*
+    public function getUser()
     {
         //criar um user_id 1 válido
         $user = new User();
-        $user->id = $id;
-        $user->username = 'teste' . $id;
-        $user->email = 'teste' . $id . '@teste.com';
-        $user->setPassword('teste' . $id);
+
+        $user->username = 'teste' . $user->id;
+        $user->email = 'teste' . $user->id . '@teste.com';
+        $user->setPassword('teste' . $user->id);
         $user->generateAuthKey();
         $user->save();
-    }
+
+        return $user->id;
+    }*/
 
     public function testValidationWithInvalidData()
     {
@@ -82,6 +88,7 @@ class MoradaTest extends \Codeception\Test\Unit
 
     public function testValidationWithValidData()
     {
+        $user = $this->tester->grabFixture('users', 'user1');
         $model = new Morada();
 
         // Teste com dados válidos
@@ -95,14 +102,15 @@ class MoradaTest extends \Codeception\Test\Unit
         $model->codpostal = '1234-567';
         $this->assertTrue($model->validate(['codpostal']), 'Código Postal deveria ser válido.');
 
-        $model->user_id = 1;
-        $this->getUser($model->user_id);
+        $model->user_id = $user->id;
+
         $this->assertTrue($model->validate(['user_id']), 'User_id deveria ser válido.');
 
     }
 
     public function testCreateMoradaWithValidData()
     {
+        $user = $this->tester->grabFixture('users', 'user1');
         $morada = new Morada();
 
         $morada->rua = 'Rua de Teste';
@@ -114,8 +122,7 @@ class MoradaTest extends \Codeception\Test\Unit
         $morada->codpostal = '1234-567';
         $this->assertTrue($morada->validate(['codpostal']), 'Código Postal deveria ser válido.');
 
-        $morada->user_id = 1;
-        $this->getUser($morada->user_id);
+        $morada->user_id = $user->id;
         $this->assertTrue($morada->validate(['user_id']), 'User_id deveria ser válido.');
 
     }
@@ -123,14 +130,13 @@ class MoradaTest extends \Codeception\Test\Unit
 
     public function testCreateMoradaSucessfully()
     {
+        $user = $this->tester->grabFixture('users', 'user1');
         $model = new Morada();
 
         $model->rua = 'Rua de Teste';
         $model->localidade = 'Localidade de Teste';
         $model->codpostal = '1234-567';
-        $model->user_id = 1;
-
-        $this->getUser($model->user_id);
+        $model->user_id = $user->id;
 
         $this->assertTrue($model->validate(), 'Morada deveria ser válida.');
 
@@ -141,14 +147,13 @@ class MoradaTest extends \Codeception\Test\Unit
 
     public function testUpdateMoradaSuccessfully()
     {
+        $user = $this->tester->grabFixture('users', 'user1');
         $morada = $this->tester->grabFixture('moradas', 'morada1');
 
         $morada->rua = 'Nova Rua';
         $morada->localidade = 'Nova Localidade';
         $morada->codpostal = '1234-567';
-        $morada->user_id = 1;
-
-        $this->getUser($morada->user_id);
+        $morada->user_id = $user->id;
 
         $this->assertTrue($morada->validate(), 'Morada deveria ser válida.');
 
