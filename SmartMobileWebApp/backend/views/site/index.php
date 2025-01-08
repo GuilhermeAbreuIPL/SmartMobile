@@ -34,16 +34,6 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
             ]) ?>
         </div>
 
-        <!-- Rendimento do Mês -->
-        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-            <?= \hail812\adminlte\widgets\SmallBox::widget([
-                'title' => $rendimentoMes . '$',
-                'text' => 'Faturação do mês',
-                'icon' => 'fas fa-calendar-alt',
-                'theme' => 'primary',  // Informativo (azul escuro para destaque)
-            ]) ?>
-        </div>
-
         <!-- Rendimento Total -->
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
             <?= \hail812\adminlte\widgets\SmallBox::widget([

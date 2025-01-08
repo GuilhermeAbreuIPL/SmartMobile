@@ -85,9 +85,6 @@ class SiteController extends Controller
             // Quantidade de clientes registados
             $clientesRegistados = \common\models\User::find()->count();
 
-            //rendimento do mês atual
-            $rendimentoMes = \common\models\Fatura::find()->where(['statusorder' => 'Concluído'])->andWhere(['MONTH(datafatura)' => date('m')])->sum('total');
-
             //rendimento total
             $rendimentoTotal = \common\models\Fatura::find()->where(['statusorder' => 'Concluído'])->sum('total');
 
@@ -97,9 +94,6 @@ class SiteController extends Controller
             //promoções ativas
             $promoAtivas = \common\models\ProdutoPromocao::find()->where(['>', 'datafim', date('Y-m-d H:i:s')])->count();
 
-            if ($rendimentoMes == null) {
-                $rendimentoMes = 0;
-            }
             if ($rendimentoTotal == null) {
                 $rendimentoTotal = 0;
             }
@@ -108,7 +102,6 @@ class SiteController extends Controller
                 'faturasConcluidas' => $faturasConcluidas,
                 'faturasPendentes' => $faturasPendentes,
                 'clientesRegistados' => $clientesRegistados,
-                'rendimentoMes' => $rendimentoMes,
                 'rendimentoTotal' => $rendimentoTotal,
                 'produtosVenda' => $produtosVenda,
                 'promoAtivas' => $promoAtivas,
