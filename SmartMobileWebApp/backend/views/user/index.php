@@ -56,10 +56,24 @@ Yii::$app->session->set('lastUrl', Yii::$app->request->url);
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, User $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                }
+                },
+                'template' => '{view} {update} {delete} {addresses}',
+                'buttons' => [
+                    'addresses' => function ($url, $model) {
+                        return Html::a(
+                            '<i class="fas fa-map-marker-alt" style="color: dodgerblue; "></i>',
+                            ['user/moradas', 'id' => $model->id],
+                            [
+                                'title' => 'Ver moradas',
+                                'class' => 'btn btn-sm btn-primary',
+                                'style' => 'background: none; border: none; padding: 0; box-shadow: none; margin-left: 4%;',
+                            ]
+                        );
+                    },
+                ],
             ],
         ],
-
     ]); ?>
+
 
 </div>

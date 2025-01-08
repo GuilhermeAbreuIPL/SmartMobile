@@ -1,18 +1,30 @@
 <?php
 return [
     'id' => 'app-frontend-tests',
+    'basePath' => dirname(__DIR__),
     'components' => [
         'assetManager' => [
             'basePath' => __DIR__ . '/../web/assets',
+            'baseUrl' => '/assets',
         ],
         'urlManager' => [
             'showScriptName' => true,
+            'enablePrettyUrl' => true,
+            'rules' => [
+
+            ],
         ],
         'request' => [
             'cookieValidationKey' => 'test',
         ],
-        'mailer' => [
-            'messageClass' => \yii\symfonymailer\Message::class
-        ]
+        'db' => [
+            'dsn' => 'mysql:host=127.0.0.1;dbname=smartmobile_test',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+        ],
+    ],
+    'params' => [
+        // Parâmetros adicionais, se necessários
     ],
 ];

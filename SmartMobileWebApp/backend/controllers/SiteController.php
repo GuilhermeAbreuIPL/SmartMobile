@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\ProdutoPromocao;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -73,9 +74,45 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('viewbackend')){
+        $this->verificarPromocoesExpiradas();
+        if (Yii::$app->user->can('viewbackend')) {
+            // Quantidade de faturas concluídas
+            $faturasConcluidas = \common\models\Fatura::find()->where(['statusorder' => 'Concluído'])->count();
 
-            return $this->render('index');
+            // Quantidade de faturas pendentes
+            $faturasPendentes = \common\models\Fatura::find()->where(['statusorder' => 'Confirmação Pendente'])->orWhere(['statusorder' => 'Processamento'])->count();
+
+            // Quantidade de clientes registados
+            $clientesRegistados = \common\models\User::find()->count();
+
+            //rendimento do mês atual
+            $rendimentoMes = \common\models\Fatura::find()->where(['statusorder' => 'Concluído'])->andWhere(['MONTH(datafatura)' => date('m')])->sum('total');
+
+            //rendimento total
+            $rendimentoTotal = \common\models\Fatura::find()->where(['statusorder' => 'Concluído'])->sum('total');
+
+            //produtos a venda
+            $produtosVenda = \common\models\Produto::find()->count();
+
+            //promoções ativas
+            $promoAtivas = \common\models\ProdutoPromocao::find()->where(['>', 'datafim', date('Y-m-d H:i:s')])->count();
+
+            if ($rendimentoMes == null) {
+                $rendimentoMes = 0;
+            }
+            if ($rendimentoTotal == null) {
+                $rendimentoTotal = 0;
+            }
+
+            return $this->render('index', [
+                'faturasConcluidas' => $faturasConcluidas,
+                'faturasPendentes' => $faturasPendentes,
+                'clientesRegistados' => $clientesRegistados,
+                'rendimentoMes' => $rendimentoMes,
+                'rendimentoTotal' => $rendimentoTotal,
+                'produtosVenda' => $produtosVenda,
+                'promoAtivas' => $promoAtivas,
+            ]);
         }
     }
 
@@ -123,5 +160,25 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function verificarPromocoesExpiradas()
+    {
+        $promocoes = ProdutoPromocao::find()->all();
+
+        foreach ($promocoes as $promocao) {
+            if (strtotime($promocao->datafim) < time()) {
+                try {
+                    // Tenta apagar a promoção
+                    if ($promocao->delete()) {
+                        Yii::info("Promoção de produto ID {$promocao->produto_id} apagada com sucesso.", __METHOD__);
+                    } else {
+                        Yii::error("Erro ao tentar apagar a promoção de produto ID {$promocao->produto_id}.", __METHOD__);
+                    }
+                } catch (\Exception $e) {
+                    Yii::error("Erro ao tentar apagar a promoção: " . $e->getMessage(), __METHOD__);
+                }
+            }
+        }
     }
 }
