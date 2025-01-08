@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/gray"
+    tools:context=".ConfigFragment">
+
+    <!-- Container Principal -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Botão Fechar (canto superior direito) -->
+        <ImageView
+            android:id="@+id/btn_close"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_action_close"
+            android:contentDescription="Close" />
+
+        <!-- Caixa Branca Central -->
+        <LinearLayout
+            android:id="@+id/container_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_card"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:elevation="10dp">
+
+            <!-- Título da seção -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dados Pessoais"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Seção de Username -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User name"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ex: João Antunes"
+                android:inputType="text"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@android:color/darker_gray" />
+
+            <!-- Seção de Password -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ex: ********"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@android:color/darker_gray" />
+
+            <!-- Botão Editar Senha -->
+            <Button
+                android:id="@+id/btn_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Edit"
+                android:backgroundTint="@color/orange"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Linha Divisória -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Seção de Morada -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Morada"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ex: R. Gen. Norton de Matos, Apartado 4133, Leiria"
+                android:inputType="text"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@android:color/darker_gray" />
+
+            <!-- Seção de Código Postal -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Codigo Postal"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ex: 2411-901"
+                android:inputType="text"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@android:color/darker_gray" />
+
+            <!-- Botão Editar morada -->
+            <Button
+                android:id="@+id/btn_edit_morada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Edit Morada"
+                android:backgroundTint="@color/orange"
+                android:textColor="@android:color/white" />
+
+            <!-- Botão Adicionar morada -->
+            <Button
+                android:id="@+id/btn_add_morada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Add Morada"
+                android:backgroundTint="@color/orange"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
