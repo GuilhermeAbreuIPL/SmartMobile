@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 08-Jan-2025 às 01:35
+-- Tempo de geração: 08-Jan-2025 às 03:55
 -- Versão do servidor: 8.2.0
 -- versão do PHP: 8.1.26
 
@@ -270,7 +270,25 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `categoria_principal_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `categoria_principal_id` (`categoria_principal_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `nome`, `categoria_principal_id`) VALUES
+(1, 'Telemoveis', NULL),
+(2, 'Apple', 1),
+(4, 'Iphone', 2),
+(5, 'Iphone Recondicionado', 2),
+(6, 'Com 100% de bateria', 5),
+(7, 'Com menos de 80% de bateria', 5),
+(8, 'Samsung', 1),
+(9, 'TLC', 1),
+(10, '70%', 5),
+(11, 'Categoria de Teste', NULL),
+(12, 'Relogios', NULL),
+(13, 'Acessorios', NULL);
 
 -- --------------------------------------------------------
 
@@ -472,7 +490,16 @@ CREATE TABLE IF NOT EXISTS `lojas` (
   `localidade` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `codpostal` varchar(8) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `lojas`
+--
+
+INSERT INTO `lojas` (`id`, `nome`, `contacto`, `rua`, `localidade`, `codpostal`) VALUES
+(4, 'Leiria', '999999999', 'Rua da gandara', 'Leiria, Rua dos Inventarios', '2400-441'),
+(5, 'Loja Teste', '12345678', 'Endereço da Loja Teste', 'Localidade da Loja Teste', '1234-567'),
+(6, 'Loja Teste', '123456789', 'Endreço da Loja Teste', 'Localidade da Loja Teste', '1234-567');
 
 -- --------------------------------------------------------
 
@@ -486,7 +513,17 @@ CREATE TABLE IF NOT EXISTS `metodopagamentos` (
   `nome` varchar(45) DEFAULT NULL,
   `descricao` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `metodopagamentos`
+--
+
+INSERT INTO `metodopagamentos` (`id`, `nome`, `descricao`) VALUES
+(2, 'Visa', 'Visa Card'),
+(3, 'MasterCard', ''),
+(4, 'Paypal', ''),
+(5, 'MbWay', '');
 
 -- --------------------------------------------------------
 
@@ -567,7 +604,16 @@ CREATE TABLE IF NOT EXISTS `moradas` (
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userprofile_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `moradas`
+--
+
+INSERT INTO `moradas` (`id`, `rua`, `localidade`, `codpostal`, `user_id`) VALUES
+(1, 'Rua vale dos minhos', 'Leiria', '2400-441', 1),
+(20, 'Vale dos Poços', 'parceiros', '2400-441', 60),
+(21, 'samago ', 'leiria', '2400-852', 60);
 
 -- --------------------------------------------------------
 
@@ -652,7 +698,15 @@ CREATE TABLE IF NOT EXISTS `promocoes` (
   `descricao` text,
   `descontopercentual` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `promocoes`
+--
+
+INSERT INTO `promocoes` (`id`, `nome`, `descricao`, `descontopercentual`) VALUES
+(1, 'BlackFriday', 'Na Black Friday tens os melhores descontos possíveis', 15.00),
+(2, 'natal', 'Feliz natal', 10.00);
 
 -- --------------------------------------------------------
 
@@ -676,7 +730,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Extraindo dados da tabela `user`
