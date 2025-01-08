@@ -38,7 +38,8 @@
         "codeception/module-phpbrowser": "*",
         "codeception/module-asserts": "*",
         "codeception/module-yii2": "^1.1",
-        "codeception/module-webdriver": "^3.2"
+        "codeception/module-webdriver": "^3.2",
+        "codeception/module-filesystem": "^3.0"
     },
     "autoload-dev": {
         "psr-4": {

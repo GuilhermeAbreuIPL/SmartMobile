@@ -14,7 +14,7 @@
     <div class="Nav">
         <form action="<?= \yii\helpers\Url::to(['produto/search']) ?>" method="get">
             <div class="search-bar">
-                    <input type="text" name="search" placeholder="Procurar um produto" />
+                    <input type="text" id="search-bar" name="search" placeholder="Procurar um produto" />
                     <button type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -49,7 +49,7 @@
         </svg>
 
         <!-- Perfil -->
-          <svg class="iconClick"  onclick="openSidebar('SidebarProfile')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="iconClick" id="profile-button" onclick="openSidebar('SidebarProfile')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="8" r="4"></circle>
             <path d="M4 20c0-4 4-7 8-7s8 3 8 7"></path>
           </svg>

@@ -90,7 +90,7 @@ $this->title = 'Detalhes da Fatura';
     </div>
 
     <p>
-        <?= Html::a('Voltar para as Faturas', ['index'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a('Voltar para as Faturas', ['index'], ['class' => 'btn btn-warning', 'id' => 'btn-voltar']) ?>
     </p>
 
 </div>

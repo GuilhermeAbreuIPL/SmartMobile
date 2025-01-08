@@ -33,6 +33,10 @@ use yii\widgets\DetailView;
             </div>
         </div>
     <?php endforeach; ?>
+
+    <?php if (empty($carrinho->linhacarrinhos)): ?>
+        <p class="text-center">O carrinho está vazio.</p>
+    <?php endif; ?>
 </div>
 
 <div class="mt-3">

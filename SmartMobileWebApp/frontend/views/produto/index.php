@@ -2,7 +2,7 @@
 <div class="row">
     <?php foreach ($dataProvider->getModels() as $produto): ?>
         <div class="col-md-auto">
-            <div class="card">
+            <div class="card" id="card-<?=$produto->id ?>">
                 <div class="imgBox">
                     <!-- Exibir imagem -->
                     <?php if ($produto->imagem && file_exists(Yii::getAlias('@backend/web/uploads/' . $produto->imagem->filename))): ?>
@@ -15,7 +15,7 @@
                              class="product img-fluid">
                     <?php endif; ?>
                 </div>
-                <div class="contentBox">
+                <div class="contentBox" id="content-<?=$produto->id ?>">
                     <h3><?= \yii\helpers\Html::encode($produto->nome) ?></h3>
 
                     <?php
@@ -57,7 +57,7 @@
                                 <path d="M1 1h4l2.8 12.4a1 1 0 0 0 1 0.6h12a1 1 0 0 0 1-.8L23 6H6"></path>
                             </svg>',
                             ['carrinho/add', 'id' => $produto->id],
-                            ['class' => 'btnCart']
+                            ['class' => 'btnCart', 'id' => 'cart-btn-' . $produto->id]
                         ) ?>
                     </div>
 

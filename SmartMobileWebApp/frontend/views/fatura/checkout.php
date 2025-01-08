@@ -21,7 +21,7 @@ $this->title = 'Finalizar compra';
         <div class="opcao_entrega">
             <div class="escolha">
                 <label class="card-escolha">
-                    <input type="radio" name="tipoentrega" value="morada" checked />
+                    <input type="radio" name="tipoentrega" value="morada" id="morada-btn" checked />
                     <div class="card-escolha-content">
                         <i class="fa fa-truck"></i>
                         <span>Desejo receber a encomenda numa morada</span>
@@ -31,7 +31,7 @@ $this->title = 'Finalizar compra';
 
             <div class="escolha">
                 <label class="card-escolha">
-                    <input type="radio" name="tipoentrega" value="loja" />
+                    <input type="radio" name="tipoentrega" value="loja" id="loja-btn" />
                     <div class="card-escolha-content">
                         <i class="fa fa-store"></i>
                         <span>Desejo levantar a encomenda em loja</span>
@@ -47,7 +47,7 @@ $this->title = 'Finalizar compra';
                 <?php foreach ($moradas as $morada): ?>
                     <!-- Cartão de morada existente -->
                     <div class="morada-card" data-id="<?= $morada->id ?>">
-                        <input type="radio" name="morada" value="<?= $morada->id ?>" />
+                        <input type="radio" name="morada" id="btn-morada-user-<?= $morada->id ?>" value="<?= $morada->id ?>" />
                         <p><strong>Rua:</strong> <?= Html::encode($morada->rua) ?></p>
                         <p><strong>Localidade:</strong> <?= Html::encode($morada->localidade) ?></p>
                         <p><strong>Código Postal:</strong> <?= Html::encode($morada->codpostal) ?></p>
@@ -59,7 +59,7 @@ $this->title = 'Finalizar compra';
             <div class="loja-list" id="loja-list" style="display: none;">
                 <?php foreach ($lojas as $loja): ?>
                     <label class="loja-card" data-id="<?= $loja->id ?>">
-                        <input type="radio" name="loja" value="<?= $loja->id ?>" />
+                        <input type="radio" name="loja" id="btn-loja-user-<?= $loja->id ?>" value="<?= $loja->id ?>" />
                         <p><strong>Nome:</strong> <?= Html::encode($loja->nome) ?></p>
                         <p><strong>Rua:</strong> <?= Html::encode($loja->rua) ?></p>
                         <p><strong>Localidade:</strong> <?= Html::encode($loja->localidade) ?></p>
@@ -74,7 +74,7 @@ $this->title = 'Finalizar compra';
             <?php foreach ($metodopagamento as $id => $nome): ?>
                 <div class="escolha">
                     <label class="card-pagamento">
-                        <input type="radio" name="metodopagamento_id" value="<?= $id ?>" />
+                        <input type="radio" name="metodopagamento_id" id="btn-<?= Html::encode($nome) ?>" value="<?= $id ?>" />
                         <div class="card-pagamento-content">
                             <i class="fa fa-credit-card"></i>
                             <span><?= Html::encode($nome) ?></span>

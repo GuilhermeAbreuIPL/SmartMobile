@@ -31,7 +31,7 @@
                                  class="product img-fluid">
                         <?php endif; ?>
                     </div>
-                    <div class="contentBox">
+                    <div class="contentBox" id="Product-Box-<?= $produto->id ?>">
                         <h3><?= \yii\helpers\Html::encode($produto->nome) ?></h3>
 
                         <?php
@@ -70,7 +70,7 @@
                                     <path d="M1 1h4l2.8 12.4a1 1 0 0 0 1 0.6h12a1 1 0 0 0 1-.8L23 6H6"></path>
                                 </svg>',
                                 ['carrinho/add', 'id' => $produto->id],
-                                ['class' => 'btnCart']
+                                ['class' => 'btnCart', 'id' => 'cart-btn-' . $produto->id]
                             ) ?>
                         </div>
                     </div>

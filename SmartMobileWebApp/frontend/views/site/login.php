@@ -27,7 +27,7 @@ use yii\bootstrap5\ActiveForm;
         </div>
 
         <div class="form-group button-wrapper">
-            <?= Html::submitButton('Login', ['class' => 'btn submit-button', 'name' => 'login-button']) ?>
+            <?= Html::submitButton('Login', ['class' => 'btn submit-button', 'name' => 'login-button', 'id'=>'login-button']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

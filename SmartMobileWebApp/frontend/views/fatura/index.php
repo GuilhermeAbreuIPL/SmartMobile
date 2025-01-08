@@ -64,6 +64,7 @@ $this->title = 'Faturas';
                     'view' => function ($url, $model) {
                         return Html::a('Ver Detalhes', $url, [
                             'class' => 'btn btn-warning',
+                            'id' => 'view-details-' . $model->id,
                         ]);
                     },
                 ],

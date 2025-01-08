@@ -186,11 +186,6 @@ class FaturaController extends Controller
                     $moradaId = Yii::$app->request->post('morada');
                     $lojaId = Yii::$app->request->post('loja');
 
-                    $stockloja = $this->verificarStockLoja($lojaId);
-                    if (!$stockloja) {
-                        Yii::$app->session->setFlash('error', 'Stock insuficiente de produto(s) na loja selecionada.');
-                        return $this->redirect('checkout'); // Redireciona em caso de erro
-                    }
 
                     $expedicao = $this->criarMoradaExpedicao($tipoEntrega, $moradaId, $lojaId);
                     if (!$expedicao) {

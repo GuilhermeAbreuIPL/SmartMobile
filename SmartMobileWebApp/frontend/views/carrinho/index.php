@@ -37,8 +37,8 @@ use yii\helpers\Url;
                             <p class="order-label">Quantidade</p>
                             <p class="order-value"><?= Html::encode($linha->quantidade) ?></p>
                             <div class="btn-quantity-container">
-                                <a href="<?= Url::to(['carrinho/add', 'id' => $linha->produto_id]) ?>" class="btn-quantity">+</a>
-                                <a href="<?= Url::to(['carrinho/remove', 'id' => $linha->produto_id]) ?>" class="btn-quantity">-</a>
+                                <a href="<?= Url::to(['carrinho/add', 'id' => $linha->produto_id]) ?>" class="btn-quantity" id="addquantity-<?=$linha->produto->id ?>">+</a>
+                                <a href="<?= Url::to(['carrinho/remove', 'id' => $linha->produto_id]) ?>" class="btn-quantity" id="removequantity-<?=$linha->produto->id ?>">-</a>
                             </div>
                         </div>
                         <div class="total-info">
@@ -49,8 +49,12 @@ use yii\helpers\Url;
                 </div>
             </div>
         <?php endforeach; ?>
-        <div class="checkout-btn-container">
+        <div class="checkout-btn-container" id="checkout-btn">
+            <?php if(empty($carrinho->linhacarrinhos)): ?>
+                <p class="text-center text-white">O carrinho está vazio.</p>
+            <?php else:; ?>
             <a href="<?= Url::to(['fatura/checkout']) ?>" class="btn-checkout">Finalizar Compra</a>
+            <?php endif; ?>
         </div>
     </div>
 </div>
