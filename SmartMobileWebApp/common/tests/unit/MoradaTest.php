@@ -3,9 +3,9 @@
 namespace common\tests\unit;
 
 Use common\fixtures\MoradaFixture;
-Use common\fixtures\UserFixture;
 use common\tests\UnitTester;
 use common\models\Morada;
+use common\models\User;
 
 class MoradaTest extends \Codeception\Test\Unit
 {
@@ -19,27 +19,8 @@ class MoradaTest extends \Codeception\Test\Unit
                 'class' => MoradaFixture::class,
                 'dataFile' => codecept_data_dir() . 'morada.php'
             ],
-            'users' => [
-                'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php'
-            ]
         ];
     }
-
-/*
-    public function getUser()
-    {
-        //criar um user_id 1 válido
-        $user = new User();
-
-        $user->username = 'teste' . $user->id;
-        $user->email = 'teste' . $user->id . '@teste.com';
-        $user->setPassword('teste' . $user->id);
-        $user->generateAuthKey();
-        $user->save();
-
-        return $user->id;
-    }*/
 
     public function testValidationWithInvalidData()
     {
@@ -88,7 +69,7 @@ class MoradaTest extends \Codeception\Test\Unit
 
     public function testValidationWithValidData()
     {
-        $user = $this->tester->grabFixture('users', 'user1');
+        $user = User::findOne(1);
         $model = new Morada();
 
         // Teste com dados válidos
@@ -110,7 +91,7 @@ class MoradaTest extends \Codeception\Test\Unit
 
     public function testCreateMoradaWithValidData()
     {
-        $user = $this->tester->grabFixture('users', 'user1');
+        $user = User::findOne(1);
         $morada = new Morada();
 
         $morada->rua = 'Rua de Teste';
@@ -130,7 +111,7 @@ class MoradaTest extends \Codeception\Test\Unit
 
     public function testCreateMoradaSucessfully()
     {
-        $user = $this->tester->grabFixture('users', 'user1');
+        $user = User::findOne(1);
         $model = new Morada();
 
         $model->rua = 'Rua de Teste';
@@ -147,7 +128,7 @@ class MoradaTest extends \Codeception\Test\Unit
 
     public function testUpdateMoradaSuccessfully()
     {
-        $user = $this->tester->grabFixture('users', 'user1');
+        $user = User::findOne(1);
         $morada = $this->tester->grabFixture('moradas', 'morada1');
 
         $morada->rua = 'Nova Rua';
