@@ -1,8 +1,14 @@
 package com.example.smartmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -45,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         );
 
         drawerLayout.addDrawerListener(toggle);
+
+        navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
         toggle.syncState();
 
         // inicia o fragment main
@@ -57,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, homeFragment)
                     .commit();
         }
+
+
+        carregarFragementoInicial();
+
     }
 
     @Override
@@ -66,5 +78,39 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    private boolean carregarFragementoInicial(){
+        Menu menu = navigationView.getMenu();
+        MenuItem item = menu.getItem(0);
+        item.setChecked(true);
+        return onNavigationItemSelected(item);
+    }
+
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+        Fragment fragment = null;
+
+        // Verifique o item selecionado e substitua o fragmento
+        if (item.getItemId() == R.id.nav_perfil) {
+            fragment = new ProfileFragment(); // Exemplo de fragmento
+        }
+
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+        }
+
+        // Fechar o Drawer após a seleção
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void onClickSignup(View view) {
+        // Redirecionar para a SignupActivity
+        Intent intent = new Intent(this, SignupActivity.class);
+        startActivity(intent);
     }
 }

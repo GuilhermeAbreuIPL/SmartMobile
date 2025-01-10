@@ -1,6 +1,8 @@
 package com.example.smartmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     @Nullable
     @Override
@@ -18,4 +20,5 @@ class ProfileFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
+
 }

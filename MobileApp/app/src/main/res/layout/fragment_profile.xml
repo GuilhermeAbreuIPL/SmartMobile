@@ -64,6 +64,7 @@
                     android:text="Criar conta"
                     android:backgroundTint="@color/orange"
                     android:textColor="@android:color/white"
+                    android:onClick="onClickSignup"
                     android:layout_marginEnd="8dp" />
 
                 <Button
