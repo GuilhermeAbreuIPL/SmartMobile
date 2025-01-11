@@ -18,7 +18,6 @@ public class SignupActivity extends AppCompatActivity {
 
     private EditText etNome, etUsername, etEmail, etNif, etTelemovel, etPassword;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
