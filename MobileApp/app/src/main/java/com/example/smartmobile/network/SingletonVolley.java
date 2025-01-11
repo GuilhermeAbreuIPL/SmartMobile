@@ -1,6 +1,7 @@
 package com.example.smartmobile.network;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -9,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.RequestQueue;
+import com.example.smartmobile.LoginActivity;
 import com.example.smartmobile.listeners.SignupListener;
 import com.example.smartmobile.listeners.LoginListener;
 import com.example.smartmobile.models.UserDetails;
@@ -74,6 +76,35 @@ public class SingletonVolley{
                     //Log to console response
                     System.out.println(response.toString());
                     Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+
+                    // Extract the token from the response
+                    JSONObject tokenObject = null; // Extrair o objeto "token"
+                    try {
+                        tokenObject = response.getJSONObject("token");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    String token = null;
+                    try {
+                        token = tokenObject.getString("access_token");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    // Save the token in SharedPreferences
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("access_token", token);
+                    editor.commit();
+
+                    //Log to console see if token is saved
+                    SharedPreferences sharedPreferences1 = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+                    String test = sharedPreferences1.getString("access_token", null);
+                    System.out.println("Token: " + test);
+
+                    // Notify listener if required
+                    loginListener.onUpdateLogin(token);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -94,7 +125,7 @@ public class SingletonVolley{
     public void login(UserLogin user, Context context) {
         // Teste da internet
         if (!NetworkUtils.isConnectionInternet(context)) {
-            loginListener.onUpdateLogin(null);
+            loginListener.onUpdateLogin((UserLogin) null);
             Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
         } else {
             JSONObject jsonParams = new JSONObject();
@@ -113,6 +144,29 @@ public class SingletonVolley{
                     //Log to console response
                     System.out.println(response.toString());
                     Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+
+                    try {
+                        // Extract the token from the response
+                        String token = response.getString("access_token");
+
+                        // Save the token in SharedPreferences
+                        SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("access_token", token);
+                        editor.apply();
+
+                        //Log to console see if token is saved
+                        SharedPreferences prefs = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+                        String accessToken = prefs.getString("access_token", null);
+                        System.out.println("Token: " + accessToken);
+
+                        // Notify listener if required
+                        loginListener.onUpdateLogin(token);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Erro ao processar resposta", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override

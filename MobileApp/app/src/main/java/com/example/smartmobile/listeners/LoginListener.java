@@ -4,4 +4,6 @@ import com.example.smartmobile.models.UserLogin;
 
 public interface LoginListener {
     void onUpdateLogin(UserLogin user);
+
+    void onUpdateLogin(String token);
 }

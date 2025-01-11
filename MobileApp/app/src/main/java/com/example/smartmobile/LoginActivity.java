@@ -5,16 +5,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.smartmobile.listeners.LoginListener;
 import com.example.smartmobile.models.UserLogin;
 import com.example.smartmobile.network.SingletonVolley;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     private EditText etUsername, etPassword;
 
@@ -39,5 +36,29 @@ public class LoginActivity extends AppCompatActivity {
         UserLogin user = new UserLogin(username, password);
 
         SingletonVolley.getInstance(this).login(user, this);
+    }
+
+    @Override
+    public void onUpdateLogin(UserLogin user) {
+        if (user != null) {
+            // Login successful
+            Toast.makeText(this, "Login successful! Token saved.", Toast.LENGTH_SHORT).show();
+            // Proceed to the next activity or update UI
+        } else {
+            // Login failed
+            Toast.makeText(this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onUpdateLogin(String token) {
+        if (token != null) {
+            // Login successful
+            Toast.makeText(this, "Login successful! Token saved.", Toast.LENGTH_SHORT).show();
+            // Proceed to the next activity or update UI
+        } else {
+            // Login failed
+            Toast.makeText(this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
