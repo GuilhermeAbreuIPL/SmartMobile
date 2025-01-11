@@ -10,7 +10,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.RequestQueue;
 import com.example.smartmobile.listeners.SignupListener;
+import com.example.smartmobile.listeners.LoginListener;
 import com.example.smartmobile.models.UserDetails;
+import com.example.smartmobile.models.UserLogin;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +23,7 @@ public class SingletonVolley{
 
     //Inicializacao dos listeners
     private SignupListener signupListener;
+    private LoginListener loginListener;
 
     private static volatile SingletonVolley instance = null;
 
@@ -86,10 +89,46 @@ public class SingletonVolley{
             });
             volleyQueue.add(req);
         }
-
     }
 
+    public void login(UserLogin user, Context context) {
+        // Teste da internet
+        if (!NetworkUtils.isConnectionInternet(context)) {
+            loginListener.onUpdateLogin(null);
+            Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            JSONObject jsonParams = new JSONObject();
+            try {
+                jsonParams.put("username", user.getUsername());
+                jsonParams.put("password", user.getPassword());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //log to console jsonParams
+            System.out.println(jsonParams.toString());
 
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL + "auth/login", jsonParams, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log to console response
+                    System.out.println(response.toString());
+                    Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Log to console error
+                    System.out.println(error.toString());
+                    Toast.makeText(context, "Error durante o login", Toast.LENGTH_SHORT).show();
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    System.out.println("Error Code: " + statusCode);
+                    System.out.println("Response Body: " + responseBody);
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
 
 
     //listeners
@@ -97,5 +136,8 @@ public class SingletonVolley{
         this.signupListener = signupListener;
     }
 
+    public void setLoginListener(LoginListener loginListener) {
+        this.loginListener = loginListener;
+    }
 
 }

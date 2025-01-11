@@ -65,7 +65,7 @@
 
         <!-- Username EditText -->
         <EditText
-            android:id="@+id/usernameInput"
+            android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -85,7 +85,7 @@
 
         <!-- Password EditText -->
         <EditText
-            android:id="@+id/passwordInput"
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
@@ -97,6 +97,7 @@
         <!-- Login Button -->
         <Button
             android:id="@+id/loginButton"
+            android:onClick="onClickLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -111,6 +112,15 @@ public class MainActivity extends AppCompatActivity {
     public void onClickSignup(View view) {
         // Redirecionar para a SignupActivity
         Intent intent = new Intent(this, SignupActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickLogin(View view) {
+        // Redirecionar para a LoginActivity
+        Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
+        //debug to console
+        Log.d("Login", "Login");
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }
