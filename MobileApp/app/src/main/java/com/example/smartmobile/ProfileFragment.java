@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class ProfileFragment extends Fragment {
+import com.example.smartmobile.listeners.UserListener;
+
+public class ProfileFragment extends Fragment{
 
     @Nullable
     @Override

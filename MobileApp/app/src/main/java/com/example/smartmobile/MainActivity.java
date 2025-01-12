@@ -28,7 +28,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity implements UserListener {
+public class MainActivity extends AppCompatActivity{
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -78,15 +78,7 @@ public class MainActivity extends AppCompatActivity implements UserListener {
 
     }
 
-    @Override
-    public void onUserResponse(JSONObject user) {
-        // Processar a resposta do usuário
-        if (user != null) {
-            Toast.makeText(this, "User data: " + user.toString(), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Failed to get user data.", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -154,15 +146,40 @@ public class MainActivity extends AppCompatActivity implements UserListener {
         startActivity(intent);
 
     }
+
+
+
+
     public boolean isUserLoggedIn() {
         //Get Shared Preferences and check if user is logged in
         SharedPreferences sharedPreferences1 = getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
         String token = sharedPreferences1.getString("access_token", null);
         System.out.println("Token: " + token);
 
+
         if (token != null) {
             //aceceder aos dados que vem do UserListener
-            SingletonVolley.getInstance(this).getUser(token, this);
+            SingletonVolley.getInstance(this).getUser(token, this, new UserListener() {
+                @Override
+                public void onUserResponse(JSONObject user) {
+                    // Processar a resposta do usuário
+                    //Acede ao objeto user e faz get de uma propriedad
+                    try{
+                        user.getString("success");
+                        System.out.println("User data: " + user.toString());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
+                    if (user != null) {
+                        Toast.makeText(MainActivity.this, "User data: " + user.toString(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed to get user data.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            //Receber a resposta do volley
             if (token != "") {
                 System.out.println("Token Aceite: " + token);
                 return true;

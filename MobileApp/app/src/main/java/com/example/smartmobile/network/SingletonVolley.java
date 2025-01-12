@@ -32,8 +32,10 @@ public class SingletonVolley{
 
     private static volatile SingletonVolley instance = null;
 
-    private static final String BASE_URL = "http://172.22.21.218/SmartMobile/SmartMobileWebApp/backend/web/api/";
     public static RequestQueue volleyQueue;
+
+    private static final String BASE_URL = "http://172.22.21.218/SmartMobile/SmartMobileWebApp/backend/web/api/";
+
 
 
     // Construtor privado para evitar instância externa
@@ -187,7 +189,7 @@ public class SingletonVolley{
         }
     }
 
-    public void getUser(String token, Context context) {
+    public void getUser(String token, Context context, UserListener userListener) {
         // Teste da internet
         if (!NetworkUtils.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
