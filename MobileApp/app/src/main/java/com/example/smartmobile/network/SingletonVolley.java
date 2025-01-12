@@ -13,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.example.smartmobile.LoginActivity;
 import com.example.smartmobile.listeners.SignupListener;
 import com.example.smartmobile.listeners.LoginListener;
+import com.example.smartmobile.listeners.UserListener;
 import com.example.smartmobile.models.UserDetails;
 import com.example.smartmobile.models.UserLogin;
 
@@ -26,6 +27,8 @@ public class SingletonVolley{
     //Inicializacao dos listeners
     private SignupListener signupListener;
     private LoginListener loginListener;
+
+    private UserListener userListener;
 
     private static volatile SingletonVolley instance = null;
 
@@ -153,7 +156,7 @@ public class SingletonVolley{
                         SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("access_token", token);
-                        editor.apply();
+                        editor.commit();
 
                         //Log to console see if token is saved
                         SharedPreferences prefs = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
@@ -184,6 +187,43 @@ public class SingletonVolley{
         }
     }
 
+    public void getUser(String token, Context context) {
+        // Teste da internet
+        if (!NetworkUtils.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            //Log to console see if token is saved
+            SharedPreferences prefs = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+            String accessToken = prefs.getString("access_token", null);
+            System.out.println("Token: " + accessToken);
+            System.out.println(BASE_URL + "user?access-token=" + accessToken);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL + "user?access-token=" + accessToken,null , new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log to console response
+                    System.out.println(response.toString());
+                    Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+                    if (userListener != null) {
+                        userListener.onUserResponse(response);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Log to console error
+                    System.out.println(error.toString());
+                    Toast.makeText(context, "Error durante o login", Toast.LENGTH_SHORT).show();
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    System.out.println("Error Code: " + statusCode);
+                    System.out.println("Response Body: " + responseBody);
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+
 
     //listeners
     public void setSignupListener(SignupListener signupListener) {
@@ -192,6 +232,10 @@ public class SingletonVolley{
 
     public void setLoginListener(LoginListener loginListener) {
         this.loginListener = loginListener;
+    }
+
+    public void setUserListener(UserListener userListener) {
+        this.userListener = userListener;
     }
 
 }

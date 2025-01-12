@@ -22,9 +22,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.smartmobile.listeners.UserListener;
+import com.example.smartmobile.network.SingletonVolley;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import org.json.JSONObject;
+
+public class MainActivity extends AppCompatActivity implements UserListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -75,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onUserResponse(JSONObject user) {
+        // Processar a resposta do usuário
+        if (user != null) {
+            Toast.makeText(this, "User data: " + user.toString(), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Failed to get user data.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -83,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean carregarFragementoInicial(){
+    private boolean carregarFragementoInicial() {
         Menu menu = navigationView.getMenu();
         MenuItem item = menu.getItem(0);
         item.setChecked(true);
@@ -91,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
 
         // Verifique o item selecionado e substitua o fragmento
@@ -124,5 +138,45 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Login", "Login");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    public void onClickLogout(View view) {
+        // Redirecionar para a LoginActivity
+        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        //debug to console
+        Log.d("Logout", "Logout");
+        // Clear the shared preferences
+        SharedPreferences sharedPref = getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear(); // clear all data
+        editor.apply(); // commit changes
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+
+    }
+    public boolean isUserLoggedIn() {
+        //Get Shared Preferences and check if user is logged in
+        SharedPreferences sharedPreferences1 = getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+        String token = sharedPreferences1.getString("access_token", null);
+        System.out.println("Token: " + token);
+
+        if (token != null) {
+            //aceceder aos dados que vem do UserListener
+            SingletonVolley.getInstance(this).getUser(token, this);
+            if (token != "") {
+                System.out.println("Token Aceite: " + token);
+                return true;
+            }
+            else {
+                SharedPreferences sharedPref = getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear(); // clear all data
+                editor.commit(); // commit changes
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
     }
 }

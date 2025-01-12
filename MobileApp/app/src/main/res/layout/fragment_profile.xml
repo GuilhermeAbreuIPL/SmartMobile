@@ -42,17 +42,19 @@
             android:layout_marginBottom="24dp">
 
             <TextView
+                android:id="@+id/tv_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Olá! Faz já o teu Registo no smartmobile"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 android:gravity="center"
-                android:layout_marginBottom="16dp" 
+                android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"/>
 
             <!-- Botões Criar Conta e Iniciar Sessão -->
             <LinearLayout
+                android:id="@+id/authcontainer"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -74,6 +76,24 @@
                     android:onClick="onClickLogin"
                     android:backgroundTint="@color/orange"
                     android:textColor="@android:color/white" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/logoutcontainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="gone" >
+
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    android:backgroundTint="@color/orange"
+                    android:textColor="@android:color/white"
+                    android:onClick="onClickLogout"
+                    android:layout_marginEnd="8dp" />
             </LinearLayout>
         </LinearLayout>
 
