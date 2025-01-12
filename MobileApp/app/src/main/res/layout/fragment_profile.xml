@@ -118,7 +118,9 @@
                 android:orientation="horizontal"
                 android:paddingVertical="12dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:onClick="onClickDadosPessoais"
+                >
 
                 <ImageView
                     android:layout_width="24dp"

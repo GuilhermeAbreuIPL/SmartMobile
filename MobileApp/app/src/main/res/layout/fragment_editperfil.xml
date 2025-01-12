@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@color/gray"
-    tools:context=".ConfigFragment">
+    tools:context=".EditUserFragment">
 
     <!-- Container Principal -->
     <LinearLayout
@@ -40,7 +40,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dados Pessoais"
+                android:text="Editar Dados Pessoais"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
@@ -55,12 +55,11 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/tv_username"
+            <EditText
+                android:id="@+id/et_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="admin"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@android:color/darker_gray" />
 
@@ -72,12 +71,11 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/tv_nome"
+            <EditText
+                android:id="@+id/et_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Admin"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@android:color/darker_gray" />
 
@@ -89,12 +87,11 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/tv_email"
+            <EditText
+                android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="email@gmail.com"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@android:color/darker_gray" />
 
@@ -106,12 +103,11 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/tv_nif"
+            <EditText
+                android:id="@+id/et_nif"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="123123123"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@android:color/darker_gray" />
 
@@ -123,116 +119,21 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/tv_telemovel"
+            <EditText
+                android:id="@+id/et_telemovel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="912345678"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@android:color/darker_gray" />
 
-            <!-- Botão Editar Dados Pessoais -->
+            <!-- Botão Salvar -->
             <Button
-                android:id="@+id/btn_edit_dados"
+                android:id="@+id/btn_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Edit Dados"
-                android:backgroundTint="@color/orange"
-                android:textColor="@android:color/white" />
-
-            <!-- Linha Divisória -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginBottom="24dp" />
-
-            <!-- Seção de Morada -->
-
-            <LinearLayout
-                android:id="@+id/morada_container1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Morada"
-                android:textColor="@android:color/black"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:id="@+id/tv_morada_rua1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Rua do exemplo, nº 1"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@android:color/darker_gray" />
-
-                <!-- Seção de Localidade -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Localidade"
-                android:textColor="@android:color/black"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:id="@+id/tv_morada_localidade1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Leiria"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@android:color/darker_gray" />
-
-            <!-- Seção de Código Postal -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Codigo Postal"
-                android:textColor="@android:color/black"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:id="@+id/tv_morada_cod_postal1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="1234-123"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@android:color/darker_gray" />
-
-            <!-- Botão Editar morada -->
-            <Button
-                android:id="@+id/btn_edit_morada1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Edit Morada"
-                android:backgroundTint="@color/orange"
-                android:textColor="@android:color/white" />
-
-            </LinearLayout>
-
-            <!-- Linha Divisória -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginBottom="24dp" />
-
-            <!-- Botão Adicionar morada -->
-            <Button
-                android:id="@+id/btn_add_morada"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Add Morada"
+                android:text="Salvar"
                 android:backgroundTint="@color/orange"
                 android:textColor="@android:color/white" />
         </LinearLayout>
