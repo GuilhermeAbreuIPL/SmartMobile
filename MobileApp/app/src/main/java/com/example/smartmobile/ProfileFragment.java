@@ -19,22 +19,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        boolean isLoggedIn = ((MainActivity) getActivity()).isUserLoggedIn();
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        TextView tv_profile = view.findViewById(R.id.tv_profile);
-        View authContainer = view.findViewById(R.id.authcontainer);
-        View logoutContainer = view.findViewById(R.id.logoutcontainer);
-
-        if (isLoggedIn) {
-            authContainer.setVisibility(View.GONE);
-            logoutContainer.setVisibility(View.VISIBLE);
-            tv_profile.setText("Deseja terminar a sessão?");
-        } else {
-            authContainer.setVisibility(View.VISIBLE);
-            logoutContainer.setVisibility(View.GONE);
-            tv_profile.setText("Olá! Faz já o teu Registo no smartmobile");
-        }
-        return view;
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override
@@ -48,18 +33,22 @@ public class ProfileFragment extends Fragment {
             TextView tv_profile = view.findViewById(R.id.tv_profile);
             View authContainer = view.findViewById(R.id.authcontainer);
             View logoutContainer = view.findViewById(R.id.logoutcontainer);
+            View DadosPessoaisContainer = view.findViewById(R.id.dadospessoaiscontainer);
+            View MinhasEncomendasContainer = view.findViewById(R.id.minhasencomendascontainer);
 
             if (isLoggedIn) {
                 authContainer.setVisibility(View.GONE);
                 logoutContainer.setVisibility(View.VISIBLE);
+                DadosPessoaisContainer.setVisibility(View.VISIBLE);
+                MinhasEncomendasContainer.setVisibility(View.VISIBLE);
                 tv_profile.setText("Deseja terminar a sessão?");
             } else {
                 authContainer.setVisibility(View.VISIBLE);
                 logoutContainer.setVisibility(View.GONE);
+                DadosPessoaisContainer.setVisibility(View.GONE);
+                MinhasEncomendasContainer.setVisibility(View.GONE);
                 tv_profile.setText("Olá! Faz já o teu Registo no smartmobile");
             }
         }
     }
-
-
 }

@@ -112,6 +112,7 @@
 
             <!-- Item: Dados Pessoais -->
             <LinearLayout
+                android:id="@+id/dadospessoaiscontainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -136,6 +137,7 @@
 
             <!-- Item: Minhas Encomendas -->
             <LinearLayout
+                android:id="@+id/minhasencomendascontainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
