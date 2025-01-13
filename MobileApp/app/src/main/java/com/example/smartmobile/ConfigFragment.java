@@ -1,15 +1,21 @@
 package com.example.smartmobile;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-class ConfigFragment extends Fragment {
+import com.example.smartmobile.network.NetworkUtils;
+
+public class ConfigFragment extends Fragment {
 
     @Nullable
     @Override
@@ -18,4 +24,45 @@ class ConfigFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_config, container, false);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!NetworkUtils.isConnectionInternet(getContext())) {
+            Toast.makeText(getContext(), "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            //chama a funçaõ do mainactivity isUserLoggedIn
+            ((MainActivity) getActivity()).isUserLoggedIn();
+        }
+        SharedPreferences prefs = getContext().getSharedPreferences("User", LoginActivity.MODE_PRIVATE);
+        if (prefs == null) {
+            Toast.makeText(getContext(), "Não existe um user guardado", Toast.LENGTH_SHORT).show();
+
+            //volta para o login
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(getContext(), "Existe um user guardado", Toast.LENGTH_SHORT).show();
+            String username = prefs.getString("username", null);
+            String nome = prefs.getString("nome", null);
+            String email = prefs.getString("email", null);
+            String nif = prefs.getString("nif", null);
+            String telemovel = prefs.getString("telemovel", null);
+
+            TextView tv_username = getView().findViewById(R.id.tv_username);
+            TextView tv_nome = getView().findViewById(R.id.tv_nome);
+            TextView tv_email = getView().findViewById(R.id.tv_email);
+            TextView tv_nif = getView().findViewById(R.id.tv_nif);
+            TextView tv_telemovel = getView().findViewById(R.id.tv_telemovel);
+
+            tv_username.setText(username);
+            tv_nome.setText(nome);
+            tv_email.setText(email);
+            tv_nif.setText(nif);
+            tv_telemovel.setText(telemovel);
+        }
+        
+    }
+
 }
