@@ -167,13 +167,40 @@ public class MainActivity extends AppCompatActivity{
                     try{
                         user.getString("success");
                         System.out.println("User data: " + user.toString());
+                        //Guardar o user data no shared preferences
+                        SharedPreferences sharedPref = getSharedPreferences("User", LoginActivity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+
+                        JSONObject userObject = user.getJSONObject("user");
+                        JSONObject userPObject = user.getJSONObject("userProfile");
+
+
+                        //quero colocar no shared preferences o user data por cada atributo que o user tem
+                        editor.putString("username", userObject.getString("username"));
+                        System.out.println("Username: " + userObject.getString("username"));
+
+                        editor.putString("nome", userPObject.getString("nome"));
+                        System.out.println("Nome: " + userPObject.getString("nome"));
+
+                        editor.putString("email", userObject.getString("email"));
+                        System.out.println("Email: " + userObject.getString("email"));
+
+                        editor.putString("nif", userPObject.getString("nif"));
+                        System.out.println("NIF: " + userPObject.getString("nif"));
+
+                        editor.putString("telemovel", userPObject.getString("telemovel"));
+                        System.out.println("Telemovel: " + userPObject.getString("telemovel"));
+
+                        editor.commit();
+
                     }catch (Exception e){
                         e.printStackTrace();
+                        System.out.println("Erro: " + e);
                     }
 
 
                     if (user != null) {
-                        Toast.makeText(MainActivity.this, "User data: " + user.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "User data valid ", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Failed to get user data.", Toast.LENGTH_SHORT).show();
                     }

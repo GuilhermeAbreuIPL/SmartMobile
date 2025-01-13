@@ -198,7 +198,6 @@ public class SingletonVolley{
             SharedPreferences prefs = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
             String accessToken = prefs.getString("access_token", null);
             System.out.println("Token: " + accessToken);
-            System.out.println(BASE_URL + "user?access-token=" + accessToken);
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL + "user?access-token=" + accessToken,null , new Response.Listener<JSONObject>() {
                 @Override
