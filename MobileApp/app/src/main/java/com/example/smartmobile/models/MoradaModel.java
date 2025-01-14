@@ -70,6 +70,50 @@ public class MoradaModel {
     }
 
 
+    // Contar o número de moradas de um usuário
+    public static int countMoradasByUserId(SQLiteDatabase db, int userId) {
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + COLUMN_USER_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    public static List<MoradaModel> getMoradasUser(SQLiteDatabase db) {
+        List<MoradaModel> moradas = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int idIndex = cursor.getColumnIndex(COLUMN_ID);
+                int ruaIndex = cursor.getColumnIndex(COLUMN_RUA);
+                int localidadeIndex = cursor.getColumnIndex(COLUMN_LOCALIDADE);
+                int codPostalIndex = cursor.getColumnIndex(COLUMN_CODPOSTAL);
+                int userIdIndex = cursor.getColumnIndex(COLUMN_USER_ID);
+
+                if (idIndex >= 0 && ruaIndex >= 0 && localidadeIndex >= 0 && codPostalIndex >= 0 && userIdIndex >= 0) {
+                    int id = cursor.getInt(idIndex);
+                    String rua = cursor.getString(ruaIndex);
+                    String localidade = cursor.getString(localidadeIndex);
+                    String codPostal = cursor.getString(codPostalIndex);
+                    int userIdFromDb = cursor.getInt(userIdIndex);
+
+                    moradas.add(new MoradaModel(id, rua, localidade, codPostal, userIdFromDb));
+                } else {
+                    // If any column doesn't exist, it means the table doesn't exist
+                    break;
+                }
+            } while (cursor.moveToNext());
+        }else{
+
+        }
+        cursor.close();
+        System.out.println("Moradas no model:"+ moradas);
+        return moradas;
+    }
 
 
 }

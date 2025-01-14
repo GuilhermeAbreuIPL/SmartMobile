@@ -1,81 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <LinearLayout
-        android:id="@+id/morada_container1"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Morada"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tv_morada_rua"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Morada"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:id="@+id/tv_morada_rua1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Rua do exemplo, nº 1"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@android:color/darker_gray" />
-
-        <!-- Seção de Localidade -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Localidade"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:id="@+id/tv_morada_localidade1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Leiria"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@android:color/darker_gray" />
-
-        <!-- Seção de Código Postal -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Codigo Postal"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:id="@+id/tv_morada_cod_postal1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="1234-123"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@android:color/darker_gray" />
-
-        <!-- Botão Editar morada -->
-        <Button
-            android:id="@+id/btn_edit_morada1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Edit Morada"
-            android:backgroundTint="@color/orange"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
-
-    <!-- Linha Divisória -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:padding="8dp"
+        android:text="Rua do exemplo, nº 1"
+        android:layout_marginBottom="16dp"
         android:background="@android:color/darker_gray"
-        android:layout_marginBottom="24dp" />
+        android:textColor="@android:color/black" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Localidade"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tv_morada_localidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Leiria"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Código Postal"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tv_morada_cod_postal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="1234-123"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/btn_edit_morada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Edit Morada"
+        android:backgroundTint="@color/orange"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

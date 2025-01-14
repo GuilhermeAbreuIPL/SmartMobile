@@ -2,6 +2,7 @@ package com.example.smartmobile;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,21 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smartmobile.adapters.MoradaAdapter;
+import com.example.smartmobile.adapters.ProductAdapter;
+import com.example.smartmobile.models.DatabaseHelper;
+import com.example.smartmobile.models.MoradaModel;
 import com.example.smartmobile.network.NetworkUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConfigFragment extends Fragment {
+
+    private List<MoradaModel> ListMoradas;
 
     @Nullable
     @Override
@@ -62,7 +74,34 @@ public class ConfigFragment extends Fragment {
             tv_nif.setText(nif);
             tv_telemovel.setText(telemovel);
         }
-        
+
+        //morada
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Obter as moradas do usuário
+
+        ListMoradas = MoradaModel.getMoradasUser(db);
+        System.out.println(ListMoradas);
+        //System.out.println(moradas.get(0).getRua());
+        System.out.println("moradas acima checka");
+
+
+        // Certifique-se de fechar o banco após o uso
+        db.close();
+
+        RecyclerView recyclerView = getView().findViewById(R.id.rv_moradas);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1)); // 2 colunas
+
+
+        // Configurar o adaptador
+        MoradaAdapter adapter = new MoradaAdapter(ListMoradas);
+        recyclerView.setAdapter(adapter);
+
+
+
     }
+
+
 
 }
