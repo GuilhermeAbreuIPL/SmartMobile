@@ -2,6 +2,7 @@ package com.example.smartmobile;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,10 +18,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.listeners.UserListener;
+import com.example.smartmobile.models.DatabaseHelper;
+import com.example.smartmobile.models.MoradaModel;
 import com.example.smartmobile.network.SingletonVolley;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity{
@@ -209,6 +214,46 @@ public class MainActivity extends AppCompatActivity{
                     }
                 }
             });
+
+            SingletonVolley.getInstance(this).getMoradas(this, new MoradaListener() {
+                @Override
+                public void onMoradaResponse(JSONObject response) {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        if(success){
+                            System.out.println("Morada data: " + response.toString());
+                        }
+
+                        JSONArray moradasArray = response.getJSONArray("moradas");
+
+                        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                        db.delete(MoradaModel.TABLE_NAME, null, null);
+
+                        for (int i = 0; i < moradasArray.length(); i++) {
+                            JSONObject moradaJson = moradasArray.getJSONObject(i);
+
+                            MoradaModel morada = new MoradaModel(
+                                    moradaJson.getInt("id"),
+                                    moradaJson.getString("rua"),
+                                    moradaJson.getString("localidade"),
+                                    moradaJson.getString("codpostal"),
+                                    moradaJson.getInt("user_id")
+                            );
+
+                            MoradaModel.insertMorada(db, morada);
+                        }
+
+                        db.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Erro: " + e);
+                    }
+                }
+            });
+
             //Receber a resposta do volley
             if (token != "") {
                 System.out.println("Token Aceite: " + token);
