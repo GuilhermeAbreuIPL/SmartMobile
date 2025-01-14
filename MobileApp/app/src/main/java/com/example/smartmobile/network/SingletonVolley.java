@@ -16,6 +16,7 @@ import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.listeners.SignupListener;
 import com.example.smartmobile.listeners.LoginListener;
 import com.example.smartmobile.listeners.UserListener;
+import com.example.smartmobile.models.MoradaModel;
 import com.example.smartmobile.models.UserDetails;
 import com.example.smartmobile.models.UserLogin;
 
@@ -295,7 +296,7 @@ public class SingletonVolley{
         }
     }
 
-    public void updateMoradas(Context context, MoradaListener moradaListener, ArrayList<String> morada) {
+    public void updateMoradas(Context context, MoradaListener moradaListener, MoradaModel morada) {
         // Teste da internet
         if (!NetworkUtils.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
@@ -306,7 +307,7 @@ public class SingletonVolley{
             System.out.println("Token: " + accessToken);
 
 
-            String moradaId = morada.get(0);
+            String moradaId = String.valueOf(morada.getId());
             System.out.println("Morada ID: " + moradaId);
 
             JSONObject jsonParams = new JSONObject();
