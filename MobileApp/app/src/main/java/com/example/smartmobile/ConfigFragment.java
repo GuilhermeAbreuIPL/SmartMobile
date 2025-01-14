@@ -86,6 +86,10 @@ public class ConfigFragment extends Fragment {
         //System.out.println(moradas.get(0).getRua());
         System.out.println("moradas acima checka");
 
+        //faz um if para o botão de adicionar morada desaparecer countMoradasUser
+        if(MoradaModel.countMoradasUser(db) >= 3){
+            getView().findViewById(R.id.btn_add_morada).setVisibility(View.GONE);
+        }
 
         // Certifique-se de fechar o banco após o uso
         db.close();
@@ -100,8 +104,6 @@ public class ConfigFragment extends Fragment {
 
 
 
+
     }
-
-
-
 }

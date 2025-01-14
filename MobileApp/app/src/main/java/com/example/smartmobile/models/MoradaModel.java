@@ -71,9 +71,9 @@ public class MoradaModel {
 
 
     // Contar o número de moradas de um usuário
-    public static int countMoradasByUserId(SQLiteDatabase db, int userId) {
-        String query = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + COLUMN_USER_ID + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+    public static int countMoradasUser(SQLiteDatabase db) {
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
         int count = 0;
         if (cursor.moveToFirst()) {
             count = cursor.getInt(0);
