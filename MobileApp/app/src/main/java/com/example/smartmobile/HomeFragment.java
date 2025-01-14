@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartmobile.adapters.ProductAdapter;
 import com.example.smartmobile.listeners.ProdutosListener;
 import com.example.smartmobile.models.Product;
+import com.example.smartmobile.network.NetworkUtils;
 import com.example.smartmobile.network.SingletonVolley;
 
 import org.json.JSONArray;
@@ -118,6 +120,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+
+
     }
 
 
@@ -125,13 +129,25 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Referências aos componentes da vista
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_products);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2)); // 2 colunas
+        TextView noConnectionMessage = view.findViewById(R.id.no_connection_message);
 
+        // Verificar conexão à Internet
+        if (!NetworkUtils.isConnectionInternet(getContext())) {
+            // Sem ligação à Internet
+            noConnectionMessage.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            // Com ligação à Internet
+            noConnectionMessage.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
 
-        // Configurar o adaptador
-        ProductAdapter adapter = new ProductAdapter(productList);
-        recyclerView.setAdapter(adapter);
+            // Configurar RecyclerView
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2)); // 2 colunas
+            ProductAdapter adapter = new ProductAdapter(productList);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
 

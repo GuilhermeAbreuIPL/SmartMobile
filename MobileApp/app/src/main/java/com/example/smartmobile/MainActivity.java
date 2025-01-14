@@ -1,5 +1,6 @@
 package com.example.smartmobile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.listeners.UserListener;
 import com.example.smartmobile.models.DatabaseHelper;
 import com.example.smartmobile.models.MoradaModel;
+import com.example.smartmobile.network.NetworkUtils;
 import com.example.smartmobile.network.SingletonVolley;
 import com.google.android.material.navigation.NavigationView;
 
@@ -62,22 +65,18 @@ public class MainActivity extends AppCompatActivity{
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
         toggle.syncState();
 
-        // inicia o fragment main
+        // Inicia o fragmento principal
         if (savedInstanceState == null) {
-
             Fragment homeFragment = new HomeFragment();
-
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, homeFragment)
                     .commit();
         }
 
-
         carregarFragementoInicial();
 
     }
-
 
 
     @Override
