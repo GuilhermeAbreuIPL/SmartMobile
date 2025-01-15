@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@color/gray"
-    tools:context=".EditMoradaFragment">
+    tools:context=".AddMoradaFragment">
 
     <!-- Container Principal -->
     <LinearLayout
@@ -40,7 +40,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Editar Morada"
+                android:text="Nova Morada"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
@@ -108,19 +108,11 @@
                     android:id="@+id/btn_guardar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Guardar"
+                    android:text="Adicionar"
                     android:backgroundTint="@color/orange"
                     android:textColor="@android:color/white"
                     android:layout_marginEnd="8dp" />
 
-                <!-- Botão Eliminar -->
-                <Button
-                    android:id="@+id/btn_eliminar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Eliminar"
-                    android:backgroundTint="@color/red"
-                    android:textColor="@android:color/white" />
             </LinearLayout>
 
         </LinearLayout>

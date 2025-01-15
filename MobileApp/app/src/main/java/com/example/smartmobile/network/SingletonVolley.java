@@ -338,6 +338,45 @@ public class SingletonVolley{
         }
     }
 
+    public void deleteMoradas(Context context, MoradaListener moradaListener, Integer moradaId) {
+        // Teste da internet
+        if (!NetworkUtils.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            //Log to console see if token is saved
+            SharedPreferences prefs = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+            String accessToken = prefs.getString("access_token", null);
+            System.out.println("Token: " + accessToken);
+
+            //log to console morada
+            System.out.println("Morada ID: " + moradaId);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, BASE_URL + "user/morada/" + moradaId + "?access-token=" + accessToken, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log to console response
+                    System.out.println(response.toString());
+                    Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+                    if (moradaListener != null) {
+                        moradaListener.onMoradaResponse(response);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Log to console error
+                    System.out.println(error.toString());
+                    Toast.makeText(context, "Error durante o login", Toast.LENGTH_SHORT).show();
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    System.out.println("Error Code: " + statusCode);
+                    System.out.println("Response Body: " + responseBody);
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+
 
     //listeners
     public void setSignupListener(SignupListener signupListener) {

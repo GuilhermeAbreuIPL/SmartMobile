@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.models.DatabaseHelper;
@@ -63,10 +64,10 @@ public class EditMoradaFragment extends Fragment {
                 getView().findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Activity activity = getActivity();
-                        if (activity != null) {
-                            activity.onBackPressed();
-                        }
+                        Fragment ProfileFragment = new ProfileFragment();
+                        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, ProfileFragment);
+                        transaction.commit();
                     }
                 });
 
@@ -95,10 +96,11 @@ public class EditMoradaFragment extends Fragment {
                                 public void onMoradaResponse(JSONObject response) {
                                     // Tratar a resposta do servidor
                                     Toast.makeText(getContext(), "Morada atualizada com sucesso!", Toast.LENGTH_SHORT).show();
-                                    Activity activity = getActivity();
-                                    if (activity != null) {
-                                        activity.onBackPressed();
-                                    }
+
+                                    Fragment ProfileFragment = new ProfileFragment();
+                                    FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.fragment_container, ProfileFragment);
+                                    transaction.commit();
                                 }
                             };
 
@@ -115,6 +117,37 @@ public class EditMoradaFragment extends Fragment {
                     }
                 });
 
+                // Adicionar um listener ao botão de eliminar
+                getView().findViewById(R.id.btn_eliminar).setOnClickListener(new View.OnClickListener() {
+                    //Corre o singleton para eliminar a morada
+                    @Override
+                    public void onClick(View v) {
+                        // Instância do listener para capturar a resposta
+                        MoradaListener moradaListener = new MoradaListener() {
+                            @Override
+                            public void onMoradaResponse(JSONObject response) {
+                                // Tratar a resposta do servidor
+                                Toast.makeText(getContext(), "Morada eliminada com sucesso!", Toast.LENGTH_SHORT).show();
+
+                                Fragment ProfileFragment = new ProfileFragment();
+                                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.fragment_container, ProfileFragment);
+                                transaction.commit();
+                            }
+                        };
+
+                        SingletonVolley.getInstance(getContext()).deleteMoradas(
+                                getContext(),
+                                moradaListener,
+                                moradaId
+                        );
+
+                    }
+
+                });
+
+
+
             } else {
                 System.out.println("Nenhuma morada encontrada com o ID " + moradaId);
 
@@ -122,11 +155,7 @@ public class EditMoradaFragment extends Fragment {
 
         }
         else {
-            Toast.makeText(getContext(), "Erro ao carregar morada", Toast.LENGTH_SHORT).show();
-            Activity activity = getActivity();
-            if (activity != null) {
-                activity.onBackPressed();
-            }
+            System.out.println("Nenhum argumento passado para o fragmento EditMoradaFragment");
         }
     }
 }
