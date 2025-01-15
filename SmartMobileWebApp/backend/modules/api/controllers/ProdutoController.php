@@ -37,8 +37,10 @@ class ProdutoController extends Controller
 
         //$produtos = Produto::find()->asArray()->with('imagem')->all();
         //$promocaoProduto = ProdutoPromocao::findAll();
-        $produtos = Produto::find()->with(['produtoPromocao.promocao', "imagem"])->asArray()->all();
 
+        //Funcionava com o comment abaixo
+        //$produtos = Produto::find()->with(['produtoPromocao.promocao', "imagem"])->asArray()->all();
+        $produtos = Produto::find()->all();
 
         if(!$produtos){
             Yii::$app->response->statusCode = 404;
@@ -48,9 +50,32 @@ class ProdutoController extends Controller
             ];
         }
 
+        foreach($produtos as $produto){
+            $precoPromo = $produto->preco;
+            if($produto->produtoPromocao != null){
+                $precoPromo = $precoPromo - ($precoPromo * $produto->produtoPromocao->promocao->descontopercentual / 100);
+            }else{
+                $precoPromo = null;
+            }
+            
+            $produtoInfo = [
+                'id' => $produto->id,
+                'nome' => $produto->nome,
+                'categoria' => $produto->categoria->nome,
+                'categoria_id' => $produto->categoria_id,
+                'filename' => $produto->imagem->filename,
+                'preco' => $produto->preco,
+                'precoPromo' => $precoPromo,
+                'descricao' => $produto->descricao,
+            ];
+
+            $data[] = $produtoInfo;
+        }
+
         return [
             'success' => true,
-            'produtos' => $produtos
+            'produtos' => $data
+            //'produtos' => $produtos
         ];
 
     }
@@ -58,7 +83,8 @@ class ProdutoController extends Controller
     public function actionDetalhe($id)
     {
 
-        $produtos = Produto::find()->where(['id' => $id])->with('produtoPromocao.promocao', 'imagem', 'categoria')->asArray()->one();
+        //$produtos = Produto::find()->where(['id' => $id])->with('produtoPromocao.promocao', 'imagem', 'categoria')->asArray()->one();
+        $produtos = Produto::find()->where(['id' => $id])->one();
         if(!$produtos){
             Yii::$app->response->statusCode = 404;
             return[
@@ -66,9 +92,29 @@ class ProdutoController extends Controller
                 'message' => 'O produto não foi encontrado'
             ];
         }
+        
+        $precoPromo = $produtos->preco;
+            if($produtos->produtoPromocao != null){
+                $precoPromo = $precoPromo - ($precoPromo * $produtos->produtoPromocao->promocao->descontopercentual / 100);
+            }else{
+                $precoPromo = null;
+            }
+
+        $produtoInfo = [
+            'id' => $produtos->id,
+            'nome' => $produtos->nome,
+            'categoria' => $produtos->categoria->nome,
+            'categoria_id' => $produtos->categoria_id,
+            'filename' => $produtos->imagem->filename,
+            'preco' => $produtos->preco,
+            'precoPromo' => $precoPromo,
+            'descricao' => $produtos->descricao,
+        ];
+
         return[
             'success' => true,
-            'produto' => $produtos
+            'produto' => $produtoInfo
+            //'produto' => $produtos
         ];
     }
 

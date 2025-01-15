@@ -47,9 +47,14 @@ class AuthController extends Controller
         }
 
         $user->create();
+
+        //ir buscar e enviar o token do user criado
+        $token = $this->actionLogin();
+        
         return[
             'success' => true,
             'model' => $user,
+            'token' => $token,
         ];
    }
 

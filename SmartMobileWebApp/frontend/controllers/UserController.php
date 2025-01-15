@@ -134,8 +134,10 @@ class UserController extends Controller
             return $this->redirect(['user/view']);
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->validate();
             $model->user_id = $userId;
+            
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Morada salva com sucesso.');
                 return $this->redirect(['user/view']);

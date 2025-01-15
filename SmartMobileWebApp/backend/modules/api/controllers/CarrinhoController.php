@@ -392,7 +392,12 @@ class CarrinhoController extends Controller
     public function actionCarrinho(){
         $request = YII::$app->request;
         $user = User::findIdentityByAccessToken($request->getQueryParam('access-token'));
-        $carrinho = Carrinho::find()->where(['userprofile_id' => $user->id])->with(['linhacarrinhos.produto.imagem'])->asArray()->all();
+        //$carrinho = Carrinho::find()->where(['userprofile_id' => $user->id])->with(['linhacarrinhos.produto.imagem'])->asArray()->all();
+        $carrinho = Carrinho::find()->where(['userprofile_id' => $user->id])->one();
+
+        $linhacarrinho = LinhaCarrinho::find()->where(['carrinho_id' => $carrinho->id])->all();
+
+        $total = 0;
 
         if(!$carrinho){
             Yii::$app->response->statusCode = 404;
@@ -402,9 +407,53 @@ class CarrinhoController extends Controller
             ];
         }
 
+        
+        $linhasCarrinho = LinhaCarrinho::find()->where(['carrinho_id' => $carrinho->id])->all();
+
+    $linhasFormatadas = [];
+
+    
+
+    foreach ($linhasCarrinho as $linha) {
+        $produto = Produto::findOne($linha->produto_id);
+
+        if ($produto) {
+            $precoPromo = $produto->preco;
+            if($produto->produtoPromocao != null){
+                $precoPromo = $precoPromo - ($precoPromo * $produto->produtoPromocao->promocao->descontopercentual / 100);
+                $total += ($precoPromo * $linha->quantidade);
+            }else{
+                $precoPromo = null;
+                $total += ($produto->preco * $linha->quantidade);
+            }
+
+            $produtoInfo = [
+                'id' => $produto->id,
+                'nome' => $produto->nome,
+                'categoria' => $produto->categoria->nome,
+                'filename' => $produto->imagem->filename,
+                'preco' => $produto->preco,
+                'precoPromo' => $precoPromo,
+                'descricao' => $produto->descricao,
+            ];
+
+            $linhasFormatadas[] = [
+                'id' => $linha->id,
+                'quantidade' => $linha->quantidade,
+                'produto' => $produtoInfo,
+            ];
+        }
+    }
+
+    $dataCarrinho = [
+        'total' => $total,
+        'linhacarrinhos' => $linhasFormatadas,
+    ];
+
         return[
             'success' => true,
-            'carrinho' => $carrinho,
+            //'carrinho' => $carrinho,
+            'carrinho' => $dataCarrinho
         ];
 
     }

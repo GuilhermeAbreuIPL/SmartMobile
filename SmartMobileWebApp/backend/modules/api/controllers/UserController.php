@@ -42,6 +42,7 @@ class UserController extends Controller
         HelperMosquitto::FazPublishNoMosquitto('teste1', "Teste fixe");
 
         return[
+            'success' => true,
             'user' =>$user,
             'userProfile'=>$userProfile,
         ];
