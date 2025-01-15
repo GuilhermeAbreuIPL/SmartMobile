@@ -156,6 +156,26 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    public void onClickEditMorada(View view) {
+        //vais buscar a tag deste botao: btn_edit_morada
+        String tag = view.getTag().toString();
+
+        EditMoradaFragment editMoradaFragment = new EditMoradaFragment();
+
+        // Criar um Bundle e adicionar a tag
+        Bundle bundle = new Bundle();
+        bundle.putString("tag", tag);
+        System.out.println("Tag: " + tag);
+        editMoradaFragment.setArguments(bundle);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, editMoradaFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+
 
     public boolean isUserLoggedIn() {
         //Get Shared Preferences and check if user is logged in

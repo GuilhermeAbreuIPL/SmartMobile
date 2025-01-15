@@ -1,5 +1,6 @@
 package com.example.smartmobile;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -83,8 +84,6 @@ public class ConfigFragment extends Fragment {
 
         ListMoradas = MoradaModel.getMoradasUser(db);
         System.out.println(ListMoradas);
-        //System.out.println(moradas.get(0).getRua());
-        System.out.println("moradas acima checka");
 
         //faz um if para o botão de adicionar morada desaparecer countMoradasUser
         if(MoradaModel.countMoradasUser(db) >= 3){
@@ -102,8 +101,14 @@ public class ConfigFragment extends Fragment {
         MoradaAdapter adapter = new MoradaAdapter(ListMoradas);
         recyclerView.setAdapter(adapter);
 
-
-
-
+        getView().findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = getActivity();
+                if (activity != null) {
+                    activity.onBackPressed();
+                }
+            }
+        });
     }
 }

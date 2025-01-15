@@ -296,7 +296,7 @@ public class SingletonVolley{
         }
     }
 
-    public void updateMoradas(Context context, MoradaListener moradaListener, MoradaModel morada) {
+    public void updateMoradas(Context context, MoradaListener moradaListener, JSONObject morada, Integer moradaId) {
         // Teste da internet
         if (!NetworkUtils.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
@@ -306,20 +306,13 @@ public class SingletonVolley{
             String accessToken = prefs.getString("access_token", null);
             System.out.println("Token: " + accessToken);
 
-
-            String moradaId = String.valueOf(morada.getId());
+            //log to console morada
             System.out.println("Morada ID: " + moradaId);
 
-            JSONObject jsonParams = new JSONObject();
-            try {
-                jsonParams.put("morada", morada);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             //log to console jsonParams
-            System.out.println(jsonParams.toString());
+            System.out.println(morada.toString());
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL + "user/moradas/" + moradaId + "?access-token=" + accessToken, jsonParams, new Response.Listener<JSONObject>() {
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, BASE_URL + "user/morada/" + moradaId + "?access-token=" + accessToken, morada, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response

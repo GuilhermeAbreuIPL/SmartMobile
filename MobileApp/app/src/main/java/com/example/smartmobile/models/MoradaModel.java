@@ -115,6 +115,33 @@ public class MoradaModel {
         return moradas;
     }
 
+    // Obter uma morada pelo ID da morada
+    public static MoradaModel getMoradaById(SQLiteDatabase db, int id) {
+        MoradaModel morada = null;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(COLUMN_ID);
+            int ruaIndex = cursor.getColumnIndex(COLUMN_RUA);
+            int localidadeIndex = cursor.getColumnIndex(COLUMN_LOCALIDADE);
+            int codPostalIndex = cursor.getColumnIndex(COLUMN_CODPOSTAL);
+            int userIdIndex = cursor.getColumnIndex(COLUMN_USER_ID);
+
+            if (idIndex >= 0 && ruaIndex >= 0 && localidadeIndex >= 0 && codPostalIndex >= 0 && userIdIndex >= 0) {
+                int moradaId = cursor.getInt(idIndex);
+                String rua = cursor.getString(ruaIndex);
+                String localidade = cursor.getString(localidadeIndex);
+                String codPostal = cursor.getString(codPostalIndex);
+                int userId = cursor.getInt(userIdIndex);
+
+                morada = new MoradaModel(moradaId, rua, localidade, codPostal, userId);
+            }
+        }
+
+        cursor.close();
+        return morada;
+    }
 
 }
 
