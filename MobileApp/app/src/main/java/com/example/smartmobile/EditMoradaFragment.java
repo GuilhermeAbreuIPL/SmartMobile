@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.models.DatabaseHelper;
 import com.example.smartmobile.models.MoradaModel;
+import com.example.smartmobile.network.NetworkUtils;
 import com.example.smartmobile.network.SingletonVolley;
 
 import org.json.JSONException;
@@ -34,68 +35,104 @@ public class EditMoradaFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            String tag = bundle.getString("tag");
 
-            DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
+        if (!NetworkUtils.isConnectionInternet(getContext())) {
+            Toast.makeText(getContext(), "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            Bundle bundle = this.getArguments();
+            if (bundle != null) {
+                String tag = bundle.getString("tag");
 
-            int moradaId = Integer.parseInt(tag);
+                DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-            MoradaModel morada = MoradaModel.getMoradaById(db, moradaId);
+                int moradaId = Integer.parseInt(tag);
 
-            if (morada != null) {
-                System.out.println("Morada encontrada:");
-                System.out.println("Rua: " + morada.getRua());
-                System.out.println("Localidade: " + morada.getLocalidade());
-                System.out.println("Código Postal: " + morada.getCodPostal());
+                MoradaModel morada = MoradaModel.getMoradaById(db, moradaId);
 
-                // Atualizar a interface com os dados da morada encontrada et_rua et_localidade et_codpostal
-                TextView et_rua = getView().findViewById(R.id.et_rua);
-                TextView et_localidade = getView().findViewById(R.id.et_localidade);
-                TextView et_codpostal = getView().findViewById(R.id.et_codpostal);
+                if (morada != null) {
+                    System.out.println("Morada encontrada:");
+                    System.out.println("Rua: " + morada.getRua());
+                    System.out.println("Localidade: " + morada.getLocalidade());
+                    System.out.println("Código Postal: " + morada.getCodPostal());
 
-                et_rua.setText(morada.getRua());
-                et_localidade.setText(morada.getLocalidade());
-                et_codpostal.setText(morada.getCodPostal());
+                    // Atualizar a interface com os dados da morada encontrada et_rua et_localidade et_codpostal
+                    TextView et_rua = getView().findViewById(R.id.et_rua);
+                    TextView et_localidade = getView().findViewById(R.id.et_localidade);
+                    TextView et_codpostal = getView().findViewById(R.id.et_codpostal);
 
-
-                getView().findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment ProfileFragment = new ProfileFragment();
-                        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragment_container, ProfileFragment);
-                        transaction.commit();
-                    }
-                });
+                    et_rua.setText(morada.getRua());
+                    et_localidade.setText(morada.getLocalidade());
+                    et_codpostal.setText(morada.getCodPostal());
 
 
-                // Adicionar um listener ao botão de guardar
-                getView().findViewById(R.id.btn_guardar).setOnClickListener(new View.OnClickListener() {
-                    //Corre o singleton para atualizar a morada
-                    @Override
-                    public void onClick(View v) {
-                        String rua = et_rua.getText().toString();
-                        String localidade = et_localidade.getText().toString();
-                        String codpostal = et_codpostal.getText().toString();
+                    getView().findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Fragment ProfileFragment = new ProfileFragment();
+                            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, ProfileFragment);
+                            transaction.commit();
+                        }
+                    });
 
-                        try {
-                            // Criar o JSONObject da morada
-                            JSONObject moradaJson = new JSONObject();
-                            moradaJson.put("rua", rua);
-                            moradaJson.put("localidade", localidade);
-                            moradaJson.put("codpostal", codpostal);
 
-                            System.out.println("Morada JSON: " + moradaJson.toString());
+                    // Adicionar um listener ao botão de guardar
+                    getView().findViewById(R.id.btn_guardar).setOnClickListener(new View.OnClickListener() {
+                        //Corre o singleton para atualizar a morada
+                        @Override
+                        public void onClick(View v) {
+                            String rua = et_rua.getText().toString();
+                            String localidade = et_localidade.getText().toString();
+                            String codpostal = et_codpostal.getText().toString();
 
+                            try {
+                                // Criar o JSONObject da morada
+                                JSONObject moradaJson = new JSONObject();
+                                moradaJson.put("rua", rua);
+                                moradaJson.put("localidade", localidade);
+                                moradaJson.put("codpostal", codpostal);
+
+                                System.out.println("Morada JSON: " + moradaJson.toString());
+
+                                // Instância do listener para capturar a resposta
+                                MoradaListener moradaListener = new MoradaListener() {
+                                    @Override
+                                    public void onMoradaResponse(JSONObject response) {
+                                        // Tratar a resposta do servidor
+                                        Toast.makeText(getContext(), "Morada atualizada com sucesso!", Toast.LENGTH_SHORT).show();
+
+                                        Fragment ProfileFragment = new ProfileFragment();
+                                        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                                        transaction.replace(R.id.fragment_container, ProfileFragment);
+                                        transaction.commit();
+                                    }
+                                };
+
+                                SingletonVolley.getInstance(getContext()).updateMoradas(
+                                        getContext(),
+                                        moradaListener,
+                                        moradaJson,
+                                        moradaId
+                                );
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                    // Adicionar um listener ao botão de eliminar
+                    getView().findViewById(R.id.btn_eliminar).setOnClickListener(new View.OnClickListener() {
+                        //Corre o singleton para eliminar a morada
+                        @Override
+                        public void onClick(View v) {
                             // Instância do listener para capturar a resposta
                             MoradaListener moradaListener = new MoradaListener() {
                                 @Override
                                 public void onMoradaResponse(JSONObject response) {
                                     // Tratar a resposta do servidor
-                                    Toast.makeText(getContext(), "Morada atualizada com sucesso!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "Morada eliminada com sucesso!", Toast.LENGTH_SHORT).show();
 
                                     Fragment ProfileFragment = new ProfileFragment();
                                     FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -104,58 +141,27 @@ public class EditMoradaFragment extends Fragment {
                                 }
                             };
 
-                            SingletonVolley.getInstance(getContext()).updateMoradas(
+                            SingletonVolley.getInstance(getContext()).deleteMoradas(
                                     getContext(),
                                     moradaListener,
-                                    moradaJson,
                                     moradaId
                             );
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                });
 
-                // Adicionar um listener ao botão de eliminar
-                getView().findViewById(R.id.btn_eliminar).setOnClickListener(new View.OnClickListener() {
-                    //Corre o singleton para eliminar a morada
-                    @Override
-                    public void onClick(View v) {
-                        // Instância do listener para capturar a resposta
-                        MoradaListener moradaListener = new MoradaListener() {
-                            @Override
-                            public void onMoradaResponse(JSONObject response) {
-                                // Tratar a resposta do servidor
-                                Toast.makeText(getContext(), "Morada eliminada com sucesso!", Toast.LENGTH_SHORT).show();
-
-                                Fragment ProfileFragment = new ProfileFragment();
-                                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.fragment_container, ProfileFragment);
-                                transaction.commit();
-                            }
-                        };
-
-                        SingletonVolley.getInstance(getContext()).deleteMoradas(
-                                getContext(),
-                                moradaListener,
-                                moradaId
-                        );
-
-                    }
-
-                });
+                    });
 
 
 
-            } else {
-                System.out.println("Nenhuma morada encontrada com o ID " + moradaId);
+                } else {
+                    System.out.println("Nenhuma morada encontrada com o ID " + moradaId);
+
+                }
 
             }
-
-        }
-        else {
-            System.out.println("Nenhum argumento passado para o fragmento EditMoradaFragment");
+            else {
+                System.out.println("Nenhum argumento passado para o fragmento EditMoradaFragment");
+            }
         }
     }
 }

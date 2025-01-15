@@ -69,51 +69,55 @@ public class HomeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        //Chama o metodo do singleton volley para carregar os produtos
-        SingletonVolley.getInstance(getContext()).getProdutos(getContext(), new ProdutosListener() {
-            @Override
-            public void onProdutosResponse(JSONObject produtos) {
-                //system out the response
-                System.out.println(produtos);
-                Toast.makeText(getContext(), "Produtos carregados com sucesso", Toast.LENGTH_SHORT).show();
-                try {
-                    JSONArray produtosArray = produtos.getJSONArray("produtos");
-                    for (int i = 0; i < produtosArray.length(); i++) {
-                        JSONObject produto = produtosArray.getJSONObject(i);
-                        Product product = new Product();
-                        product.setId(produto.getInt("id"));
-                        product.setNome(produto.getString("nome"));
-                        product.setCategoria(produto.getString("categoria"));
-                        product.setCategoria_id(produto.getInt("categoria_id"));
-                        product.setFilename(produto.getString("filename"));
-                        product.setPreco(produto.getString("preco"));
-                        product.setPrecoPromo(produto.getString("precoPromo"));
-                        product.setDescricao(produto.getString("descricao"));
-                        productList.add(product);
-                    }
-                    // Notify the adapter that the data has changed
-
-                    getActivity().runOnUiThread(() -> {
-                        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view_products);
-                        ProductAdapter adapter = (ProductAdapter) recyclerView.getAdapter();
-                        if (adapter != null) {
-                            adapter.notifyDataSetChanged();
+        //teste internet
+        if (!NetworkUtils.isConnectionInternet(getContext())) {
+            Toast.makeText(getContext(), "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            //Chama o metodo do singleton volley para carregar os produtos
+            SingletonVolley.getInstance(getContext()).getProdutos(getContext(), new ProdutosListener() {
+                @Override
+                public void onProdutosResponse(JSONObject produtos) {
+                    //system out the response
+                    System.out.println(produtos);
+                    Toast.makeText(getContext(), "Produtos carregados com sucesso", Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONArray produtosArray = produtos.getJSONArray("produtos");
+                        for (int i = 0; i < produtosArray.length(); i++) {
+                            JSONObject produto = produtosArray.getJSONObject(i);
+                            Product product = new Product();
+                            product.setId(produto.getInt("id"));
+                            product.setNome(produto.getString("nome"));
+                            product.setCategoria(produto.getString("categoria"));
+                            product.setCategoria_id(produto.getInt("categoria_id"));
+                            product.setFilename(produto.getString("filename"));
+                            product.setPreco(produto.getString("preco"));
+                            product.setPrecoPromo(produto.getString("precoPromo"));
+                            product.setDescricao(produto.getString("descricao"));
+                            productList.add(product);
                         }
-                    });
+                        // Notify the adapter that the data has changed
+
+                        getActivity().runOnUiThread(() -> {
+                            RecyclerView recyclerView = getView().findViewById(R.id.recycler_view_products);
+                            ProductAdapter adapter = (ProductAdapter) recyclerView.getAdapter();
+                            if (adapter != null) {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
 
 
-                } catch (JSONException e) {
-                    //system out the error
-                    System.out.println(e);
-                    System.out.println("Fiz porcaria no try catch");
-                    throw new RuntimeException(e);
+                    } catch (JSONException e) {
+                        //system out the error
+                        System.out.println(e);
+                        System.out.println("Fiz porcaria no try catch");
+                        throw new RuntimeException(e);
+
+                    }
+
 
                 }
-
-
-            }
-        });
-
+            });
+        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -104,6 +104,9 @@ public class MainActivity extends AppCompatActivity{
         if (item.getItemId() == R.id.nav_perfil) {
             fragment = new ProfileFragment(); // Exemplo de fragmento
         }
+        if (item.getItemId() == R.id.nav_mudarip) {
+            fragment = new IpFragment(); // Exemplo de fragmento
+        }
 
         if (fragment != null) {
             getSupportFragmentManager()

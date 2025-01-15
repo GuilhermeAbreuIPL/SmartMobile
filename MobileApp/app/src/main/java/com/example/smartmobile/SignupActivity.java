@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.smartmobile.models.UserDetails;
+import com.example.smartmobile.network.NetworkUtils;
 import com.example.smartmobile.network.SingletonVolley;
 
 public class SignupActivity extends AppCompatActivity {
@@ -34,20 +35,25 @@ public class SignupActivity extends AppCompatActivity {
 
 
     public void onClickSignup(View view) {
-        String nome = etNome.getText().toString();
-        String username = etUsername.getText().toString();
-        String email = etEmail.getText().toString();
-        String nif = etNif.getText().toString();
-        String telemovel = etTelemovel.getText().toString();
-        String password = etPassword.getText().toString();
 
-        if (nome.isEmpty() || username.isEmpty() || email.isEmpty() || nif.isEmpty() || telemovel.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Por favor preencha todos os campos", Toast.LENGTH_SHORT).show();
-            return;
+        if (!NetworkUtils.isConnectionInternet(this)) {
+            Toast.makeText(this, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            String nome = etNome.getText().toString();
+            String username = etUsername.getText().toString();
+            String email = etEmail.getText().toString();
+            String nif = etNif.getText().toString();
+            String telemovel = etTelemovel.getText().toString();
+            String password = etPassword.getText().toString();
+
+            if (nome.isEmpty() || username.isEmpty() || email.isEmpty() || nif.isEmpty() || telemovel.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Por favor preencha todos os campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            UserDetails user = new UserDetails(nome, username, email, nif, telemovel, password);
+
+            SingletonVolley.getInstance(this).signup(user, this);
         }
-
-        UserDetails user = new UserDetails(nome, username, email, nif, telemovel, password);
-
-        SingletonVolley.getInstance(this).signup(user, this);
     }
 }

@@ -1,11 +1,15 @@
 package com.example.smartmobile.network;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -37,9 +41,11 @@ public class SingletonVolley{
 
     public static RequestQueue volleyQueue;
 
-    private static final String BASE_URL = "http://172.22.21.218/SmartMobile/SmartMobileWebApp/backend/web/api/";
+    private final String BaseIp = "172.22.21.218";
 
-
+    private String BASE_URL(String ip) {
+        return "http://" + ip + "/SmartMobile/SmartMobileWebApp/backend/web/api/";
+    }
 
     // Construtor privado para evitar instância externa
     private SingletonVolley(Context context) {
@@ -78,7 +84,11 @@ public class SingletonVolley{
             //log to console jsonParams
             System.out.println(jsonParams.toString());
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL + "auth/register", jsonParams, new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL(ip) + "auth/register", jsonParams, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -146,7 +156,11 @@ public class SingletonVolley{
             //log to console jsonParams
             System.out.println(jsonParams.toString());
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL + "auth/login", jsonParams, new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL(ip) + "auth/login", jsonParams, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -202,7 +216,11 @@ public class SingletonVolley{
             String accessToken = prefs.getString("access_token", null);
             System.out.println("Token: " + accessToken);
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL + "user?access-token=" + accessToken,null , new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL(ip) + "user?access-token=" + accessToken,null , new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -241,7 +259,11 @@ public class SingletonVolley{
             //log to console user
             System.out.println("User Voley: " + user.toString());
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, BASE_URL + "user?access-token=" + accessToken, user, new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, BASE_URL(ip) + "user?access-token=" + accessToken, user, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -272,7 +294,11 @@ public class SingletonVolley{
         if (!NetworkUtils.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
         } else {
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL + "produtos", null, new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL(ip) + "produtos", null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -289,6 +315,7 @@ public class SingletonVolley{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    testTimeoutError(context, error);
                     //Log to console error
                     System.out.println(error.toString());
                     Toast.makeText(context, "Error durante o login", Toast.LENGTH_SHORT).show();
@@ -307,7 +334,11 @@ public class SingletonVolley{
         if (!NetworkUtils.isConnectionInternet(context)) {
             Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
         } else {
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL + "produtos/" + id, null, new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL(ip) + "produtos/" + id, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -348,7 +379,11 @@ public class SingletonVolley{
             String accessToken = prefs.getString("access_token", null);
             System.out.println("Token: " + accessToken);
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL + "user/moradas?access-token=" + accessToken,null , new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL(ip) + "user/moradas?access-token=" + accessToken,null , new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -387,7 +422,11 @@ public class SingletonVolley{
             //log to console morada
             System.out.println(morada.toString());
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL + "user/create-morada?access-token=" + accessToken, morada, new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL(ip) + "user/create-morada?access-token=" + accessToken, morada, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -429,7 +468,11 @@ public class SingletonVolley{
             //log to console jsonParams
             System.out.println(morada.toString());
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, BASE_URL + "user/morada/" + moradaId + "?access-token=" + accessToken, morada, new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, BASE_URL(ip) + "user/morada/" + moradaId + "?access-token=" + accessToken, morada, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -468,7 +511,11 @@ public class SingletonVolley{
             //log to console morada
             System.out.println("Morada ID: " + moradaId);
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, BASE_URL + "user/morada/" + moradaId + "?access-token=" + accessToken, null, new Response.Listener<JSONObject>() {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, BASE_URL(ip) + "user/morada/" + moradaId + "?access-token=" + accessToken, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     //Log to console response
@@ -494,6 +541,14 @@ public class SingletonVolley{
         }
     }
 
+    public void testTimeoutError(Context context,VolleyError error) {
+        if (error instanceof TimeoutError) {
+            Log.e("Fallback", "Tentando IP alternativo...");
+            Toast.makeText(context, "Conectividade com o Servidor Falhou", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.e("VolleyError", "Erro: " + error.getMessage());
+        }
+    }
 
     //listeners
     public void setSignupListener(SignupListener signupListener) {

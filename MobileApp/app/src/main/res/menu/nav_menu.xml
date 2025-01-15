@@ -17,6 +17,8 @@
         <menu >
             <item android:id="@+id/nav_perfil"
                 android:title="Perfil"/>
+            <item android:id="@+id/nav_mudarip"
+                android:title="Alterar o IP"/>
         </menu>
     </item>
 </menu>
