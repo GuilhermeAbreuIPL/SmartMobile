@@ -43,7 +43,7 @@ public class MoradaAdapter extends RecyclerView.Adapter<MoradaAdapter.MoradaView
         MoradaModel morada = moradaList.get(position);
         holder.moradaRua.setText(morada.getRua());
         holder.moradaLocalidade.setText(morada.getLocalidade());
-        holder.moradaCodPostal.setText(morada.getLocalidade());
+        holder.moradaCodPostal.setText(morada.getCodPostal());
 
         holder.btn_edit_morada.setTag(morada.getId());
         System.out.println("Morada ID: " + morada.getId());

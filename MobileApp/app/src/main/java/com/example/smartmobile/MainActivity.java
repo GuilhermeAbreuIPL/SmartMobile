@@ -176,7 +176,23 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    public void onClickAddMorada(View view) {
+        AddMoradaFragment addMoradaFragment = new AddMoradaFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, addMoradaFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
+    public void onClickEditUser(View view) {
+        EditUserFragment editUserFragment = new EditUserFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, editUserFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
     public boolean isUserLoggedIn() {
         //Get Shared Preferences and check if user is logged in
