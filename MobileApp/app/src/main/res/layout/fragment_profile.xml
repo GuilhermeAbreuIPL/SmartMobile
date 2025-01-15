@@ -22,16 +22,6 @@
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />
 
-        <!-- Botão de Fechar -->
-        <ImageView
-            android:id="@+id/btn_close"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_action_close"
-            android:contentDescription="Close"
-            android:layout_marginBottom="16dp" />
-
         <!-- Caixa Branca Central -->
         <LinearLayout
             android:layout_width="match_parent"

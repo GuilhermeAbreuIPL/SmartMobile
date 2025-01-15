@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-class ShoppingCartFragment extends Fragment {
+public class ShoppingCartFragment extends Fragment {
 
     @Nullable
     @Override

@@ -24,6 +24,7 @@ import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.listeners.UserListener;
 import com.example.smartmobile.models.DatabaseHelper;
 import com.example.smartmobile.models.MoradaModel;
+import com.example.smartmobile.models.Product;
 import com.example.smartmobile.network.NetworkUtils;
 import com.example.smartmobile.network.SingletonVolley;
 import com.google.android.material.navigation.NavigationView;
@@ -151,6 +152,22 @@ public class MainActivity extends AppCompatActivity{
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, configFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void onClickProduct(View view) {
+        String tag = view.getTag().toString();
+
+        ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("product_id", tag);
+        productDetailsFragment.setArguments(bundle);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, productDetailsFragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -306,5 +323,24 @@ public class MainActivity extends AppCompatActivity{
         else {
             return false;
         }
+    }
+
+    public void onClickLogo(View view) {
+        // Redirecionar para a HomeFragment
+        Fragment homeFragment = new HomeFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, homeFragment)
+                .commit();
+    }
+
+    public void onClickCartIcon(View view) {
+        // Redirecionar para a CarrinhoFragment
+        Fragment ShoppingCartFragment = new ShoppingCartFragment();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, ShoppingCartFragment)
+                .commit();
     }
 }
