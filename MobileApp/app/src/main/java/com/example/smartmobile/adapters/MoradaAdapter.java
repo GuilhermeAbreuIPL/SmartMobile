@@ -3,6 +3,7 @@ package com.example.smartmobile.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,8 +45,8 @@ public class MoradaAdapter extends RecyclerView.Adapter<MoradaAdapter.MoradaView
         holder.moradaLocalidade.setText(morada.getLocalidade());
         holder.moradaCodPostal.setText(morada.getLocalidade());
 
-
-
+        holder.btn_edit_morada.setTag(morada.getId());
+        System.out.println("Morada ID: " + morada.getId());
     }
 
     @Override
@@ -59,11 +60,14 @@ public class MoradaAdapter extends RecyclerView.Adapter<MoradaAdapter.MoradaView
         TextView moradaLocalidade;
         TextView moradaCodPostal;
 
+        Button btn_edit_morada;
+
         public MoradaViewHolder(@NonNull View itemView) {
             super(itemView);
             moradaRua = itemView.findViewById(R.id.tv_morada_rua);
             moradaLocalidade = itemView.findViewById(R.id.tv_morada_localidade);
             moradaCodPostal = itemView.findViewById(R.id.tv_morada_cod_postal);
+            btn_edit_morada = itemView.findViewById(R.id.btn_edit_morada);
         }
     }
 }
