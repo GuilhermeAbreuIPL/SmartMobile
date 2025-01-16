@@ -348,6 +348,14 @@ public class MainActivity extends AppCompatActivity{
                 .commit();
     }
 
+    public void onClickCheckout(View view) {
+        Fragment CheckoutFragment = new CheckoutFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, CheckoutFragment)
+                .commit();
+    }
+
     public void refreshCarrinho() {
         Fragment ShoppingCartFragment = new ShoppingCartFragment();
         getSupportFragmentManager()

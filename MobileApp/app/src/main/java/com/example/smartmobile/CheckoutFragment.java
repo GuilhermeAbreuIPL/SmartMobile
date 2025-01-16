@@ -2,63 +2,98 @@ package com.example.smartmobile;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CheckoutFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.smartmobile.adapters.CartAdapter;
+import com.example.smartmobile.adapters.FaturaProductAdapter;
+import com.example.smartmobile.listeners.GetCarrinhoListener;
+import com.example.smartmobile.models.LinhaCarrinho;
+import com.example.smartmobile.network.NetworkUtils;
+import com.example.smartmobile.network.SingletonVolley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class CheckoutFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CheckoutFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CheckoutFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CheckoutFragment newInstance(String param1, String param2) {
-        CheckoutFragment fragment = new CheckoutFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    private List<LinhaCarrinho> linhasCarrinhoList = new ArrayList<>();
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_checkout, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!NetworkUtils.isConnectionInternet(getContext())) {
+            Toast.makeText(getContext(), "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+
+            SingletonVolley.getInstance(getContext()).getCarrinho(getContext(), new GetCarrinhoListener() {
+                @Override
+                public void onGetCarrinhoResponse(JSONObject response) {
+
+                    try {
+                        JSONObject carrinho = response.getJSONObject("carrinho");
+                        JSONArray linhasCarrinhos = carrinho.getJSONArray("linhacarrinhos");
+                        for (int i = 0; i < linhasCarrinhos.length(); i++) {
+                            JSONObject linha = linhasCarrinhos.getJSONObject(i);
+                            LinhaCarrinho linhaCarrinho = new LinhaCarrinho();
+
+                            // Preencher o Total do carrinho
+                            String total = carrinho.getString("total");
+                            TextView tv_total = getView().findViewById(R.id.tv_total_price);
+                            tv_total.setText("Total: " + total + " €");
+
+
+                            // Preencher os dados principais da linha do carrinho
+                            linhaCarrinho.setId(linha.getInt("id"));
+                            linhaCarrinho.setQuantidade(linha.getString("quantidade"));
+
+                            // Obter o objeto do produto dentro da linha do carrinho
+                            JSONObject produto = linha.getJSONObject("produto");
+
+                            // Preencher os dados do produto
+                            linhaCarrinho.setProdutoId(produto.getInt("id"));
+                            linhaCarrinho.setProdutoNome(produto.getString("nome"));
+                            linhaCarrinho.setProdutoCategoria(produto.getString("categoria"));
+                            linhaCarrinho.setProdutoFilename(produto.getString("filename"));
+                            linhaCarrinho.setProdutoPreco(produto.getString("preco"));
+                            linhaCarrinho.setProdutoPrecoPromo(produto.isNull("precoPromo") ? null : produto.getString("precoPromo"));
+                            linhaCarrinho.setProdutoDescricao(produto.getString("descricao"));
+
+                            // Adicionar a linha do carrinho preenchida à lista (ou processar conforme necessário)
+                            linhasCarrinhoList.add(linhaCarrinho); // Assumindo que linhasCarrinhoList é uma lista do tipo List<LinhaCarrinho>
+                            System.out.println("Linha do carrinho adicionada: " + linhaCarrinho);
+                        }
+                        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view_products_checkout);
+                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1)); // 2 colunas
+                        FaturaProductAdapter adapter = new FaturaProductAdapter(linhasCarrinhoList);
+                        recyclerView.setAdapter(adapter);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        System.out.println("Erro: " + e);
+                    }
+                }
+            });
+        }
     }
 }

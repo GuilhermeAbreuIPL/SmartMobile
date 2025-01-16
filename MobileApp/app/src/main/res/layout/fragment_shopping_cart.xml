@@ -78,6 +78,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/orange"
             android:text="Finalizar compra"
+            android:onClick="onClickCheckout"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

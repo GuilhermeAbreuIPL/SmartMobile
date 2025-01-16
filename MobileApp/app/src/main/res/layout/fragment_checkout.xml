@@ -82,11 +82,11 @@
             </LinearLayout>
 
             <!-- RecyclerView para produtos -->
-            <!--<androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_products"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_products_checkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_product_data" />-->
+                tools:listitem="@layout/item_product_data" />
 
             <!-- Linha de separação -->
             <View
@@ -139,7 +139,7 @@
 
             <!-- Seção de moradas -->
             <!--<androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_moradas"
+                android:id="@+id/rv_moradas_checkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
