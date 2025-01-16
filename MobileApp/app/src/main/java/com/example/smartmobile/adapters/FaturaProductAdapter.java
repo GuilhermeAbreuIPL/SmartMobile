@@ -39,7 +39,7 @@ public class FaturaProductAdapter extends RecyclerView.Adapter<FaturaProductAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FaturaProductAdapter.FaturaProductViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FaturaProductViewHolder holder, int position) {
         LinhaCarrinho linhaCarrinho = faturaProductList.get(position);
         holder.FaturaProductName.setText(linhaCarrinho.getProdutoNome());
         holder.FaturaProductQuantity.setText(linhaCarrinho.getQuantidade());

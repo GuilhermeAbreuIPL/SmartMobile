@@ -113,12 +113,16 @@
                 android:gravity="center"
                 android:layout_marginBottom="16dp">
 
-                <!-- RecyclerView para métodos de pagamento -->
-                <!--<androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_payments"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_payment" />-->
+
+
+                    <!-- RecyclerView para métodos de pagamento -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_payments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_payment" />
+
+
             </LinearLayout>
 
             <!-- Linha de separação -->
