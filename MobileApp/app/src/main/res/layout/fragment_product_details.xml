@@ -81,6 +81,7 @@
             android:backgroundTint="@color/orange"
             android:textColor="@android:color/white"
             android:textStyle="bold"
+            android:onClick="onClickAddCart"
             android:paddingVertical="12dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -8,6 +8,7 @@ import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -97,7 +98,14 @@ public class ProductDetailsFragment extends Fragment {
                         .load(BASE_IMG_URL + imageUrl)
                         .placeholder(null)
                         .into(productImageView);
+
+                Button addToCartButton = getView().findViewById(R.id.add_to_cart);
+                addToCartButton.setTag(product.getId());
             }
+            //Set da tag do botão adicionar ao carrinho
+
+
+
 
         });
 

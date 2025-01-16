@@ -15,10 +15,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.RequestQueue;
 import com.example.smartmobile.LoginActivity;
+import com.example.smartmobile.listeners.AddCarrinhoListener;
+import com.example.smartmobile.listeners.GetCarrinhoListener;
 import com.example.smartmobile.listeners.ProdutosListener;
 import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.listeners.SignupListener;
 import com.example.smartmobile.listeners.LoginListener;
+import com.example.smartmobile.listeners.UpdateCarrinhoListener;
 import com.example.smartmobile.listeners.UserListener;
 import com.example.smartmobile.models.MoradaModel;
 import com.example.smartmobile.models.UserDetails;
@@ -539,7 +542,146 @@ public class SingletonVolley{
             });
             volleyQueue.add(req);
         }
+
+
+
     }
+
+    public void addCarrinhoProduto(Context context, int id, AddCarrinhoListener listener){
+        //verifica se tenho ligação à internet
+        if (!NetworkUtils.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            SharedPreferences prefs = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+            String accessToken = prefs.getString("access_token", null);
+            System.out.println("Token: " + accessToken);
+            System.out.println("ID: " + id);
+
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BASE_URL(ip) + "carrinho/add/" + id +"?access-token="+accessToken, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log to console response
+                    System.out.println(response.toString());
+                    Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        listener.onCarrinhoAddResponse(response);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Log to console error
+                    System.out.println(error.toString());
+                    Toast.makeText(context, "Error durante o addcarrinho", Toast.LENGTH_SHORT).show();
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    System.out.println("Error Code: " + statusCode);
+                    System.out.println("Response Body: " + responseBody);
+                }
+            });
+            volleyQueue.add(req);
+        }
+
+
+
+    }
+
+    //Função para o getCarrinho
+    public void getCarrinho(Context context, GetCarrinhoListener listener){
+        //verifica se tenho ligação à internet
+        if (!NetworkUtils.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            SharedPreferences prefs = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+            String accessToken = prefs.getString("access_token", null);
+            System.out.println("Token: " + accessToken);
+
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL(ip) + "carrinho?access-token="+accessToken, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log to console response
+                    System.out.println(response.toString());
+                    Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        listener.onGetCarrinhoResponse(response);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Log to console error
+                    System.out.println(error.toString());
+                    Toast.makeText(context, "Error durante o addcarrinho", Toast.LENGTH_SHORT).show();
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    System.out.println("Error Code: " + statusCode);
+                    System.out.println("Response Body: " + responseBody);
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+
+    public void updateCarrinhoProduto(Context context, int id, int quantidade, UpdateCarrinhoListener listener){
+        //verifica se tenho ligação à internet
+        if (!NetworkUtils.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            SharedPreferences prefs = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+            String accessToken = prefs.getString("access_token", null);
+            System.out.println("Token: " + accessToken);
+            System.out.println("ID: " + id);
+            System.out.println("Quantidade: " + quantidade);
+
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            //passa a quantidade para string
+
+            JSONObject jsonParams = new JSONObject();
+            try {
+                jsonParams.put("quantidade", String.valueOf(quantidade));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //log to console jsonParams
+            System.out.println(jsonParams.toString());
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, BASE_URL(ip) + "carrinho/edit/" + id +"?access-token="+accessToken, jsonParams, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log to console response
+                    System.out.println(response.toString());
+                    Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        listener.onUpdateCarrinhoResponse(response);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Log to console error
+                    System.out.println(error.toString());
+                    Toast.makeText(context, "Error durante o addcarrinho", Toast.LENGTH_SHORT).show();
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    System.out.println("Error Code: " + statusCode);
+                    System.out.println("Response Body: " + responseBody);
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+
 
     public void testTimeoutError(Context context,VolleyError error) {
         if (error instanceof TimeoutError) {

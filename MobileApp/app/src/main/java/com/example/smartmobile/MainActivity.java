@@ -20,6 +20,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.smartmobile.listeners.AddCarrinhoListener;
 import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.listeners.UserListener;
 import com.example.smartmobile.models.DatabaseHelper;
@@ -340,6 +341,53 @@ public class MainActivity extends AppCompatActivity{
     public void onClickCartIcon(View view) {
         // Redirecionar para a CarrinhoFragment
         Fragment ShoppingCartFragment = new ShoppingCartFragment();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, ShoppingCartFragment)
+                .commit();
+    }
+
+    public void refreshCarrinho() {
+        Fragment ShoppingCartFragment = new ShoppingCartFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, ShoppingCartFragment)
+                .commit();
+    }
+
+    public void onClickAddCart(View view) {
+        // Redirecionar para a CarrinhoFragment
+        Fragment ShoppingCartFragment = new ShoppingCartFragment();
+        String tag = view.getTag().toString();
+        int productId = Integer.parseInt(tag);
+
+        //Bundle bundle = new Bundle();
+        System.out.println("Tag: " + tag);
+
+        //bundle.putString("product_id", tag);
+        //ShoppingCartFragment.setArguments(bundle);
+
+        //adicionar ao carrinho
+        SingletonVolley.getInstance(this).addCarrinhoProduto(this, productId, new AddCarrinhoListener() {
+            @Override
+            public void onCarrinhoAddResponse(JSONObject produto) {
+                try {
+                    boolean success = produto.getBoolean("success");
+                    if (success) {
+                        System.out.println("Produto adicionado ao carrinho: " + produto.toString());
+                        Toast.makeText(MainActivity.this, "Produto adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+                    } else {
+                        System.out.println("Erro ao adicionar produto ao carrinho: " + produto.toString());
+                        Toast.makeText(MainActivity.this, "Erro ao adicionar produto ao carrinho", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Erro: " + e);
+                }
+            }
+        });
+
 
         getSupportFragmentManager()
                 .beginTransaction()
