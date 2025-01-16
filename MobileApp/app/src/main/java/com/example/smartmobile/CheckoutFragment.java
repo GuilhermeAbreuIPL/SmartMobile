@@ -207,7 +207,11 @@ public class CheckoutFragment extends Fragment {
                                     Toast.makeText(getContext(), "Checkout bem sucedido", Toast.LENGTH_SHORT).show();
                                     System.out.println("Checkout bem sucedido");
 
-                                    // Abrir Order Details Fragment
+                                    OrderHistoryFragment orderHistoryFragment = new OrderHistoryFragment();
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.fragment_container, orderHistoryFragment)
+                                            .addToBackStack(null)
+                                            .commit();
                                 } else {
                                     Toast.makeText(getContext(), "Erro no checkout", Toast.LENGTH_SHORT).show();
                                     System.out.println("Erro no checkout");
