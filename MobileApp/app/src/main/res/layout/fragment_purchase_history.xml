@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Shopping Cart"
+                android:text="Faturas"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
@@ -38,15 +38,6 @@
                 android:contentDescription="Fechar" />
         </LinearLayout>
 
-        <!-- Total -->
-        <TextView
-            android:id="@+id/tv_total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total: 0€"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="16dp" />
 
         <!-- Lista de Produtos -->
         <LinearLayout
@@ -55,105 +46,13 @@
             android:orientation="vertical"
             android:layout_marginBottom="16dp">
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_products"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_order_history" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="4dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/border_card"
-                    android:padding="8dp"
-                    android:elevation="4dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:contentDescription="Product Image" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Product Name"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0€"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                    <Button
-                        android:id="@+id/btn_remove_product"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Remove"
-                        android:backgroundTint="@android:color/darker_gray"
-                        android:textColor="@android:color/white" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="4dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/border_card"
-                    android:padding="8dp"
-                    android:elevation="4dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:contentDescription="Product Image" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Product Name"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0€"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                    <Button
-                        android:id="@+id/btn_remove_product1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Remove"
-                        android:backgroundTint="@android:color/darker_gray"
-                        android:textColor="@android:color/white" />
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
-
-        <!-- Botão Finalizar Compra -->
-        <Button
-            android:id="@+id/btn_checkout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/orange"
-            android:text="Finalizar compra"
-            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
