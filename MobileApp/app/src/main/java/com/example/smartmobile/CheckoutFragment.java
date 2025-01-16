@@ -15,12 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartmobile.adapters.CartAdapter;
+import com.example.smartmobile.adapters.FaturaMoradaAdapter;
 import com.example.smartmobile.adapters.FaturaProductAdapter;
 import com.example.smartmobile.adapters.MetodoPagamentoAdapter;
 import com.example.smartmobile.listeners.GetCarrinhoListener;
 import com.example.smartmobile.listeners.MetodoPagamentoListener;
+import com.example.smartmobile.listeners.MoradaListener;
 import com.example.smartmobile.models.LinhaCarrinho;
 import com.example.smartmobile.models.MetodoPagamento;
+import com.example.smartmobile.models.MoradaModel;
 import com.example.smartmobile.network.NetworkUtils;
 import com.example.smartmobile.network.SingletonVolley;
 
@@ -35,6 +38,7 @@ import java.util.List;
 public class CheckoutFragment extends Fragment {
     private List<LinhaCarrinho> linhasCarrinhoList = new ArrayList<>();
     private List<MetodoPagamento> metodoPagamentoList = new ArrayList<>();
+    private List<MoradaModel> faturaMoradaList = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -116,6 +120,31 @@ public class CheckoutFragment extends Fragment {
                         RecyclerView recyclerView = getView().findViewById(R.id.recycler_view_payments);
                         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
                         MetodoPagamentoAdapter adapter = new MetodoPagamentoAdapter(metodoPagamentoList);
+                        recyclerView.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        System.out.println("Erro: " + e);
+                    }
+                }
+            });
+
+            SingletonVolley.getInstance(getContext()).getMoradas(getContext(), new MoradaListener() {
+                @Override
+                public void onMoradaResponse(JSONObject response) {
+                    try {
+                        JSONArray moradas = response.getJSONArray("moradas");
+                        for (int i = 0; i < moradas.length(); i++) {
+                            JSONObject morada = moradas.getJSONObject(i);
+                            MoradaModel moradaModel = new MoradaModel();
+                            moradaModel.setId(morada.getInt("id"));
+                            moradaModel.setRua(morada.getString("rua"));
+                            moradaModel.setLocalidade(morada.getString("localidade"));
+                            moradaModel.setCodPostal(morada.getString("codpostal"));
+                            faturaMoradaList.add(moradaModel);
+                        }
+                        RecyclerView recyclerView = getView().findViewById(R.id.rv_moradas_checkout);
+                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+                        FaturaMoradaAdapter adapter = new FaturaMoradaAdapter(faturaMoradaList);
                         recyclerView.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();

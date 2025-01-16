@@ -25,11 +25,11 @@
 
         <!-- RadioButton à direita -->
         <RadioButton
-            android:id="@+id/radioButton1"
+            android:id="@+id/radioButton_morada_checkout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:buttonTint="@color/white"
+            android:buttonTint="@color/black"
             android:checked="false"
             android:textColor="@color/white" />
     </LinearLayout>
@@ -46,7 +46,7 @@
 
     <!-- Rua -->
     <TextView
-        android:id="@+id/tv_morada_rua"
+        android:id="@+id/tv_morada_rua_checkout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -64,10 +64,10 @@
         android:text="Localidade"
         android:textColor="@android:color/black"
         android:layout_marginBottom="4dp"
-        android:layout_below="@id/tv_morada_rua" />
+        android:layout_below="@id/tv_morada_rua_checkout" />
 
     <TextView
-        android:id="@+id/tv_morada_localidade"
+        android:id="@+id/tv_morada_localidade_checkout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -85,10 +85,10 @@
         android:text="Código Postal"
         android:textColor="@android:color/black"
         android:layout_marginBottom="4dp"
-        android:layout_below="@id/tv_morada_localidade" />
+        android:layout_below="@id/tv_morada_localidade_checkout" />
 
     <TextView
-        android:id="@+id/tv_morada_cod_postal"
+        android:id="@+id/tv_morada_cod_postal_checkout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -106,5 +106,5 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/darker_gray"
-        android:layout_below="@id/tv_morada_cod_postal" />
+        android:layout_below="@id/tv_morada_cod_postal_checkout" />
 </RelativeLayout>
