@@ -18,6 +18,7 @@ import com.example.smartmobile.adapters.CartAdapter;
 import com.example.smartmobile.adapters.FaturaMoradaAdapter;
 import com.example.smartmobile.adapters.FaturaProductAdapter;
 import com.example.smartmobile.adapters.MetodoPagamentoAdapter;
+import com.example.smartmobile.listeners.CheckoutListener;
 import com.example.smartmobile.listeners.GetCarrinhoListener;
 import com.example.smartmobile.listeners.MetodoPagamentoListener;
 import com.example.smartmobile.listeners.MoradaListener;
@@ -150,6 +151,73 @@ public class CheckoutFragment extends Fragment {
                         e.printStackTrace();
                         System.out.println("Erro: " + e);
                     }
+                }
+            });
+
+            getView().findViewById(R.id.btn_checkout).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int metodoPagamentoId = -1;
+
+                    // Obter a posição selecionada do adaptador
+                    int selectedPosition = MetodoPagamentoAdapter.getSelectedPosition();
+
+                    if (selectedPosition != RecyclerView.NO_POSITION) {
+                        // Obter o método de pagamento com base na posição selecionada
+                        MetodoPagamento metodoSelecionado = metodoPagamentoList.get(selectedPosition);
+                        metodoPagamentoId = metodoSelecionado.getId();
+
+                        // Usa o ID conforme necessário
+                        System.out.println("Método de pagamento selecionado: " + metodoPagamentoId);
+                    } else {
+                        System.out.println("Nenhum método de pagamento foi selecionado.");
+                        Toast.makeText(getContext(), "Selecione um método de pagamento", Toast.LENGTH_SHORT).show();
+                    }
+
+                    // Obter a morada selecionada
+                    int moradaId = -1;
+                    int selectedMoradaPosition = FaturaMoradaAdapter.getSelectedPosition();
+
+                    if (selectedMoradaPosition != RecyclerView.NO_POSITION) {
+                        MoradaModel moradaSelecionada = faturaMoradaList.get(selectedMoradaPosition);
+                        moradaId = moradaSelecionada.getId();
+                        System.out.println("Morada selecionada: " + moradaId);
+                    } else {
+                        System.out.println("Nenhuma morada foi selecionada.");
+                        Toast.makeText(getContext(), "Selecione uma morada", Toast.LENGTH_SHORT).show();
+                    }
+
+                    // Criar o objeto de checkout
+                    JSONObject checkout = new JSONObject();
+                    try {
+                        checkout.put("tipoEntrega", "Morada");
+                        checkout.put("metodoPagamento", metodoPagamentoId);
+                        checkout.put("morada_id", moradaId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        System.out.println("Erro: " + e);
+                    }
+
+                    // Enviar o pedido de checkout
+                    SingletonVolley.getInstance(getContext()).checkout(getContext(),checkout, new CheckoutListener() {
+                        @Override
+                        public void onCheckoutResponse(JSONObject response) {
+                            try {
+                                if (response.getBoolean("success")) {
+                                    Toast.makeText(getContext(), "Checkout bem sucedido", Toast.LENGTH_SHORT).show();
+                                    System.out.println("Checkout bem sucedido");
+
+                                    // Abrir Order Details Fragment
+                                } else {
+                                    Toast.makeText(getContext(), "Erro no checkout", Toast.LENGTH_SHORT).show();
+                                    System.out.println("Erro no checkout");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                System.out.println("Erro: " + e);
+                            }
+                        }
+                    });
                 }
             });
         }

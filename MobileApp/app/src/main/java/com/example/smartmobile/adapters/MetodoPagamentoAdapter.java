@@ -21,7 +21,11 @@ import java.util.List;
 public class MetodoPagamentoAdapter extends RecyclerView.Adapter<MetodoPagamentoAdapter.MetodoPagamentoViewHolder> {
     private List<MetodoPagamento> metodoPagamentoList = new ArrayList<>();
     private MetodoPagamentoListener listener;
-    private int selectedPosition = -1;
+    private static int selectedPosition = -1;
+
+    public static int getSelectedPosition() {
+        return selectedPosition;
+    }
 
     public MetodoPagamentoAdapter(List<MetodoPagamento> metodoPagamentoList) {
         this.metodoPagamentoList = metodoPagamentoList;
@@ -40,7 +44,6 @@ public class MetodoPagamentoAdapter extends RecyclerView.Adapter<MetodoPagamento
     public void onBindViewHolder(@NonNull MetodoPagamentoViewHolder holder, int position) {
         MetodoPagamento metodoPagamento = metodoPagamentoList.get(position);
         holder.metodoPagamentoNome.setText(metodoPagamento.getNome());
-        holder.metodoPagamentoRadio.setTag(metodoPagamento.getId());
 
         // Configurar o estado do RadioButton com base na posição selecionada
         holder.metodoPagamentoRadio.setChecked(position == selectedPosition);
@@ -49,9 +52,6 @@ public class MetodoPagamentoAdapter extends RecyclerView.Adapter<MetodoPagamento
         holder.metodoPagamentoRadio.setOnClickListener(v -> {
             int previousSelectedPosition = selectedPosition;
             selectedPosition = holder.getAdapterPosition();
-            
-            //printa a tag do radio button
-            System.out.println(holder.metodoPagamentoRadio.getTag());
 
             // Notificar apenas os itens que mudaram para melhorar a performance
             notifyItemChanged(previousSelectedPosition);

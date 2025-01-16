@@ -18,7 +18,11 @@ import java.util.List;
 public class FaturaMoradaAdapter extends RecyclerView.Adapter<FaturaMoradaAdapter.FaturaMoradaViewHolder> {
     private final List<MoradaModel> faturaMoradaList;
     private MoradaListener listener;
-    private int selectedPosition = -1;
+    private static int selectedPosition = -1;
+
+    public static int getSelectedPosition() {
+        return selectedPosition;
+    }
 
     public FaturaMoradaAdapter(List<MoradaModel> faturaMoradaList){
         this.faturaMoradaList = faturaMoradaList;
@@ -39,16 +43,12 @@ public class FaturaMoradaAdapter extends RecyclerView.Adapter<FaturaMoradaAdapte
         holder.moradaRua.setText(moradaModel.getRua());
         holder.moradaLocalidade.setText(moradaModel.getLocalidade());
         holder.moradaCodPostal.setText(moradaModel.getCodPostal());
-        holder.moradaRadio.setTag(moradaModel.getId());
 
         holder.moradaRadio.setChecked(position == selectedPosition);
 
         holder.moradaRadio.setOnClickListener(v -> {
             int previousSelectedPosition = selectedPosition;
             selectedPosition = holder.getAdapterPosition();
-
-            //printa a tag do radio button
-            System.out.println(holder.moradaRadio.getTag());
 
             notifyItemChanged(previousSelectedPosition);
             notifyItemChanged(selectedPosition);
