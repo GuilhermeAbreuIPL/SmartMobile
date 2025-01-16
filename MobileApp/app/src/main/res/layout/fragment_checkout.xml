@@ -62,15 +62,17 @@
                     android:layout_height="wrap_content"
                     android:text="Nome"
                     android:textColor="@android:color/black"
-                    android:layout_marginStart="45dp"
-                    android:layout_marginEnd="85dp" />
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="85dp"
+                    android:textStyle="bold"/>
 
                 <!-- TextView Preço -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Preço"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"/>
 
                 <!-- TextView Quantidade -->
                 <TextView
@@ -78,7 +80,8 @@
                     android:layout_height="wrap_content"
                     android:text="Quantidade"
                     android:layout_marginStart="60dp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <!-- RecyclerView para produtos -->
