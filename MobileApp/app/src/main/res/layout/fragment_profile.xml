@@ -148,6 +148,7 @@
                     android:layout_height="wrap_content"
                     android:text="Minhas encomendas"
                     android:textColor="@android:color/white"
+                    android:onClick="onClickOrders"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>

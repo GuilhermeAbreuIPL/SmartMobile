@@ -356,6 +356,14 @@ public class MainActivity extends AppCompatActivity{
                 .commit();
     }
 
+    public void onClickOrders(View view) {
+        Fragment OrderHistoryFragment = new OrderHistoryFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, OrderHistoryFragment)
+                .commit();
+    }
+
     public void refreshCarrinho() {
         Fragment ShoppingCartFragment = new ShoppingCartFragment();
         getSupportFragmentManager()
