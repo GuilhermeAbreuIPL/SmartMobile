@@ -53,6 +53,7 @@ public class OrderHistoryFragment extends Fragment {
                             fatura1.setTotal(fatura.getString("total"));
                             fatura1.setEstado(fatura.getString("estado"));
                             fatura1.setMetodoPagamento(fatura.getString("metodopagamento"));
+                            fatura1.setId(fatura.getInt("id"));
                             faturasList.add(fatura1);
                         }
                         // Notify the adapter that the data has changed

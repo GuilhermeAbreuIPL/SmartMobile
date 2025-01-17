@@ -3,6 +3,7 @@ package com.example.smartmobile.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,7 +40,7 @@ public class FaturaAdapter extends RecyclerView.Adapter<FaturaAdapter.FaturaAdap
             holder.FaturaValorTotal.setText(faturas.getTotal());
             holder.FaturaStatus.setText(faturas.getEstado());
             holder.FaturaMetodoPagamento.setText(faturas.getMetodoPagamento());
-
+            holder.FaturaShow.setTag(faturas.getId());
         }
 
         @Override
@@ -53,6 +54,7 @@ public class FaturaAdapter extends RecyclerView.Adapter<FaturaAdapter.FaturaAdap
             TextView FaturaValorTotal;
             TextView FaturaStatus;
             TextView FaturaMetodoPagamento;
+            Button FaturaShow;
 
             public FaturaAdapterViewHoslder(@NonNull View view) {
                 super(view);
@@ -60,6 +62,7 @@ public class FaturaAdapter extends RecyclerView.Adapter<FaturaAdapter.FaturaAdap
                 FaturaValorTotal = view.findViewById(R.id.tv_total);
                 FaturaStatus = view.findViewById(R.id.tv_status);
                 FaturaMetodoPagamento = view.findViewById(R.id.tv_payment);
+                FaturaShow = view.findViewById(R.id.btn_show_fatura);
             }
         }
 }

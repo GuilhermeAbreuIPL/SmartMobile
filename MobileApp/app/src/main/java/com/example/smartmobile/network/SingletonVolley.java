@@ -798,6 +798,45 @@ public class SingletonVolley{
         }
     }
 
+    public void getFaturaDetails(Context context, String id, FaturaListener listener){
+        //verifica se tenho ligação à internet
+        if (!NetworkUtils.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            SharedPreferences prefs = context.getSharedPreferences("AppPrefs", LoginActivity.MODE_PRIVATE);
+            String accessToken = prefs.getString("access_token", null);
+            System.out.println("Token: " + accessToken);
+
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs1 = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs1.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL(ip) + "faturas/" + id + "?access-token="+accessToken, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log to console response
+                    System.out.println(response.toString());
+                    Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        listener.onFaturaResponse(response);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Log to console error
+                    System.out.println(error.toString());
+                    Toast.makeText(context, "Error durante o showcarrinho", Toast.LENGTH_SHORT).show();
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    System.out.println("Error Code: " + statusCode);
+                    System.out.println("Response Body: " + responseBody);
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+
 
     public void testTimeoutError(Context context,VolleyError error) {
         if (error instanceof TimeoutError) {

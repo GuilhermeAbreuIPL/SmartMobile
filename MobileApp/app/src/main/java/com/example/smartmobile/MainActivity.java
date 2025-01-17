@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -211,6 +212,23 @@ public class MainActivity extends AppCompatActivity{
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, editUserFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void onClickVerDetalhesFatura(View view) {
+        String tag = view.getTag().toString();
+        System.out.println("Tag: " + tag);
+
+        OrderDetailsFragment detalhesFacturaFragment = new OrderDetailsFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("fatura_id", tag);
+        detalhesFacturaFragment.setArguments(bundle);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, detalhesFacturaFragment)
                 .addToBackStack(null)
                 .commit();
     }

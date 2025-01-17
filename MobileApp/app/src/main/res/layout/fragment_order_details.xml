@@ -59,7 +59,7 @@
                 android:id="@+id/tv_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ex: 10-10-2024"
+                android:text="Loading..."
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="16dp" />
@@ -75,7 +75,7 @@
                 android:id="@+id/tv_total"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ex: 55€"
+                android:text="Loading..."
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="16dp" />
@@ -88,9 +88,10 @@
                 android:textColor="@android:color/black" />
 
             <TextView
+                android:id="@+id/tv_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ex: Confirmar pedido"
+                android:text="Loading..."
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="16dp" />
@@ -103,9 +104,26 @@
                 android:textColor="@android:color/black" />
 
             <TextView
+                android:id="@+id/tv_pagamento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ex: Multibanco"
+                android:text="Loading..."
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo Entrega"
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_entrega"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading..."
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="16dp" />
@@ -121,7 +139,7 @@
                 android:id="@+id/tv_rua"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ex: Rua do exemplo"
+                android:text="Loading..."
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="16dp" />
@@ -137,7 +155,7 @@
                 android:id="@+id/tv_localidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ex: R. Gen. Norton de Matos Apartado 4133, Leiria"
+                android:text="Loading..."
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="16dp" />
@@ -153,7 +171,7 @@
                 android:id="@+id/tv_codpostal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ex: 2411-901"
+                android:text="Loading..."
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginBottom="16dp" />
@@ -205,7 +223,7 @@
 
         <!-- RecyclerView para produtos -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_products"
+            android:id="@+id/rv_fatura_products_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_product_data" />
