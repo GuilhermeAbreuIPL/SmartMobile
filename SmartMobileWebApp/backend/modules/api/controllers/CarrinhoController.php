@@ -159,17 +159,6 @@ class CarrinhoController extends Controller
             'linhacarrinho' => $linhacarrinho
         ];
 
-
-
-
-
-
-
-
-
-
-
-
     }
 
     //Função que podia estar no carrinho ou nas faturas?
@@ -256,6 +245,7 @@ class CarrinhoController extends Controller
                     $fatura->moradaexpedicao_id = $result['moradaexpedicao_id'];
                     $fatura->save(false);
 
+                    $totalPrice = 0;
                     foreach ($linhascarrinho as $linha){
                         $linhaFatura = new LinhaFatura();
                         $linhaFatura->fatura_id = $fatura->id;
@@ -263,12 +253,23 @@ class CarrinhoController extends Controller
                         $linhaFatura->quantidade = $linha->quantidade;
                         $linhaFatura->precounitario = $linha->precounitario;
                         $linhaFatura->save(false);
+
+                        //Preço total da fatura
+                        $produto = Produto::findOne($linha->produto_id);
+                        if ($produto) {
+                            $precoPromo = $produto->preco;
+                            if($produto->produtoPromocao != null){
+                                $precoPromo = $precoPromo - ($precoPromo * $produto->produtoPromocao->promocao->descontopercentual / 100);
+                                $linhaFatura->precounitario = $precoPromo;
+                                $linhaFatura->save(false);
+                                $totalPrice += ($precoPromo * $linha->quantidade);
+                            }else{
+                                $precoPromo = null;
+                                $totalPrice += ($produto->preco * $linha->quantidade);
+                            }
+                        }
                     }
 
-                    $totalPrice = 0;
-                    foreach ($linhascarrinho as $linha) {
-                        $totalPrice += $linha->quantidade * $linha->precounitario;
-                    }
 
                     LinhaCarrinho::deleteAll(['carrinho_id' => $carrinho->id]);
                     $fatura->total = $totalPrice;

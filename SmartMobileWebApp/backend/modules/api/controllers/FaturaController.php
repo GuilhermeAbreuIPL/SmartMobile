@@ -39,6 +39,19 @@ class FaturaController extends Controller
         $user = User::findIdentityByAccessToken($request->getQueryParams('access-token'));
         $faturas = Fatura::find()->where(['userprofile_id' => $user->id])->all();
 
+        foreach ($faturas as $fatura) {
+            $data = [
+                'id' => $fatura->id,
+                'data' => $fatura->datafatura,
+                'total' => $fatura->total,
+                'estado' => $fatura->statusorder,
+                'metodopagamento' => $fatura->metodopagamento->nome,
+            ];
+
+            $faturadata[] = $data;
+        }
+
+
         if(!$faturas){
             Yii::$app->response->statusCode = 404;
             return[
@@ -49,7 +62,7 @@ class FaturaController extends Controller
 
         return [
             'success' => true,
-            'faturas' => $faturas
+            'faturas' => $faturadata
         ];
 
     }
@@ -58,8 +71,8 @@ class FaturaController extends Controller
     {
         $request = YII::$app->request;
         $user = User::findIdentityByAccessToken($request->getQueryParams('access-token'));
-        $faturas = Fatura::find()->where(['userprofile_id'=> $user->id, 'id' => $id] )->with(['linhafaturas.produto.imagem','moradaexpedicao', 'metodopagamento'])->asArray()->all();
-        if(!$faturas){
+        $fatura = Fatura::find()->where(['userprofile_id'=> $user->id, 'id' => $id] )->with(['linhafaturas.produto.imagem','moradaexpedicao', 'metodopagamento'])->one();
+        if(!$fatura){
             Yii::$app->response->statusCode = 404;
             return[
                 'success' => false,
@@ -67,12 +80,34 @@ class FaturaController extends Controller
             ];
         }
 
+        //return $faturas com data, total, estado, metodo de pagamento, morada de expedicao, tipo entrega, linhasfaturas com produto, quantidade, preco
 
+        foreach ($fatura->linhafaturas as $linhafatura) {
+            $data = [
+                'produto' => $linhafatura->produto->nome,
+                'quantidade' => $linhafatura->quantidade,
+                'preco' => $linhafatura->precounitario,
+            ];
 
+            $linhafaturadata[] = $data;
+        }
+
+        
+        $data = [
+            'data' => $fatura->datafatura,
+            'total' => $fatura->total,
+            'estado' => $fatura->statusorder,
+            'metodopagamento' => $fatura->metodopagamento->nome,
+            'tipoentrega' => $fatura->tipoentrega,
+            'rua' => $fatura->moradaexpedicao->rua,
+            'localidade' => $fatura->moradaexpedicao->localidade,
+            'codpostal' => $fatura->moradaexpedicao->codpostal,
+            'linhafaturas' => $linhafaturadata
+        ];
 
         return[
             'success' => true,
-            'faturas' => $faturas
+            'faturas' => $data
         ];
     }
 
