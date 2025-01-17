@@ -37,7 +37,7 @@ class FaturaController extends Controller
     {
         $request = YII::$app->request;
         $user = User::findIdentityByAccessToken($request->getQueryParams('access-token'));
-        $faturas = Fatura::find()->where(['userprofile_id' => $user->id])->all();
+        $faturas = Fatura::find()->where(['userprofile_id' => $user->id])->orderBy('datafatura DESC')->all();
 
         foreach ($faturas as $fatura) {
             $data = [
