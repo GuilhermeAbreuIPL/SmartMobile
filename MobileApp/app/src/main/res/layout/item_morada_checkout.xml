@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <!-- Texto "Escolhe" e RadioButton -->
+    <LinearLayout
+        android:id="@+id/choose_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical">
+
+        <!-- Texto à esquerda -->
+        <TextView
+            android:id="@+id/tv_escolhe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Escolhe"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical" />
+
+        <!-- RadioButton à direita -->
+        <RadioButton
+            android:id="@+id/radioButton_morada_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:buttonTint="@color/black"
+            android:checked="false"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <!-- TextView "Morada" -->
+    <TextView
+        android:id="@+id/tv_morada_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Morada"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp"
+        android:layout_below="@id/choose_container" />
+
+    <!-- Rua -->
+    <TextView
+        android:id="@+id/tv_morada_rua_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Rua do exemplo, nº 1"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/tv_morada_title" />
+
+    <!-- Localidade -->
+    <TextView
+        android:id="@+id/tv_localidade_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Localidade"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp"
+        android:layout_below="@id/tv_morada_rua_checkout" />
+
+    <TextView
+        android:id="@+id/tv_morada_localidade_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Leiria"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/tv_localidade_title" />
+
+    <!-- Código Postal -->
+    <TextView
+        android:id="@+id/tv_cod_postal_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Código Postal"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp"
+        android:layout_below="@id/tv_morada_localidade_checkout" />
+
+    <TextView
+        android:id="@+id/tv_morada_cod_postal_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="1234-123"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/tv_cod_postal_title" />
+
+    <!-- Linha de separação -->
+    <View
+        android:id="@+id/line_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/tv_morada_cod_postal_checkout" />
+</RelativeLayout>

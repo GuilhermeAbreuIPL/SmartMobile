@@ -12,28 +12,11 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Botão Fechar (canto superior direito) -->
-        <ImageView
-            android:id="@+id/btn_close"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_action_close"
-            android:contentDescription="Close" />
 
-        <!-- Caminho do Produto -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home > Smartphone > Apple"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:layout_marginBottom="8dp" />
 
         <!-- Nome do Produto -->
         <TextView
-            android:id="@+id/product_name"
+            android:id="@+id/product_name_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Product Name"
@@ -43,19 +26,19 @@
             android:layout_marginBottom="16dp" />
 
         <!-- Imagem do Produto -->
-        <View
+        <ImageView
             android:id="@+id/product_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@color/simple_gray"
+            android:background="@drawable/mini_border"
             android:layout_marginBottom="16dp" />
 
         <!-- Preço do Produto -->
         <TextView
-            android:id="@+id/product_price"
+            android:id="@+id/product_price_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price : x.xx €"
+            android:text="Preço : Loading..."
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:layout_marginBottom="16dp" />
@@ -80,37 +63,10 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/product_description_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis feugiat dui, a vehicula arcu. Praesent laoreet nibh rutrum elit ultricies sagittis. Etiam nec faucibus leo..."
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                android:lineSpacingExtra="4dp" />
-        </LinearLayout>
-
-        <!-- Disponíbilidade -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/border_card"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Disponíbilidade"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="8dp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Leiria: 0\nCoimbra: 0\nPorto: 0"
+                android:text="Loading..."
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 android:lineSpacingExtra="4dp" />
@@ -125,6 +81,7 @@
             android:backgroundTint="@color/orange"
             android:textColor="@android:color/white"
             android:textStyle="bold"
+            android:onClick="onClickAddCart"
             android:paddingVertical="12dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

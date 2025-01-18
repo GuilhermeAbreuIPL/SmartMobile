@@ -4,21 +4,21 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/cena1"
+        <item android:id="@+id/nav_telomeveis"
             android:title="Telemoveis"/>
-        <item android:id="@+id/cena2"
+        <item android:id="@+id/nav_relogios"
             android:title="Relogios"/>
+        <item android:id="@+id/nav_acessorios"
+            android:title="Acessórios"/>
     </group>
     <item
         android:title="" >
 
         <menu >
-            <item android:id="@+id/light_mode"
-                android:title="Light Mode"/>
-            <item android:id="@+id/comparador"
-                android:title="Comparador"/>
-            <item android:id="@+id/perfil"
+            <item android:id="@+id/nav_perfil"
                 android:title="Perfil"/>
+            <item android:id="@+id/nav_mudarip"
+                android:title="Alterar o IP"/>
         </menu>
     </item>
 </menu>
