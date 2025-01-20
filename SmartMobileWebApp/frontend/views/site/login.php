@@ -7,35 +7,32 @@
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+<link rel="stylesheet" href="<?= Yii::getAlias('@web/css/login.css?v=') ?>">
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+<div class="container-login">
+    <div class="login-box">
+        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'username', ['options' => ['class' => 'form-group input-field']])->textInput(['autofocus' => true]) ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+        <?= $form->field($model, 'password', ['options' => ['class' => 'form-group input-field']])->passwordInput() ?>
 
-                <div class="my-1 mx-0" style="color:#999;">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                    <br>
-                    Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
-                </div>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
+        <div class="extra-options">
+            Esqueceu-se da sau senha, pode a  <?= Html::a('redefinir', ['site/request-password-reset'], ['class' => 'link']) ?>.
+            <br>
+            Deseja <?= Html::a('voltar', ['site/index'], ['class' => 'link']) ?>?
         </div>
+
+        <div class="form-group button-wrapper">
+            <?= Html::submitButton('Login', ['class' => 'btn submit-button', 'name' => 'login-button', 'id'=>'login-button']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
 </div>
+
+
+

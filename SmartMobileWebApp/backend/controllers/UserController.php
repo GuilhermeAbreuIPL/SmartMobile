@@ -2,16 +2,19 @@
 
 namespace backend\controllers;
 
-use backend\models\UserForm;
 use backend\models\UserSearch;
+use common\models\MetodoPagamento;
+use common\models\MoradaExpedicao;
 use common\models\User;
+use common\models\UserForm;
 use common\models\Userprofile;
+use common\models\Morada;
+use common\models\Fatura;
 use Yii;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 class UserController extends Controller
 {
@@ -29,7 +32,7 @@ class UserController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create'],
+                        'actions' => ['index', 'view', 'create', 'moradas', 'faturas'],
                         'roles' => ['admin', 'gestor', 'funcionario'],
                     ],
                 ],
@@ -80,18 +83,66 @@ class UserController extends Controller
         ]);
     }
 
+    public function actionMoradas($id)
+    {
+        $user = User::findOne($id);
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found.');
+        }
+
+        if (!$user->moradas) {
+            Yii::$app->session->setFlash('error', 'Este user não tem moradas associadas.');
+            return $this->redirect(Yii::$app->session->get('lastUrl', ['user/index']));
+        }
+
+        $moradas = $user->moradas;
+
+        return $this->render('moradas', [
+            'user' => $user,
+            'moradas' => $moradas,
+        ]);
+    }
+
+    public function actionFaturas($id)
+    {
+        //procurar faturas com o user ID
+        $user = User::findOne($id);
+        $faturas = Fatura::find()->where(['userprofile_id' => $id])->all();
+        $metodopagamento = MetodoPagamento::find()->all();
+        $moradaexpedicao = MoradaExpedicao::find()->all();
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found.');
+        }
+
+        if (!$faturas) {
+            Yii::$app->session->setFlash('error', 'Este user não tem faturas associadas.');
+            return $this->redirect(Yii::$app->session->get('lastUrl', ['user/index']));
+        }
+
+        return $this->render('faturas', [
+            'user' => $user,
+            'faturas' => $faturas,
+            'metodopagamento' => $metodopagamento,
+            'moradaexpedicao' => $moradaexpedicao,
+        ]);
+    }
+
     public function actionCreate(){
         $model = new UserForm();
 
 
+
         if ($model->load(\Yii::$app->request->post())) {
             $model->create();
+            Yii::$app->session->setFlash('success', 'Utilizador criado com sucesso!');
             return $this->redirect(['user/index']);
         }
 
-            $roles = $this->getAvailableRoles();
+        $roles = $this->getAvailableRoles();
 
-            return $this->render('create', [
+        return $this->render('create', [
             'model' => $model,
             'roles' => $roles,
         ]);
@@ -122,11 +173,12 @@ class UserController extends Controller
         // Obter a role do user a ser editado
         $targetUserRole = array_keys(\Yii::$app->authManager->getRolesByUser($id))[0] ?? null;
 
+        /*
         // Verifica se o user tem uma role atribuída
         if (!$targetUserRole) {
             Yii::$app->session->setFlash('error', 'O user não tem uma role atribuída.');
             return $this->redirect($lastUrl);
-        }
+        }*/
 
         // Permissões para editar
         $permissions = [
@@ -207,12 +259,14 @@ class UserController extends Controller
             throw new NotFoundHttpException('Utilizador não encontrado.');
         }
 
+
         $targetUserRole = array_keys(\Yii::$app->authManager->getRolesByUser($id))[0] ?? null;
+        /*
         //ve se existe uma role atribuida ao user
         if (!$targetUserRole) {
             Yii::$app->session->setFlash('error', 'O user não tem uma role atribuída.');
             return $this->redirect($lastUrl);
-        }
+        }*/
 
         // Verificar permissões
         $permissions = [

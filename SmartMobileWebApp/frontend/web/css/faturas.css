@@ -1,0 +1,119 @@
+.fatura-index {
+    background-color: #eeeeee;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.fatura-index h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+    color: #495057;
+    font-weight: bold;
+}
+
+.grid-view {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.grid-view th {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.grid-view td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 15px;
+    font-size: 14px;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.grid-view tr:nth-child(even) td {
+    background-color: #f8f9fa;
+}
+
+.grid-view tr:hover td {
+    background-color: #e9ecef;
+    transition: background-color 0.3s;
+}
+
+.btn-warning {
+    background-color: #e65c00;
+    border-color: #e65c00;
+    color: white;
+    font-weight: bold;
+    padding: 7px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.btn-warning:hover {
+    background-color: #e05500;
+    border-color: #e05500;
+    color: white;
+}
+
+.summary{
+    display:none;
+}
+
+/* Estilização geral da paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination li a,
+.pagination li span {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Link ativo */
+.pagination li.active a {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    cursor: default;
+}
+
+/* Links desativados */
+.pagination li.disabled span {
+    color: #6c757d;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+}
+
+/* Hover nos links */
+.pagination li a:hover {
+    background-color: #0056b3;
+    color: white;
+    border-color: #0056b3;
+}

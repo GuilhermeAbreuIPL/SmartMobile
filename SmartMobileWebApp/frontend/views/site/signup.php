@@ -6,30 +6,37 @@
 
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
-
-$this->title = 'Signup';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to signup:</p>
+<link rel="stylesheet" href="<?= Yii::getAlias('@web/css/signup.css?v=') ?>">
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+<div class="container-signup">
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+    <div class="signup-box">
+        <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-                <?= $form->field($model, 'email') ?>
+        <?= $form->field($model, 'nome', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => 45]) ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'username', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength'=> 255 , 'autofocus' => true]) ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-                </div>
+        <?= $form->field($model, 'email', ['options' => ['class' => 'form-group input-field']])->textInput(['maxlength' => 255]) ?>
 
-            <?php ActiveForm::end(); ?>
+        <?= $form->field($model, 'nif', ['options' => ['class' => 'form-group input-field']])->textInput(['minlength' => 9, 'maxlength' => 9]) ?>
+
+        <?= $form->field($model, 'telemovel', ['options' => ['class' => 'form-group input-field']])->textInput(['minlength' => 9, 'maxlength' => 9]) ?>
+
+        <?= $form->field($model, 'password', ['options' => ['class' => 'form-group input-field']])->passwordInput()?>
+
+        <?= $form->field($model, 'role')->hiddenInput(['value' => 'Cliente'])->label(false) ?>
+
+        <div class="extra-options">
+            Deseja <?= Html::a('voltar', ['site/index'], ['class' => 'link']) ?>?
         </div>
+
+        <div class="form-group">
+            <?= Html::submitButton('Signup', ['class' => 'btn submit-button', 'name' => 'signup-button']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
 </div>

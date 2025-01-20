@@ -12,10 +12,9 @@ use Yii;
  * @property int|null $nif
  * @property int|null $telemovel
  *
- * @property Carrinhos $carrinhos
- * @property Faturas $faturas
+ * @property Carrinho $carrinhos
+ * @property Fatura $faturas
  * @property User $id0
- * @property Moradas $moradas
  */
 class Userprofile extends \yii\db\ActiveRecord
 {
@@ -69,7 +68,7 @@ class Userprofile extends \yii\db\ActiveRecord
      */
     public function getCarrinhos()
     {
-        return $this->hasOne(Carrinhos::class, ['id' => 'id']);
+        return $this->hasOne(Carrinho::class, ['id' => 'id']);
     }
 
     /**
@@ -79,7 +78,7 @@ class Userprofile extends \yii\db\ActiveRecord
      */
     public function getFaturas()
     {
-        return $this->hasOne(Faturas::class, ['id' => 'id']);
+        return $this->hasMany(Fatura::class, ['id' => 'id']);
     }
 
     /**
@@ -92,15 +91,8 @@ class Userprofile extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'id']);
     }
 
-    /**
-     * Gets query for [[Moradas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMoradas()
-    {
-        return $this->hasOne(Moradas::class, ['id' => 'id']);
-    }
+
+
 
     public function getUser()
     {

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".SignupActivity">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Signup"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- TODO Close Button -->
+
+
+
+    <!-- Container -->
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/border_card"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleProfile">
+
+        <!-- Login Title -->
+        <TextView
+            android:id="@+id/loginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:text="Signup"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Nome Label -->
+        <TextView
+            android:id="@+id/nomeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- Nome EditText -->
+        <EditText
+            android:id="@+id/etNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: João Antunes"
+            android:inputType="text" />
+
+        <!-- Username Label -->
+        <TextView
+            android:id="@+id/usernameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User name"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- Username EditText -->
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: João Antunes"
+            android:inputType="text" />
+
+        <!-- Email Label -->
+        <TextView
+            android:id="@+id/emailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- Email EditText -->
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: JoaoAntunes@gmail.com"
+            android:inputType="text" />
+
+        <!-- NIF Label -->
+        <TextView
+            android:id="@+id/nifLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NIF"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- NIF EditText -->
+        <EditText
+            android:id="@+id/etNif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: 123456789"
+            android:maxLength="9"
+            android:inputType="number" />
+
+        <!-- Telemovel Label -->
+        <TextView
+            android:id="@+id/telemovelLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telemovel"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- Telemovel EditText -->
+        <EditText
+            android:id="@+id/etTelemovel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: 911323555"
+            android:maxLength="9"
+            android:inputType="number" />
+
+        <!-- Password Label -->
+        <TextView
+            android:id="@+id/passwordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <!-- Password EditText -->
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:height="48dp"
+            android:backgroundTint="@color/simple_gray"
+            android:hint="Ex: **********"
+            android:inputType="textPassword" />
+
+        <!-- Register Button -->
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/orange"
+            android:text="Signup"
+            android:onClick="onClickSignup"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

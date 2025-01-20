@@ -2,8 +2,6 @@
 
 namespace frontend\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -13,8 +11,9 @@ use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
+use common\models\UserForm;
 use frontend\models\ContactForm;
+use common\models\ProdutoPromocao;
 
 /**
  * Site controller
@@ -75,6 +74,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->verificarPromocoesExpiradas();
         return $this->render('index');
     }
 
@@ -153,8 +153,9 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+        $model = new UserForm();
+        $model->role = 'Cliente';
+        if ($model->load(Yii::$app->request->post()) && $model->create()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }
@@ -213,47 +214,24 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Verify email address
-     *
-     * @param string $token
-     * @throws BadRequestHttpException
-     * @return yii\web\Response
-     */
-    public function actionVerifyEmail($token)
+    // Verifica se existem promoções expiradas e apaga-as
+    public function verificarPromocoesExpiradas()
     {
-        try {
-            $model = new VerifyEmailForm($token);
-        } catch (InvalidArgumentException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-        if (($user = $model->verifyEmail()) && Yii::$app->user->login($user)) {
-            Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
-            return $this->goHome();
-        }
+        $promocoes = ProdutoPromocao::find()->all();
 
-        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
-        return $this->goHome();
-    }
-
-    /**
-     * Resend verification email
-     *
-     * @return mixed
-     */
-    public function actionResendVerificationEmail()
-    {
-        $model = new ResendVerificationEmailForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-                return $this->goHome();
+        foreach ($promocoes as $promocao) {
+            if (strtotime($promocao->datafim) < strtotime(date('Y-m-d'))) {
+                try {
+                    // Tenta apagar a promoção
+                    if ($promocao->delete()) {
+                        Yii::info("Promoção de produto ID {$promocao->produto_id} apagada com sucesso.", __METHOD__);
+                    } else {
+                        Yii::error("Erro ao tentar apagar a promoção de produto ID {$promocao->produto_id}.", __METHOD__);
+                    }
+                } catch (\Exception $e) {
+                    Yii::error("Erro ao tentar apagar a promoção: " . $e->getMessage(), __METHOD__);
+                }
             }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
         }
-
-        return $this->render('resendVerificationEmail', [
-            'model' => $model
-        ]);
     }
 }

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:padding="20dp"
+    tools:context=".PurchaseHistoryFragment">
+
+    <!-- Contêiner principal -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Título da página e botão fechar -->
+        <LinearLayout
+            android:id="@+id/title_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Checkout"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_action_close"
+                android:contentDescription="Fechar" />
+        </LinearLayout>
+
+        <!-- Lista de produtos -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border_card"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="10dp">
+
+                <!-- TextView Nome -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome"
+                    android:textColor="@android:color/black"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="85dp"
+                    android:textStyle="bold"/>
+
+                <!-- TextView Preço -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Preço"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"/>
+
+                <!-- TextView Quantidade -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantidade"
+                    android:layout_marginStart="60dp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <!-- RecyclerView para produtos -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_products_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_product_data" />
+
+            <!-- Linha de separação -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_below="@id/container_item" />
+
+            <!-- Seção de pagamento -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tipo de pagamento"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:id="@+id/bottom_rectangle_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
+
+
+
+                    <!-- RecyclerView para métodos de pagamento -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_payments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_payment" />
+
+
+            </LinearLayout>
+
+            <!-- Linha de separação -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/darker_gray"
+                android:layout_below="@id/container_item" />
+            <!-- Seção de moradas -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Moradas"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"/>
+
+            <!-- Seção de moradas -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_moradas_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                tools:listitem="@layout/item_morada_checkout"/>
+        </LinearLayout>
+
+
+
+        <!-- Preço total -->
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total: 0€"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:gravity="end"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Botão de finalizar compra -->
+        <Button
+            android:id="@+id/btn_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Finalizar compra"
+            android:backgroundTint="@color/orange"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
