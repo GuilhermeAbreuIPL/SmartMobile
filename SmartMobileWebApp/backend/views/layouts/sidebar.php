@@ -50,7 +50,7 @@
                     ['label' => 'Promoções', 'icon' => 'gift', 'url' => ['promocao/index'], 'visible' => Yii::$app->user->can('viewPromocao')],
 
                     // Produtos
-                    ['label' => 'Produtos', 'icon' => 'box', 'url' => ['produto/index']],
+                    ['label' => 'Produtos', 'icon' => 'box', 'url' => ['produto/index'], 'visible' => Yii::$app->user->can('updateProduto')],
 
                     // Promoção Produtos
                     ['label' => 'Promoção Produtos', 'icon' => 'percentage', 'url' => ['produtopromocao/index'], 'visible' => Yii::$app->user->can('viewPromocao')],

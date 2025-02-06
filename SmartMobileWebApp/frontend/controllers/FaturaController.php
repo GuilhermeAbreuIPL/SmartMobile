@@ -188,8 +188,7 @@ class FaturaController extends Controller
 
 
                     $expedicao = $this->criarMoradaExpedicao($tipoEntrega, $moradaId, $lojaId);
-                    if (!$expedicao) {
-                        Yii::$app->session->setFlash('error', 'Erro ao criar morada de expedição.');
+                    if (!$expedicao) { 
                         return $this->redirect('checkout'); // Redireciona em caso de erro
                     }
 
