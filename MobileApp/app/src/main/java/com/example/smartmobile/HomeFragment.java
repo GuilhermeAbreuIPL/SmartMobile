@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -151,6 +153,57 @@ public class HomeFragment extends Fragment {
             ProductAdapter adapter = new ProductAdapter(productList);
             recyclerView.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Atualizar a lista de produtos
+        getView().findViewById(R.id.search_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText search = getView().findViewById(R.id.search_text);
+
+                if (search.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Insira um termo de pesquisa", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!NetworkUtils.isConnectionInternet(getContext())) {
+                    Toast.makeText(getContext(), "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                SingletonVolley.getInstance(getContext()).getProdutoSearch(getContext(), search.getText().toString() , new ProdutosListener() {
+                    @Override
+                    public void onProdutosResponse(JSONObject produtos) throws JSONException {
+                        productList.clear();
+                        JSONArray produtosArray = produtos.getJSONArray("produtos");
+                        for (int i = 0; i < produtosArray.length(); i++) {
+                            JSONObject produto = produtosArray.getJSONObject(i);
+                            Product product = new Product();
+                            product.setId(produto.getInt("id"));
+                            product.setNome(produto.getString("nome"));
+                            product.setCategoria(produto.getString("categoria"));
+                            product.setCategoria_id(produto.getInt("categoria_id"));
+                            product.setFilename(produto.getString("filename"));
+                            product.setPreco(produto.getString("preco"));
+                            product.setPrecoPromo(produto.getString("precoPromo"));
+                            product.setDescricao(produto.getString("descricao"));
+                            productList.add(product);
+                        }
+
+                        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view_products);
+                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2)); // 2 colunas
+                        ProductAdapter adapter = new ProductAdapter(productList);
+                        recyclerView.setAdapter(adapter);
+                    }
+                });
+
+            }
+
+        });
+
     }
 
 

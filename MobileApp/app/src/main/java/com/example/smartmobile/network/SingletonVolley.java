@@ -335,6 +335,46 @@ public class SingletonVolley{
         }
     }
 
+    public void getProdutoSearch(Context context, String search, ProdutosListener listener){
+        //verifica se tenho ligação à internet
+        if (!NetworkUtils.isConnectionInternet(context)) {
+            Toast.makeText(context, "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            //buscar o ip do SharedPreferences
+            SharedPreferences prefs = context.getSharedPreferences("IP", LoginActivity.MODE_PRIVATE);
+            String ip = prefs.getString("ip", BaseIp);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, BASE_URL(ip) + "produtos/pesquisa/" + search, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //Log to console response
+                    //System.out.println(response.toString());
+                    Toast.makeText(context, "Recebi uma response", Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        try {
+                            listener.onProdutosResponse(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    testTimeoutError(context, error);
+                    //Log to console error
+                    System.out.println(error.toString());
+                    Toast.makeText(context, "Nenhum produto encontrado", Toast.LENGTH_SHORT).show();
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    System.out.println("Error Code: " + statusCode);
+                    System.out.println("Response Body: " + responseBody);
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+
     public void getProdutoDetails(Context context, int id, ProdutosListener listener){
         //verifica se tenho ligação à internet
         if (!NetworkUtils.isConnectionInternet(context)) {
@@ -363,7 +403,7 @@ public class SingletonVolley{
                 public void onErrorResponse(VolleyError error) {
                     //Log to console error
                     System.out.println(error.toString());
-                    Toast.makeText(context, "Error durante o login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Nenhum produto encontrado", Toast.LENGTH_SHORT).show();
                     int statusCode = error.networkResponse.statusCode;
                     String responseBody = new String(error.networkResponse.data);
                     System.out.println("Error Code: " + statusCode);
