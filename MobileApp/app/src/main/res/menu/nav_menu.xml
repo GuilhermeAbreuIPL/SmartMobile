@@ -4,12 +4,7 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_telomeveis"
-            android:title="Telemoveis"/>
-        <item android:id="@+id/nav_relogios"
-            android:title="Relogios"/>
-        <item android:id="@+id/nav_acessorios"
-            android:title="Acessórios"/>
+
     </group>
     <item
         android:title="" >
