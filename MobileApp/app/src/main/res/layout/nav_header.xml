@@ -11,11 +11,10 @@
     <ImageView
         android:id="@+id/imgFoto"
         android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="0dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
         app:srcCompat="@drawable/logo" />
-
 
 
     <TextView
