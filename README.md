@@ -1,4 +1,4 @@
-# SmartMobile - Relatório do Projeto
+# SmartMobile
 
 ## Introdução
 
