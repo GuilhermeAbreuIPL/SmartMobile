@@ -1,4 +1,4 @@
-# SmartMobile
+# SmartMobile - Loja de Informática
 
 ## Introdução
 
