@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use backend\models\UserSearch;
+use common\models\Carrinho;
+use common\models\LinhaCarrinho;
 use common\models\MetodoPagamento;
 use common\models\MoradaExpedicao;
 use common\models\User;
@@ -251,6 +253,13 @@ class UserController extends Controller
     {
         $user = User::findOne($id);
         $profile = Userprofile::findOne(['id' => $id]);
+        $carrinho = Carrinho::findOne(['userprofile_id' => $id]);
+        $faturas = Fatura::find()->where(['userprofile_id' => $id])->all();
+        $moradas = Morada::find()->where(['user_id' => $id])->all();
+
+        if ($carrinho != null){
+            $linhacarrinho = LinhaCarrinho::find(['carrinho_id' => $carrinho->id])->all();
+        }
 
         // Guarda que este foi o ultimo url
         $lastUrl = Yii::$app->session->get('lastUrl', ['user/index']);
@@ -293,6 +302,33 @@ class UserController extends Controller
             // Revogar todas as permissões do utilizador
             $auth = \Yii::$app->authManager;
             $auth->revokeAll($user->id);
+
+            if ($carrinho != null){
+                foreach ($linhacarrinho as $linha){
+                    if (!$linha->delete()){
+                        throw new \Exception('Erro ao apagar LinhaCarrinho.');
+                    }
+                }
+                if (!$carrinho->delete()){
+                    throw new \Exception('Erro ao apagar Carrinho.');
+                }
+            }
+
+            if ($faturas != null){
+                foreach ($faturas as $fatura){
+                    if (!$fatura->delete()){
+                        throw new \Exception('Erro ao apagar Fatura.');
+                    }
+                }
+            }
+
+            if ($moradas != null){
+                foreach ($moradas as $morada){
+                    if (!$morada->delete()){
+                        throw new \Exception('Erro ao apagar Morada.');
+                    }
+                }
+            }
 
             // Apagar o perfil do utilizador
             if (!$profile->delete()) {

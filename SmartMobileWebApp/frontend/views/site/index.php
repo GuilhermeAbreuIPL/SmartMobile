@@ -1,6 +1,8 @@
 <?php
 /** @var yii\web\View $this */
 
+use yii\helpers\Url;
+
 $this->title = 'My Yii Application';
 ?>
 
@@ -9,13 +11,13 @@ $this->title = 'My Yii Application';
 <div class="site-index">
     <div class="slideshow-container">
         <div class="slide fade">
-            <img src="https://via.placeholder.com/1920x1080?text=Slide+1" alt="Slide 1">
+            <img src="<?= Url::to('@web/foto_home/SmartMobile.png')?>" class="img-responsive" alt="...">
         </div>
         <div class="slide fade">
-            <img src="https://via.placeholder.com/1920x1080?text=Slide+2" alt="Slide 2">
+            <img src="<?= Url::to('@web/foto_home/Mapple.png')?>" class="img-responsive" alt="...">
         </div>
         <div class="slide fade">
-            <img src="https://via.placeholder.com/1920x1080?text=Slide+3" alt="Slide 3">
+            <img src="<?= Url::to('@web/foto_home/IPL.png')?>" class="img-responsive" alt="...">
         </div>
     </div>
 
