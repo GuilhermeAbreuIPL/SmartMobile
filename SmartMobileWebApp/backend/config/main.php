@@ -63,6 +63,7 @@ return [
                         'DELETE morada/{id}' => 'delete-morada',
                     ]
                 ],
+
                 //Rules relativas ao produto
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -71,10 +72,10 @@ return [
                     'extraPatterns' => [
                         'GET' => 'produtos', /* api/produtos */
                         'GET {id}' => 'detalhe', /*api/produtos/{id}*/
+                        //'GET pesquisa/{nome}' => 'pesquisas', /*api/produtos/pesquisa/{nome}*/
+                        'GET pesquisa/<nome:[a-zA-Z]+>' => 'pesquisas', /* api/produtos/pesquisa/{nome} */
                         'GET categoria/{id}' => 'categorias',
                     ],
-
-
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
