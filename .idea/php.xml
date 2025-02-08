@@ -199,6 +199,10 @@
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/php-webdriver/webdriver" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/bluerhinos/phpmqtt" />
       <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/codeception/module-filesystem" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/setasign/fpdi" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/mpdf/psr-log-aware-trait" />
+      <path value="$PROJECT_DIR$/SmartMobileWebApp/vendor/mpdf/psr-http-message-shim" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4">

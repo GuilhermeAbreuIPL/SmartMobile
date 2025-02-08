@@ -39,7 +39,7 @@ class FaturaController extends Controller
                     'rules' => [
                         [
                             'allow' => true,
-                            'actions' => ['index', 'view', 'checkout'],
+                            'actions' => ['index', 'view', 'checkout', 'pdf'],
                             'roles' => ['@'], // Only logged-in users can access
                         ],
                     ],
@@ -355,6 +355,27 @@ class FaturaController extends Controller
 
         return $expedicao;
     }
+
+    public function actionPdf($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->userprofile_id !== Yii::$app->user->id) {
+            throw new ForbiddenHttpException('Você não tem permissão para acessar esta página.');
+        }
+
+        $linhasFatura = LinhaFatura::find()->where(['fatura_id' => $model->id])->all();
+
+        $html = $this->renderPartial('pdf', [
+            'model' => $model,
+            'linhasFatura' => $linhasFatura,
+        ]);
+
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('Fatura_' . $model->id . '.pdf', 'D'); // 'D' força o download, 'I' exibe no navegador
+    }
+
 
     /**
      * Finds the fatura model based on its primary key value.

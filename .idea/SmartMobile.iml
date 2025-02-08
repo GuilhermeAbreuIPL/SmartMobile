@@ -2,7 +2,24 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/SmartMobileWebApp/backend/tests" isTestSource="true" packagePrefix="backend\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/SmartMobileWebApp/backend/tests/_support" isTestSource="true" packagePrefix="backend\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/SmartMobileWebApp/common/tests" isTestSource="true" packagePrefix="common\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/SmartMobileWebApp/common/tests/_support" isTestSource="true" packagePrefix="common\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/SmartMobileWebApp/frontend/tests" isTestSource="true" packagePrefix="frontend\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/SmartMobileWebApp/frontend/tests/_support" isTestSource="true" packagePrefix="frontend\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/SmartMobileWebApp/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/common/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/frontend/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/SmartMobileWebApp/vendor/mpdf/mpdf" />
+      <excludeFolder url="file://$MODULE_DIR$/SmartMobileWebApp/vendor/mpdf/psr-http-message-shim" />
+      <excludeFolder url="file://$MODULE_DIR$/SmartMobileWebApp/vendor/mpdf/psr-log-aware-trait" />
+      <excludeFolder url="file://$MODULE_DIR$/SmartMobileWebApp/vendor/setasign/fpdi" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
