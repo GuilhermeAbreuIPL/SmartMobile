@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity{
                     .beginTransaction()
                     .replace(R.id.fragment_container, homeFragment)
                     .commit();
+            testInternetMain();
         }
 
         carregarFragementoInicial();
@@ -88,6 +90,22 @@ public class MainActivity extends AppCompatActivity{
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    public void testInternetMain() {
+        // Verificar tem interet
+        if (!NetworkUtils.isConnectionInternet(this)) {
+            // Sem ligação à Internet
+            ImageView carticon = findViewById(R.id.cart_icon);
+            carticon.setVisibility(View.GONE);
+        }
+        else {
+            if (isUserLoggedIn()) {
+                // Com ligação à Internet
+                ImageView carticon = findViewById(R.id.cart_icon);
+                carticon.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -115,6 +133,7 @@ public class MainActivity extends AppCompatActivity{
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
+            testInternetMain();
         }
 
         // Fechar o Drawer após a seleção
@@ -126,6 +145,7 @@ public class MainActivity extends AppCompatActivity{
         // Redirecionar para a SignupActivity
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
+        testInternetMain();
     }
 
     public void onClickLogin(View view) {
@@ -149,7 +169,7 @@ public class MainActivity extends AppCompatActivity{
         editor.apply(); // commit changes
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-
+        testInternetMain();
     }
 
     public void onClickDadosPessoais(View view) {
@@ -159,6 +179,8 @@ public class MainActivity extends AppCompatActivity{
                 .replace(R.id.fragment_container, configFragment)
                 .addToBackStack(null)
                 .commit();
+        testInternetMain();
+
     }
 
     public void onClickProduct(View view) {
@@ -175,6 +197,7 @@ public class MainActivity extends AppCompatActivity{
                 .replace(R.id.fragment_container, productDetailsFragment)
                 .addToBackStack(null)
                 .commit();
+        testInternetMain();
     }
 
 
@@ -195,6 +218,7 @@ public class MainActivity extends AppCompatActivity{
                 .replace(R.id.fragment_container, editMoradaFragment)
                 .addToBackStack(null)
                 .commit();
+        testInternetMain();
 
     }
 
@@ -205,6 +229,7 @@ public class MainActivity extends AppCompatActivity{
                 .replace(R.id.fragment_container, addMoradaFragment)
                 .addToBackStack(null)
                 .commit();
+        testInternetMain();
     }
 
     public void onClickEditUser(View view) {
@@ -214,6 +239,7 @@ public class MainActivity extends AppCompatActivity{
                 .replace(R.id.fragment_container, editUserFragment)
                 .addToBackStack(null)
                 .commit();
+        testInternetMain();
     }
 
     public void onClickVerDetalhesFatura(View view) {
@@ -231,6 +257,7 @@ public class MainActivity extends AppCompatActivity{
                 .replace(R.id.fragment_container, detalhesFacturaFragment)
                 .addToBackStack(null)
                 .commit();
+        testInternetMain();
     }
 
     public boolean isUserLoggedIn() {
@@ -354,6 +381,7 @@ public class MainActivity extends AppCompatActivity{
                 .beginTransaction()
                 .replace(R.id.fragment_container, homeFragment)
                 .commit();
+        testInternetMain();
     }
 
     public void onClickCartIcon(View view) {
@@ -364,6 +392,7 @@ public class MainActivity extends AppCompatActivity{
                 .beginTransaction()
                 .replace(R.id.fragment_container, ShoppingCartFragment)
                 .commit();
+        testInternetMain();
     }
 
     public void onClickCheckout(View view) {
@@ -372,6 +401,7 @@ public class MainActivity extends AppCompatActivity{
                 .beginTransaction()
                 .replace(R.id.fragment_container, CheckoutFragment)
                 .commit();
+        testInternetMain();
     }
 
     public void onClickOrders(View view) {
@@ -380,6 +410,7 @@ public class MainActivity extends AppCompatActivity{
                 .beginTransaction()
                 .replace(R.id.fragment_container, OrderHistoryFragment)
                 .commit();
+        testInternetMain();
     }
 
     public void refreshCarrinho() {
@@ -388,6 +419,7 @@ public class MainActivity extends AppCompatActivity{
                 .beginTransaction()
                 .replace(R.id.fragment_container, ShoppingCartFragment)
                 .commit();
+        testInternetMain();
     }
 
     public void onClickAddCart(View view) {
