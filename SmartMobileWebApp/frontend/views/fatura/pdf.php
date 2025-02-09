@@ -8,7 +8,6 @@ use yii\helpers\Html;
 <p><strong>Total:</strong> <?= Yii::$app->formatter->asCurrency($model->total) ?></p>
 <p><strong>Status:</strong> <?= Html::encode($model->statusorder) ?></p>
 <p><strong>Tipo de Entrega:</strong> <?= Html::encode($model->tipoentrega) ?></p>
-<p><strong>Total:</strong> <?= Html::encode($model->total) ?></p>
 
 <h2>Produtos</h2>
 <table border="1" cellpadding="5" cellspacing="0" width="100%">
