@@ -34,7 +34,6 @@ class ProdutoController extends Controller
 
     public function actionProdutos()
     {
-
         //$produtos = Produto::find()->asArray()->with('imagem')->all();
         //$promocaoProduto = ProdutoPromocao::findAll();
 
@@ -74,7 +73,7 @@ class ProdutoController extends Controller
 
         return [
             'success' => true,
-            'produtos' => $data
+            'produtos' => $data,
             //'produtos' => $produtos
         ];
 
@@ -116,6 +115,51 @@ class ProdutoController extends Controller
             'produto' => $produtoInfo
             //'produto' => $produtos
         ];
+    }
+
+
+    public function actionPesquisas($nome)
+    {
+        
+        $produtos = Produto::find()->where(['like', 'nome', $nome])->all();
+
+        if(!$produtos){
+            Yii::$app->response->statusCode = 404;
+            return [
+                'success' => false,
+                'message' => 'Não foram encontrados produtos',
+            ];
+        }
+
+        foreach($produtos as $produto){
+            $precoPromo = $produto->preco;
+            if($produto->produtoPromocao != null){
+                $precoPromo = $precoPromo - ($precoPromo * $produto->produtoPromocao->promocao->descontopercentual / 100);
+            }else{
+                $precoPromo = null;
+            }
+            
+            $produtoInfo = [
+                'id' => $produto->id,
+                'nome' => $produto->nome,
+                'categoria' => $produto->categoria->nome,
+                'categoria_id' => $produto->categoria_id,
+                'filename' => $produto->imagem->filename,
+                'preco' => $produto->preco,
+                'precoPromo' => $precoPromo,
+                'descricao' => $produto->descricao,
+            ];
+
+            $data[] = $produtoInfo;
+        }
+
+        return [
+            'success' => true,
+            'produtos' => $data,
+            
+            //'produtos' => $produtos
+        ];
+
     }
 
     public function actionCategorias($id)

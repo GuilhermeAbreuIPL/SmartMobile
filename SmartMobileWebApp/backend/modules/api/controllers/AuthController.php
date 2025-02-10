@@ -43,6 +43,7 @@ class AuthController extends Controller
             return[
                 'success' => true,
                 'message' => 'Oops! algo correu mal!',
+                'errors' => $user->errors,
             ];
         }
 

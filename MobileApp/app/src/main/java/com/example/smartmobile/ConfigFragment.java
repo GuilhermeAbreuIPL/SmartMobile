@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,9 +46,16 @@ public class ConfigFragment extends Fragment {
         super.onResume();
         if (!NetworkUtils.isConnectionInternet(getContext())) {
             Toast.makeText(getContext(), "Sem ligação à internet", Toast.LENGTH_SHORT).show();
+
+            Button btn_add_morada = getView().findViewById(R.id.btn_add_morada);
+            Button btn_edit_dados = getView().findViewById(R.id.btn_edit_dados);
+
+            btn_edit_dados.setVisibility(View.GONE);
+            btn_add_morada.setVisibility(View.GONE);
         } else {
             //chama a funçaõ do mainactivity isUserLoggedIn
             ((MainActivity) getActivity()).isUserLoggedIn();
+
         }
         SharedPreferences prefs = getContext().getSharedPreferences("User", LoginActivity.MODE_PRIVATE);
         if (prefs == null) {

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.smartmobile.R;
 import com.example.smartmobile.models.MoradaModel;
 import com.example.smartmobile.models.Product;
+import com.example.smartmobile.network.NetworkUtils;
 
 import org.w3c.dom.Text;
 
@@ -67,7 +68,14 @@ public class MoradaAdapter extends RecyclerView.Adapter<MoradaAdapter.MoradaView
             moradaRua = itemView.findViewById(R.id.tv_morada_rua);
             moradaLocalidade = itemView.findViewById(R.id.tv_morada_localidade);
             moradaCodPostal = itemView.findViewById(R.id.tv_morada_cod_postal);
+
             btn_edit_morada = itemView.findViewById(R.id.btn_edit_morada);
+
+            if (NetworkUtils.isConnectionInternet(itemView.getContext())) {
+                btn_edit_morada.setVisibility(View.VISIBLE);
+            } else {
+                btn_edit_morada.setVisibility(View.GONE);
+            }
         }
     }
 }

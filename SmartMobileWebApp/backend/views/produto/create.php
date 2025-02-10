@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var common\models\Produto $model */
 
-$this->title = 'Create Produto';
+$this->title = 'Criar Produto';
 $this->params['breadcrumbs'][] = ['label' => 'Produtos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -66,7 +66,7 @@ $categoryTreeHtml = renderCategoryTreeWithExpand($categorias, null, $model->cate
 
         <?= $form->field($model, 'preco')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'descricao')->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'descricao')->textarea(['rows' => 6])->label('Descrição') ?>
 
         <div class="form-group">
             <label id="selected-category-label" style="display: none;"><strong>Categoria Selecionada:</strong></label>
