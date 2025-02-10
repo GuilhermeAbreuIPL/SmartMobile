@@ -1,5 +1,11 @@
 # SmartMobile - Loja de Informática
 
+## GitHub
+
+https://github.com/GuilhermeAbreuIPL/SmartMobile
+
+---
+
 ## Introdução
 
 O projeto SmartMobile consiste no desenvolvimento de uma loja de informática fictícia, que integra uma aplicação web, uma aplicação Android e uma API REST para comunicação entre ambas. O sistema foi projetado para oferecer uma experiência de compra intuitiva e eficiente, permitindo aos utilizadores navegar por um catálogo de produtos, adicionar itens ao carrinho, realizar compras e acompanhar o estado das encomendas. Além disso, o sistema inclui funcionalidades de gestão para administradores, gestores e funcionários, como a adição de produtos, gestão de stock, e atualização do estado das encomendas.
